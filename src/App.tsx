@@ -1,19 +1,9 @@
 import AuthForm from "components/Authentication/AuthForm";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useDispatch } from "react-redux";
-import { setUserThunk } from "reducers/UserSlice";
+import { setUserThunk, updateUserThunk } from "reducers/UserSlice";
 
 const App = () => {
-  const dispatch = useDispatch();
-  const getMe = () => {
-    dispatch(setUserThunk());
-    console.log("banana");
-  };
-
-  return (
-    <div>
-      <AuthForm />
-      <button onClick={getMe}>get me</button>
-    </div>
-  );
+  return <div>hic</div>;
 };
 export default App;

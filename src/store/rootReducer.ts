@@ -3,8 +3,8 @@ import authReducer from "../reducers/AuthSlice";
 import userReducer from "../reducers/UserSlice";
 
 const rootReducer = combineReducers({
-  auth: authReducer,
-  user: userReducer,
+  authSlice: authReducer,
+  userSlice: userReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

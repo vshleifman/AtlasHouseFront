@@ -6,12 +6,12 @@ import { User } from "types/types";
 const UserSlice = createSlice({
   name: "user",
   initialState: {
-    user: {},
+    userData: {},
     errorMsg: "",
   },
   reducers: {
     setUser(state, action) {
-      state.user = action.payload;
+      state.userData = action.payload;
     },
     addError(state, action) {
       state.errorMsg = action.payload;
@@ -21,11 +21,8 @@ const UserSlice = createSlice({
 
 export const setUserThunk = (): AppThunk => async (dispatch) => {
   try {
-    console.log("bublik");
-
     const response = await api.get("/users/me");
     console.log(response.data);
-
     dispatch(setUser(response.data));
   } catch (error) {
     dispatch(addError(error.response.data.msg));
@@ -36,8 +33,8 @@ export const updateUserThunk = (data: Partial<User>): AppThunk => async (
   dispatch
 ) => {
   try {
-    const updatedUser = api.patch("users/me", { data });
-    dispatch(setUser(updatedUser));
+    const response = await api.patch("/users/me", data);
+    dispatch(setUser(response.data));
   } catch (error) {
     dispatch(addError(error.response.data.msg));
   }

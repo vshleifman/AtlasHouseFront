@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import api from "api/axiosInstance";
 import { AppThunk } from "store/store";
+import { setUser, setUserThunk } from "./UserSlice";
 
 const AuthSlice = createSlice({
   name: "auth",
@@ -28,6 +29,7 @@ export const tryAutoSignin = (): AppThunk => (dispatch) => {
   const token = localStorage.getItem("token");
   if (token) {
     dispatch(signin(token));
+    dispatch(setUserThunk());
   } //add else
 };
 
@@ -41,8 +43,13 @@ export const signupThunk = (userData: {
   type: string;
 }): AppThunk => async (dispatch) => {
   try {
+    console.log(userData);
+
     const response = await api.post("/signup", userData);
     dispatch(signin(response.data.token));
+    console.log(response);
+
+    dispatch(setUser(response.data.user));
     localStorage.setItem("token", response.data.token);
   } catch (error) {
     console.log(error);
@@ -58,6 +65,7 @@ export const signinThunk = (
   try {
     const response = await api.post("/signin", { email, password });
     dispatch(signin(response.data.token));
+    dispatch(setUser(response.data.user));
     localStorage.setItem("token", response.data.token);
   } catch (error) {
     dispatch(addError(error.response.data.msg));
@@ -66,7 +74,7 @@ export const signinThunk = (
 
 export const signoutThunk = (): AppThunk => async (dispatch) => {
   try {
-    const response = await api.post("/signout");
+    await api.post("/signout");
     localStorage.removeItem("token");
     dispatch(signout());
   } catch (error) {
