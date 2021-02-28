@@ -43,17 +43,12 @@ export const signupThunk = (userData: {
   type: string;
 }): AppThunk => async (dispatch) => {
   try {
-    console.log(userData);
-
     const response = await api.post("/signup", userData);
     dispatch(signin(response.data.token));
-    console.log(response);
-
     dispatch(setUser(response.data.user));
     localStorage.setItem("token", response.data.token);
+    window.history.back();
   } catch (error) {
-    console.log(error);
-
     dispatch(addError(error.response.data.msg));
   }
 };
@@ -67,6 +62,7 @@ export const signinThunk = (
     dispatch(signin(response.data.token));
     dispatch(setUser(response.data.user));
     localStorage.setItem("token", response.data.token);
+    window.history.back();
   } catch (error) {
     dispatch(addError(error.response.data.msg));
   }
@@ -77,6 +73,7 @@ export const signoutThunk = (): AppThunk => async (dispatch) => {
     await api.post("/signout");
     localStorage.removeItem("token");
     dispatch(signout());
+    window.location.replace("/");
   } catch (error) {
     dispatch(addError(error.response.data.msg));
   }

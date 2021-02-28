@@ -6,7 +6,9 @@ import { User } from "types/types";
 const UserSlice = createSlice({
   name: "user",
   initialState: {
-    userData: {},
+    userData: {
+      __t: "",
+    },
     errorMsg: "",
   },
   reducers: {
@@ -22,8 +24,8 @@ const UserSlice = createSlice({
 export const setUserThunk = (): AppThunk => async (dispatch) => {
   try {
     const response = await api.get("/users/me");
-    console.log(response.data);
     dispatch(setUser(response.data));
+    window.history.back();
   } catch (error) {
     dispatch(addError(error.response.data.msg));
   }
