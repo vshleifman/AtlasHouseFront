@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { userSelector } from "selectors/selectors";
 
 const NavBar = () => {
@@ -7,8 +7,24 @@ const NavBar = () => {
 
   return (
     <div>
-      <p>Navbar</p>
-      <p>{user.userData.__t ? "username" : <Link to="/auth">auth</Link>}</p>
+      <ul>
+        <li>
+          <NavLink to="/">AtlasHouse</NavLink>
+        </li>
+        <li>
+          <NavLink to="/rooms">View Rooms</NavLink>
+        </li>
+        <li>
+          <NavLink to="/contacts">Contact Us</NavLink>
+        </li>
+        <li>
+          {user.userData.__t ? (
+            "User Name"
+          ) : (
+            <NavLink to="/auth">Sign In</NavLink>
+          )}
+        </li>
+      </ul>
     </div>
   );
 };

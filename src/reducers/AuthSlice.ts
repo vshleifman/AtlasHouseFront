@@ -73,6 +73,7 @@ export const signoutThunk = (): AppThunk => async (dispatch) => {
     await api.post("/signout");
     localStorage.removeItem("token");
     dispatch(signout());
+    dispatch(setUser({ __t: "" }));
     window.location.replace("/");
   } catch (error) {
     dispatch(addError(error.response.data.msg));
