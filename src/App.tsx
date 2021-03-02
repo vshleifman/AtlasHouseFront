@@ -5,64 +5,132 @@ import Auth from "./pages/Authentication";
 import Contacts from "pages/Contacts";
 import Rooms from "pages/Rooms";
 import Calendar from "components/Calendar";
+import styled from "styled-components";
+
+const Cell = styled.div`
+  height: 2em;
+  border: 1px solid black;
+  display: grid;
+`;
+
+const BodyCell = styled(Cell)`
+  &:hover {
+    border-left: 3px solid blue;
+    border-right: 3px solid blue;
+  }
+`;
+
+const Body = styled.div`
+  display: grid;
+  grid-area: cells;
+`;
+
+const DateCell = styled(Cell)`
+  justify-items: center;
+  height: 1.2em;
+`;
+
+const MonthRow = styled.div`
+  display: grid;
+  grid-area: monthRow;
+`;
+
+const WeekCell = styled(Cell)`
+  font-size: 0.7em;
+  place-content: center;
+  height: auto;
+`;
+
+const WeekRow = styled(MonthRow)`
+  grid-area: weekRow;
+`;
+
+const RoomCell = styled(Cell)``;
+
+const RoomColumn = styled.div`
+  display: grid;
+  grid-area: roomColumn;
+`;
 
 const App = () => {
   let dateCells = [];
+  let weekCells = [];
   let roomCells = [];
   let cells = [];
-  const rooms = ["32b", "33a", "54a", "72b", "12a"];
-  rooms.sort();
 
-  const columnsN = 28;
+  const rooms = ["32b", "33a", "54a", "72b", "12a"];
+
+  let currentDay = new Date(2021, 2, 1);
+
+  const getDaysInMonth = (year: number, month: number) => {
+    const date = new Date(year, month + 1, 0);
+    return date.getDate();
+  };
+
+  const getWeekDay = () => {
+    const day = currentDay.getDay();
+    switch (day) {
+      case 0:
+        return "SUN";
+      case 1:
+        return "MON";
+      case 2:
+        return "TUE";
+      case 3:
+        return "WED";
+      case 4:
+        return "THR";
+      case 5:
+        return "FRI";
+      case 6:
+        return "SAT";
+    }
+  };
+
+  const columnsN = getDaysInMonth(
+    currentDay.getFullYear(),
+    currentDay.getMonth()
+  );
   const rowsN = rooms.length;
 
   let iterationOverMonthCounter = 1;
+
   for (let i = 1; i <= columnsN * rowsN; i++) {
     if ((i - 1) / (columnsN * iterationOverMonthCounter) === 1) {
       iterationOverMonthCounter++;
     }
 
+    let dayCounterAcrossRows =
+      i <= columnsN ? i : i - columnsN * (iterationOverMonthCounter - 1);
+
+    currentDay.setDate(dayCounterAcrossRows);
+
     cells.push(
-      <div
-        style={{ height: "2em", border: "1px solid black" }}
-        id={
-          i <= columnsN
-            ? `room${rooms[iterationOverMonthCounter - 1]}, day${i}`
-            : `room${rooms[iterationOverMonthCounter - 1]}, day${
-                i - columnsN * (iterationOverMonthCounter - 1)
-              }`
-        }
-      ></div>
+      <BodyCell
+        style={getWeekDay() === "SUN" ? { backgroundColor: "gray" } : {}}
+        key={`bc${i}`}
+        id={`room${
+          rooms[iterationOverMonthCounter - 1]
+        }, day${dayCounterAcrossRows}`}
+      ></BodyCell>
     );
+
     if (i <= columnsN) {
-      dateCells.push(
-        <div
-          style={{
-            display: "grid",
-            justifyItems: "center",
-            border: "1px solid black",
-          }}
-        >
-          {i}
-        </div>
-      );
+      dateCells.push(<DateCell key={`dc${i}`}>{i}</DateCell>);
+
+      weekCells.push(<WeekCell key={`wc${i}`}>{getWeekDay()}</WeekCell>);
     }
+
     if (i <= rowsN) {
-      roomCells.push(
-        <div style={{ height: "2em", border: "1px solid black" }}>
-          {rooms[i - 1]}
-        </div>
-      );
+      roomCells.push(<RoomCell key={`rc${i}`}>{rooms[i - 1]}</RoomCell>);
     }
   }
 
   return (
     <div
-      className="container"
       style={{
-        // height: "500px",
         display: "grid",
-        gridTemplate: `"month dateCells dateCells" 1fr "roomCells cells cells" 20fr / 1fr 10fr 10fr`,
+        gridTemplate: `"month monthRow" 1fr "month weekRow" 1fr "roomColumn cells" auto / 4em auto`,
       }}
     >
       <div
@@ -73,35 +141,27 @@ const App = () => {
       >
         February
       </div>
-      <div
-        style={{
-          display: "grid",
-          gridArea: "dateCells",
-          gridTemplateColumns: `repeat(${columnsN}, 1fr)`,
-        }}
-      >
+      <WeekRow style={{ gridTemplateColumns: `repeat(${columnsN}, 1fr)` }}>
+        {weekCells}
+      </WeekRow>
+      <MonthRow style={{ gridTemplateColumns: `repeat(${columnsN}, 1fr)` }}>
         {dateCells}
-      </div>
-      <div
+      </MonthRow>
+      <RoomColumn
         style={{
-          display: "grid",
           gridTemplateRows: `repeat(${rowsN}, 2em)`,
-          gridArea: "roomCells",
         }}
       >
         {roomCells}
-      </div>
-      <div
+      </RoomColumn>
+      <Body
         style={{
-          // display='inline-grid',
-          display: "grid",
-          gridArea: "cells",
-          gridTemplateColumns: `repeat(${columnsN}, 1fr)`,
           gridTemplateRows: `repeat(${rowsN}, 2em)`,
+          gridTemplateColumns: `repeat(${columnsN}, 1fr)`,
         }}
       >
         {cells}
-      </div>
+      </Body>
     </div>
 
     // <div>
