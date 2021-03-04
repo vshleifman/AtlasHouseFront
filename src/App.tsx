@@ -6,6 +6,9 @@ import Contacts from "pages/Contacts";
 import Rooms from "pages/Rooms";
 import Calendar from "components/Calendar";
 import styled from "styled-components";
+import { useState } from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import moment from "moment";
 
 const Cell = styled.div`
   height: 2em;
@@ -41,8 +44,9 @@ const WeekCell = styled(Cell)`
   height: auto;
 `;
 
-const WeekRow = styled(MonthRow)`
+const WeekRow = styled(MonthRow)<{ column: number }>`
   grid-area: weekRow;
+  grid-template-columns: repeat(${(props) => props.column}, 1fr);
 `;
 
 const RoomCell = styled(Cell)``;
@@ -52,7 +56,25 @@ const RoomColumn = styled.div`
   grid-area: roomColumn;
 `;
 
+//------------------------------------------
+//------------------------------------------
+
 const App = () => {
+  moment.updateLocale("en", {
+    weekdaysShort: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+  });
+
+  const [calView, setCalView] = useState("month");
+
+  const [{ year, month, day }, setDate] = useState({
+    year: moment().year(),
+    month: moment().month(),
+    day: moment().days(),
+  });
+
+  let currentDay = new Date(year, month, day);
+  // console.log(currentDay.add(2, "days").toDate());
+
   let dateCells = [];
   let weekCells = [];
   let roomCells = [];
@@ -60,108 +82,159 @@ const App = () => {
 
   const rooms = ["32b", "33a", "54a", "72b", "12a"];
 
-  let currentDay = new Date(2021, 2, 1);
+  const daysInMonth = moment(currentDay).daysInMonth();
 
-  const getDaysInMonth = (year: number, month: number) => {
-    const date = new Date(year, month + 1, 0);
-    return date.getDate();
-  };
-
-  const getWeekDay = () => {
-    const day = currentDay.getDay();
-    switch (day) {
-      case 0:
-        return "SUN";
-      case 1:
-        return "MON";
-      case 2:
-        return "TUE";
-      case 3:
-        return "WED";
-      case 4:
-        return "THR";
-      case 5:
-        return "FRI";
-      case 6:
-        return "SAT";
+  const getColumnsCount = (calView: string) => {
+    switch (calView) {
+      case "1week":
+        return 7;
+      case "2weeks":
+        return 14;
+      default:
+        return daysInMonth;
     }
   };
 
-  const columnsN = getDaysInMonth(
-    currentDay.getFullYear(),
-    currentDay.getMonth()
-  );
-  const rowsN = rooms.length;
+  const columnsCount = getColumnsCount(calView); //as prop from separate component
+  const rowsCount = rooms.length;
 
-  let iterationOverMonthCounter = 1;
+  let iterationOverPeriodCounter = 1;
 
-  for (let i = 1; i <= columnsN * rowsN; i++) {
-    if ((i - 1) / (columnsN * iterationOverMonthCounter) === 1) {
-      iterationOverMonthCounter++;
+  for (let i = 1; i <= columnsCount * rowsCount; i++) {
+    if ((i - 1) / (columnsCount * iterationOverPeriodCounter) === 1) {
+      iterationOverPeriodCounter++;
     }
 
     let dayCounterAcrossRows =
-      i <= columnsN ? i : i - columnsN * (iterationOverMonthCounter - 1);
+      i <= columnsCount
+        ? i
+        : i - columnsCount * (iterationOverPeriodCounter - 1);
+    console.log({ dayCounterAcrossRows });
 
     currentDay.setDate(dayCounterAcrossRows);
 
+    const currentWeekDay = moment(currentDay).format("ddd");
+
     cells.push(
-      <BodyCell
-        style={getWeekDay() === "SUN" ? { backgroundColor: "gray" } : {}}
+      <BodyCell //separate component; not "id"
+        style={currentWeekDay === "SUN" ? { backgroundColor: "gray" } : {}}
         key={`bc${i}`}
         id={`room${
-          rooms[iterationOverMonthCounter - 1]
+          rooms[iterationOverPeriodCounter - 1]
         }, day${dayCounterAcrossRows}`}
       ></BodyCell>
     );
 
-    if (i <= columnsN) {
+    if (i <= columnsCount) {
+      // console.log(currentDay.add(1, "days").format("D"));
+
       dateCells.push(<DateCell key={`dc${i}`}>{i}</DateCell>);
 
-      weekCells.push(<WeekCell key={`wc${i}`}>{getWeekDay()}</WeekCell>);
+      weekCells.push(<WeekCell key={`wc${i}`}>{currentWeekDay}</WeekCell>);
     }
 
-    if (i <= rowsN) {
+    if (i <= rowsCount) {
       roomCells.push(<RoomCell key={`rc${i}`}>{rooms[i - 1]}</RoomCell>);
     }
   }
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplate: `"month monthRow" 1fr "month weekRow" 1fr "roomColumn cells" auto / 4em auto`,
-      }}
-    >
+    <div>
       <div
         style={{
           display: "grid",
-          gridArea: "month",
+          gridTemplate: `"month monthRow" 1fr "month weekRow" 1fr "roomColumn cells" auto / 4em auto`,
         }}
       >
-        February
+        <div
+          style={{
+            display: "grid",
+            gridArea: "month",
+          }}
+        >
+          {currentDay.getMonth()}
+        </div>
+        <WeekRow column={columnsCount}>{weekCells}</WeekRow>{" "}
+        {/*check styled variables; tailwind*/}
+        <MonthRow
+          style={{ gridTemplateColumns: `repeat(${columnsCount}, 1fr)` }}
+        >
+          {dateCells}
+        </MonthRow>
+        <RoomColumn
+          style={{
+            gridTemplateRows: `repeat(${rowsCount}, 2em)`,
+          }}
+        >
+          {roomCells}
+        </RoomColumn>
+        <Body
+          style={{
+            gridTemplateRows: `repeat(${rowsCount}, 2em)`,
+            gridTemplateColumns: `repeat(${columnsCount}, 1fr)`,
+          }}
+        >
+          {cells}
+        </Body>
       </div>
-      <WeekRow style={{ gridTemplateColumns: `repeat(${columnsN}, 1fr)` }}>
-        {weekCells}
-      </WeekRow>
-      <MonthRow style={{ gridTemplateColumns: `repeat(${columnsN}, 1fr)` }}>
-        {dateCells}
-      </MonthRow>
-      <RoomColumn
-        style={{
-          gridTemplateRows: `repeat(${rowsN}, 2em)`,
-        }}
-      >
-        {roomCells}
-      </RoomColumn>
-      <Body
-        style={{
-          gridTemplateRows: `repeat(${rowsN}, 2em)`,
-          gridTemplateColumns: `repeat(${columnsN}, 1fr)`,
-        }}
-      >
-        {cells}
-      </Body>
+      <br />
+      <div>
+        {" "}
+        {/*separate component*/}
+        Change View:
+        <button
+          onClick={() => {
+            setCalView("1week");
+          }}
+        >
+          1 week
+        </button>
+        <button
+          onClick={() => {
+            setCalView("2weeks");
+          }}
+        >
+          2 weeks
+        </button>
+        <button
+          onClick={() => {
+            setCalView("month");
+          }}
+        >
+          month
+        </button>
+      </div>
+      <br />
+      <div>
+        {/*separate component*/}
+        <Formik
+          initialValues={{
+            year,
+            month,
+            day,
+          }}
+          onSubmit={({ year, month, day }, { setSubmitting }) => {
+            setSubmitting(false);
+            setDate({ year, month, day });
+          }}
+        >
+          <Form>
+            <label htmlFor="year">year</label>
+            <Field name="year" type="number" />
+            <ErrorMessage name="year" />
+            <br />
+            <label htmlFor="month">month</label>
+            <Field name="month" type="number" />
+            <ErrorMessage name="month" />
+            <br />
+            <label htmlFor="day">day</label>
+            <Field name="day" type="number" />
+            <ErrorMessage name="day" />
+            <br />
+            <button type="submit">Set date</button>
+          </Form>
+        </Formik>
+      </div>
     </div>
 
     // <div>
