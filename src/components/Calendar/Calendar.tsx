@@ -9,11 +9,31 @@ import DateSetter from "./DateSetter";
 import IntervalSelector from "./IntervalSelector";
 
 const rooms = [
-  { code: "32b", in: 2, out: 3 },
-  { code: "33a", in: 1, out: 5 },
-  { code: "54a", in: 1, out: 2 },
-  { code: "72b", in: 4, out: 5 },
-  { code: "12a", in: 4, out: 6 },
+  {
+    code: "32b",
+    in: moment(new Date(1, 2, 21)),
+    out: moment(new Date(14, 2, 21)),
+  },
+  {
+    code: "33a",
+    in: moment(new Date(1, 1, 21)),
+    out: moment(new Date(3, 3, 21)),
+  },
+  {
+    code: "54a",
+    in: moment(new Date(2, 0, 21)),
+    out: moment(new Date(2, 1, 21)),
+  },
+  {
+    code: "72b",
+    in: moment(new Date(3, 4, 21)),
+    out: moment(new Date(4, 5, 21)),
+  },
+  {
+    code: "12a",
+    in: moment(new Date(4, 7, 20)),
+    out: moment(new Date(3, 3, 22)),
+  },
 ];
 const Calendar = () => {
   const { interval } = useSelector(calendarSelector);
@@ -65,11 +85,6 @@ const Calendar = () => {
   const WeekdayCell = styled(DateCell)``;
 
   //<----- Component ------>
-
-  for (let i = moment().date(); i < 60; i++) {
-    console.log(i);
-  }
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -86,7 +101,7 @@ const Calendar = () => {
   const monthCells: JSX.Element[] = [];
   const weekdayCells: JSX.Element[] = [];
 
-  for (let i = currentDay.date(); i < interval + today.date(); i++) {
+  for (let i = currentDay.date(); i < interval + todayMoment.date(); i++) {
     dayCells.push(
       <DayCell
         style={
@@ -108,7 +123,10 @@ const Calendar = () => {
   const stakcedRoomRows: JSX.Element[] = [];
 
   rooms.forEach((room) => {
-    if (room.in <= todayMoment.month() && room.out >= todayMoment.month()) {
+    if (
+      room.in.month() <= todayMoment.month() &&
+      room.out.month() >= todayMoment.month()
+    ) {
       roomsNames.push(<RoomName key={`rN${room.code}`}>{room.code}</RoomName>);
 
       stakcedRoomRows.push(

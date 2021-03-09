@@ -9,7 +9,7 @@ import Calendar from "components/Calendar/Calendar";
 const App = () => {
   return (
     <div>
-      {/* <NavBar /> */}
+      <NavBar />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/auth" component={Auth} />
