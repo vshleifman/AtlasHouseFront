@@ -24,6 +24,7 @@ const UserSlice = createSlice({
 export const setUserThunk = (): AppThunk => async (dispatch) => {
   try {
     const response = await api.get("/users/me");
+
     dispatch(setUser(response.data));
     window.history.back();
   } catch (error) {

@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { tryAutoSignin } from "reducers/AuthSlice";
-import { userSelector } from "selectors/selectors";
 import SigninFrom from "./SigninForm";
 import SignupFrom from "./SignupForm";
 
 const AuthForm = () => {
   const dispatch = useDispatch();
-  const user = useSelector(userSelector);
-
-  const history = useHistory();
 
   useEffect(() => {
     dispatch(tryAutoSignin());

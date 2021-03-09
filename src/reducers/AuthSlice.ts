@@ -47,7 +47,6 @@ export const signupThunk = (userData: {
     dispatch(signin(response.data.token));
     dispatch(setUser(response.data.user));
     localStorage.setItem("token", response.data.token);
-    localStorage.setItem("user", response.data.user);
     window.history.back();
   } catch (error) {
     dispatch(addError(error.response.data.msg));
@@ -63,7 +62,6 @@ export const signinThunk = (
     dispatch(signin(response.data.token));
     dispatch(setUser(response.data.user));
     localStorage.setItem("token", response.data.token);
-    localStorage.setItem("user", response.data.user);
     window.history.back();
   } catch (error) {
     dispatch(addError(error.response.data.msg));

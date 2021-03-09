@@ -4,7 +4,7 @@ import moment from "moment";
 const CalendarSlice = createSlice({
   name: "calendar",
   initialState: {
-    today: moment(),
+    today: moment().unix(),
     interval: 31,
   },
   reducers: {
