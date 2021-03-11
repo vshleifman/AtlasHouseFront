@@ -5,7 +5,6 @@ import { BrowserRouter } from "react-router-dom";
 import store from "store/store";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "./assets/tailwind.css";
 
 ReactDOM.render(
   <React.StrictMode>

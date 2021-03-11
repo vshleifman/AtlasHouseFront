@@ -26,7 +26,6 @@ export const setUserThunk = (): AppThunk => async (dispatch) => {
     const response = await api.get("/users/me");
 
     dispatch(setUser(response.data));
-    window.history.back();
   } catch (error) {
     dispatch(addError(error.response.data.msg));
   }
