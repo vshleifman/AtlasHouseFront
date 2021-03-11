@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Auth from "./pages/Authentication";
 import Contacts from "pages/Contacts";
 import Apartments from "pages/Apartments";
+import Calendar from "components/Calendar/Calendar";
 import ProfilePage from "pages/ProfilePage";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="/apartments" component={Apartments} />
           <Route path="/profile" component={ProfilePage} />
         </Switch>
+        {/* <Route path="/calendar" component={Calendar} /> */}
       </StSwitch>
     </Container>
   );
