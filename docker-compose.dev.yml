@@ -1,9 +1,7 @@
-version: "3"
 services:
   frontend:
     volumes:
-      - "/app/node_modules"
-      - "./src:/app/src"
-      - "./public:/app/public"
+      - ".:/app"
     ports:
       - 3000:3000
+    command: npm start
