@@ -16,7 +16,7 @@ const UserSlice = createSlice({
       state.userData = action.payload;
     },
     addError(state, action) {
-      state.errorMsg = action.payload;
+      state.errorMsg = JSON.stringify(action.payload);
     },
   },
 });

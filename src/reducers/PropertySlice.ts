@@ -6,7 +6,7 @@ import { addError } from "./UserSlice";
 const PropertySlice = createSlice({
   name: "property",
   initialState: {
-    properties: [],
+    properties: [{ name: "", price: "", available: true }],
     errorMsg: "",
   },
   reducers: {
@@ -22,6 +22,8 @@ const PropertySlice = createSlice({
 export const setPropertiesThunk = (): AppThunk => async (dispatch) => {
   try {
     const response = await api.get("/properties");
+    // setTimeout(() => {
+    // }, 1000);
     dispatch(setProperies(response.data));
   } catch (error) {
     dispatch(addError(error));

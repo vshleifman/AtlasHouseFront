@@ -1,9 +1,12 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import rootReducer, { RootState } from "./rootReducer";
 
-const store = configureStore({
-  reducer: rootReducer,
-});
+export const createStoreInstance = () =>
+  configureStore({
+    reducer: rootReducer,
+  });
+
+const store = createStoreInstance();
 
 export type AppDispatch = typeof store.dispatch;
 

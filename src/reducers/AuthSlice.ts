@@ -20,7 +20,7 @@ const AuthSlice = createSlice({
       state.token = "";
     },
     addError(state, action) {
-      state.errorMsg = action.payload;
+      state.errorMsg = JSON.stringify(action.payload);
     },
   },
 });

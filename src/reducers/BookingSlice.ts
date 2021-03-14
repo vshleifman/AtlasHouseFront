@@ -14,7 +14,7 @@ const BookingSlice = createSlice({
       state.bookings = action.payload;
     },
     addError(state, action) {
-      state.errorMsg = action.payload;
+      state.errorMsg = JSON.stringify(action.payload);
     },
   },
 });

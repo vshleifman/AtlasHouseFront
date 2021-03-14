@@ -1,5 +1,7 @@
+import ApartmentList from "components/ApartmentList/ApartmentList";
+
 const Apartments = () => {
-  return <div>hi</div>;
+  return <ApartmentList />;
 };
 
 export default Apartments;

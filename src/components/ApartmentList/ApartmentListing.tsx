@@ -1,8 +1,4 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setPropertiesThunk } from "reducers/PropertySlice";
 import styled from "styled-components";
-import { propertySelector } from "../../selectors/selectors";
 
 const Container = styled.div`
   border: 1px solid black;
@@ -43,7 +39,7 @@ const ApartmentListing = ({
   apartment: { name: string; available: boolean; price: string };
 }) => {
   return (
-    <Container>
+    <Container data-testid="listing">
       <Photo></Photo>
       <Name>{apartment.name}</Name>
       <Availability>{apartment.available.toString()}</Availability>
