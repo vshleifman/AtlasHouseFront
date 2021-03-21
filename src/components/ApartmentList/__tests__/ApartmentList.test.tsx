@@ -1,13 +1,8 @@
-import { prettyDOM, render, screen, waitFor } from "@testing-library/react";
-import { Provider } from "react-redux";
+import { render, screen } from "testUtils";
 import ApartmentList from "../ApartmentList";
-import propertyReducer from "../../../reducers/PropertySlice";
-import { configureStore } from "@reduxjs/toolkit";
-import store from "../../../store/store";
-import rootReducer from "store/rootReducer";
-import api from "api/axiosInstance";
 import { setupServer } from "msw/node";
 import { rest } from "msw";
+import * as slice from "reducers/PropertySlice";
 
 const mockProperties = [
   { name: "name", available: true, price: "32" },
@@ -31,26 +26,12 @@ afterAll(() => {
 afterEach(() => {
   server.resetHandlers();
 });
-// jest.spyOn(api, "get").mockImplementation(async (path) => {
-//   console.log(path);
-//   if (path === "/properties") {
-//     return {
-//       response: {
-//         data: [
-// { name: "name", available: true, price: "32" },
-// { name: "name2", available: true, price: "32" },
-//         ],
-//       },
-//     };
-//   }
-// });
 
 test("renders listings from store", async () => {
-  render(
-    <Provider store={store}>
-      <ApartmentList />
-    </Provider>
-  );
+  const spy = jest.spyOn(slice, "setPropertiesThunk");
+  render(<ApartmentList />);
+
   const query = await screen.findAllByTestId("listing");
+  expect(spy).toBeCalledTimes(1);
   expect(query.length).toBe(mockProperties.length);
 });

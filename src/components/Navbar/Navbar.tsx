@@ -32,29 +32,27 @@ const UserLink = styled(BaseLink)`
   text-decoration: none;
   place-self: end; ;
 `;
+
 const Navbar = () => {
-  const user = useSelector(userSelector);
-  const checkUserType = () => {
-    if (user.userData.__t) {
-      return user.userData.__t;
-    }
-    return "Guest";
-  };
+  const userType = useSelector(userSelector).userData.__t;
+
   return (
     <Container>
       <HomeLink to="/">AtlasHouse</HomeLink>
       <ApartmentsLink to="/apartments">Apartments</ApartmentsLink>
-      <BookingsLink to="/bookings">Bookings</BookingsLink>
+      {userType !== "Guest" ? (
+        <BookingsLink to="/bookings">Bookings</BookingsLink>
+      ) : null}
       <ContactsOrCustomersLink
-        to={checkUserType() !== "Admin" ? "/contacts" : "/customers"}
+        to={userType !== "Admin" ? "/contacts" : "/customers"}
       >
-        {checkUserType() !== "Admin" ? "Contacts" : "Customers"}
+        {userType !== "Admin" ? "Contacts" : "Customers"}
       </ContactsOrCustomersLink>
 
-      {checkUserType() === "Guest" ? (
+      {userType === "Guest" ? (
         <UserLink to="/auth">Sign in</UserLink>
       ) : (
-        <UserLink to="/profile">{checkUserType()}</UserLink>
+        <UserLink to="/profile">{userType}</UserLink>
       )}
     </Container>
   );

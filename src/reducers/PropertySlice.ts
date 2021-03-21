@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import api from "api/axiosInstance";
 import { AppThunk } from "store/store";
-import { addError } from "./UserSlice";
 
 const PropertySlice = createSlice({
   name: "property",
@@ -14,7 +13,9 @@ const PropertySlice = createSlice({
       state.properties = action.payload;
     },
     addError(state, action) {
-      state.errorMsg = action.payload;
+      console.log(action.payload);
+
+      state.errorMsg = JSON.stringify(action.payload);
     },
   },
 });
@@ -22,14 +23,12 @@ const PropertySlice = createSlice({
 export const setPropertiesThunk = (): AppThunk => async (dispatch) => {
   try {
     const response = await api.get("/properties");
-    // setTimeout(() => {
-    // }, 1000);
     dispatch(setProperies(response.data));
   } catch (error) {
-    dispatch(addError(error));
+    dispatch(addError(error.message));
   }
 };
 
-export const { setProperies } = PropertySlice.actions;
+export const { setProperies, addError } = PropertySlice.actions;
 
 export default PropertySlice.reducer;

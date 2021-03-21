@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import api from "api/axiosInstance";
 import { AppThunk } from "store/store";
-import { addError } from "./UserSlice";
 
 const BookingSlice = createSlice({
   name: "booking",
@@ -28,6 +27,6 @@ export const setBookingsThunk = (): AppThunk => async (dispatch) => {
   }
 };
 
-export const { setBookings } = BookingSlice.actions;
+export const { setBookings, addError } = BookingSlice.actions;
 
 export default BookingSlice.reducer;

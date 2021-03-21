@@ -3,12 +3,17 @@ import api from "api/axiosInstance";
 import { AppThunk } from "store/store";
 import { User } from "types/types";
 
+export const initialUserData = {
+  __t: "Guest",
+  firstName: "",
+  lastName: "",
+  email: "",
+};
+
 const UserSlice = createSlice({
   name: "user",
   initialState: {
-    userData: {
-      __t: "",
-    },
+    userData: initialUserData,
     errorMsg: "",
   },
   reducers: {

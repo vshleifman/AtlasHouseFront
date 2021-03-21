@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import api from "api/axiosInstance";
 import { AppThunk } from "store/store";
-import { setUser, setUserThunk } from "./UserSlice";
+import { initialUserData, setUser, setUserThunk } from "./UserSlice";
+import { MemoryHistory } from "history";
 
 const AuthSlice = createSlice({
   name: "auth",
@@ -33,36 +34,33 @@ export const tryAutoSignin = (): AppThunk => (dispatch) => {
   } //add else
 };
 
-export const signupThunk = (userData: {
-  user: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-  };
-  type: string;
-}): AppThunk => async (dispatch) => {
-  try {
-    const response = await api.post("/signup", userData);
-    dispatch(signin(response.data.token));
-    dispatch(setUser(response.data.user));
-    localStorage.setItem("token", response.data.token);
-    window.history.back();
-  } catch (error) {
-    dispatch(addError(error.response.data.msg));
-  }
-};
-
-export const signinThunk = (
-  email: string,
-  password: string
+export const authThunk = (
+  endpoint: string,
+  userData: {
+    user: {
+      firstName?: string;
+      lastName?: string;
+      email: string;
+      password: string;
+    };
+    type?: string;
+  },
+  history: MemoryHistory
 ): AppThunk => async (dispatch) => {
   try {
-    const response = await api.post("/signin", { email, password });
+    let response;
+    if (endpoint === "up") {
+      response = await api.post("/signup", userData);
+    } else {
+      response = await api.post("/signin", {
+        email: userData.user.email,
+        password: userData.user.password,
+      });
+    }
     dispatch(signin(response.data.token));
     dispatch(setUser(response.data.user));
     localStorage.setItem("token", response.data.token);
-    window.history.back();
+    history.goBack();
   } catch (error) {
     dispatch(addError(error.response.data.msg));
   }
@@ -73,7 +71,7 @@ export const signoutThunk = (): AppThunk => async (dispatch) => {
     await api.post("/signout");
     localStorage.removeItem("token");
     dispatch(signout());
-    dispatch(setUser({ __t: "" }));
+    dispatch(setUser(initialUserData));
     window.location.replace("/");
   } catch (error) {
     dispatch(addError(error.response.data.msg));

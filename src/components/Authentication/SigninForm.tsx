@@ -1,10 +1,13 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { signinThunk } from "../../reducers/AuthSlice";
+import { authThunk } from "../../reducers/AuthSlice";
+import { useHistory } from "react-router";
+import { MemoryHistory } from "history";
 
 const SigninForm = () => {
   const dispatch = useDispatch();
+  const history = useHistory() as MemoryHistory;
 
   return (
     <Formik
@@ -15,16 +18,16 @@ const SigninForm = () => {
       })}
       onSubmit={({ email, password }, { setSubmitting }) => {
         setSubmitting(false);
-        dispatch(signinThunk(email, password));
+        dispatch(authThunk("in", { user: { email, password } }, history));
       }}
     >
       <Form>
         <label htmlFor="email">Email</label>
-        <Field name="email" type="email" />
+        <Field id="email" name="email" type="email" />
         <ErrorMessage name="email" />
         <br />
         <label htmlFor="password">Password</label>
-        <Field name="password" type="text" />
+        <Field id="password" name="password" type="text" />
         <ErrorMessage name="password" />
         <br />
         <button type="submit">Sign in</button>

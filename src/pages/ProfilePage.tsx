@@ -1,13 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import { signoutThunk } from "reducers/AuthSlice";
 import { userSelector } from "selectors/selectors";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: grid;
+`;
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const userData = useSelector(userSelector);
   return (
     <div>
-      me: {JSON.stringify(userData.userData)}
+      me: {userData.userData}
       <button
         onClick={() => {
           dispatch(signoutThunk());

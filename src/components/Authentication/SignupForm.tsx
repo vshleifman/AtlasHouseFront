@@ -1,11 +1,13 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { signupThunk } from "../../reducers/AuthSlice";
+import { authThunk } from "../../reducers/AuthSlice";
+import { useHistory } from "react-router";
+import { MemoryHistory } from "history";
 
 const SignupForm = () => {
   const dispatch = useDispatch();
-
+  const history = useHistory() as MemoryHistory;
   return (
     <Formik
       initialValues={{ firstName: "", email: "", password: "", lastName: "" }}
@@ -20,32 +22,38 @@ const SignupForm = () => {
         { setSubmitting }
       ) => {
         setSubmitting(false);
+        console.log("hii");
+
         dispatch(
-          signupThunk({
-            user: { firstName, email, password, lastName },
-            type: "User",
-          })
+          authThunk(
+            "up",
+            {
+              user: { firstName, email, password, lastName },
+              type: "User",
+            },
+            history
+          )
         );
       }}
     >
       <Form>
         <label htmlFor="firstName">First Name</label>
-        <Field name="firstName" type="text" />
+        <Field id="firstName" name="firstName" type="text" />
         <ErrorMessage name="firstName" />
         <br />
         <label htmlFor="lastName">Last Name</label>
-        <Field name="lastName" type="text" />
+        <Field id="lastName" name="lastName" type="text" />
         <ErrorMessage name="lastName" />
         <br />
         <label htmlFor="email">Email</label>
-        <Field name="email" type="email" />
+        <Field id="email" name="email" type="email" />
         <ErrorMessage name="email" />
         <br />
         <label htmlFor="password">Password</label>
-        <Field name="password" type="text" />
+        <Field id="password" name="password" type="text" />
         <ErrorMessage name="password" />
         <br />
-        <button type="submit">Submit</button>
+        <button type="submit">Sign up</button>
       </Form>
     </Formik>
   );
