@@ -1,23 +1,12 @@
-import { useEffect, useLayoutEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setPropertiesThunk } from "reducers/PropertySlice";
-import { propertySelector } from "selectors/selectors";
+import { Apartment } from "types/types";
 import ApartmentListing from "./ApartmentListing";
 
-const ApartmentList = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(setPropertiesThunk());
-  }, [dispatch]);
-
-  const propertiesData = useSelector(propertySelector);
-
+const ApartmentList = ({ apartments }: { apartments: Apartment[] }) => {
   return (
     <div>
-      {propertiesData.properties[0].name
-        ? propertiesData.properties.map((property) => (
-            <ApartmentListing key={property.name} apartment={property} />
+      {apartments[0].name
+        ? apartments.map((apart) => (
+            <ApartmentListing key={Math.random()} apartment={apart} />
           ))
         : null}
     </div>

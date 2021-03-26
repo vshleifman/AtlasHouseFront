@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import Auth from "./pages/Authentication";
 import Contacts from "pages/Contacts";
-import Apartments from "pages/Apartments";
+import Apartments from "components/ApartmentList/Apartments";
 import ProfilePage from "pages/ProfilePage";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";

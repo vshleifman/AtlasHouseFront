@@ -1,4 +1,6 @@
+import moment from "moment";
 import styled from "styled-components";
+import { Apartment } from "types/types";
 
 const Container = styled.div`
   border: 1px solid black;
@@ -33,16 +35,22 @@ const Price = styled(BaseBox)`
   grid-area: price;
 `;
 
-const ApartmentListing = ({
-  apartment,
-}: {
-  apartment: { name: string; available: boolean; price: string };
-}) => {
+const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
+  const isAvailable = () => {
+    const bool = apartment.bookings.some(
+      (booking) =>
+        moment(booking.checkIn).toDate() <= moment().toDate() &&
+        moment(booking.checkOut).toDate() >= moment().toDate()
+    );
+    return !bool;
+  };
   return (
     <Container data-testid="listing">
       <Photo></Photo>
       <Name>{apartment.name}</Name>
-      <Availability>{apartment.available.toString()}</Availability>
+      <Availability>
+        {isAvailable() ? "Available Now" : "Not Currently Available"}
+      </Availability>
       <Description>a room</Description>
       <Price>{apartment.price}</Price>
     </Container>

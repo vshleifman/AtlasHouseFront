@@ -11,8 +11,13 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
   const userData = useSelector(userSelector);
   return (
-    <div>
-      me: {userData.userData}
+    <Container>
+      <div>
+        <p>First Name: {userData.userData.firstName}</p>
+        <p>Last Name: {userData.userData.lastName}</p>
+        <p>Email: {userData.userData.email}</p>
+        <p>User Type: {userData.userData.__t}</p>
+      </div>
       <button
         onClick={() => {
           dispatch(signoutThunk());
@@ -20,7 +25,7 @@ const ProfilePage = () => {
       >
         Signout
       </button>
-    </div>
+    </Container>
   );
 };
 

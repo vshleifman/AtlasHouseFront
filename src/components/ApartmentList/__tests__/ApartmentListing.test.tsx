@@ -1,10 +1,23 @@
-import { render, screen } from "@testing-library/react";
+import { generateApartment, render, screen } from "testUtils";
+import moment from "moment";
 import ApartmentListing from "../ApartmentListing";
+import { Apartment } from "types/types";
+
+const customRender = (apartment: Apartment) =>
+  render(<ApartmentListing apartment={apartment} />);
 
 test("renders listing with props", () => {
-  const apartment = { name: "testName", available: true, price: "100" };
-  render(<ApartmentListing apartment={apartment} />);
+  const apartment = generateApartment(moment().add(1, "day").toISOString());
+  customRender(apartment);
+
   screen.getByText(apartment.name);
-  screen.getByText(apartment.available.toString());
+  screen.getByText("Available Now");
   screen.getByText(apartment.price);
+});
+
+test('if checkIn is today or eralier and checkOut is today or later, shows "unavailable"', () => {
+  const apartment = generateApartment();
+  customRender(apartment);
+
+  screen.getByText("Not Currently Available");
 });

@@ -22,8 +22,6 @@ const SignupForm = () => {
         { setSubmitting }
       ) => {
         setSubmitting(false);
-        console.log("hii");
-
         dispatch(
           authThunk(
             "up",
