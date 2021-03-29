@@ -1,5 +1,4 @@
 import userEvent from "@testing-library/user-event";
-import api from "api/axiosInstance";
 import DateSearchBar from "components/DateSearchBar";
 import moment from "moment";
 import * as slice from "../ApartmentList/PropertySlice";

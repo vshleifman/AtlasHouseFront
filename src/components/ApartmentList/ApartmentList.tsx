@@ -1,12 +1,19 @@
+import styled from "styled-components";
 import { Apartment } from "types/types";
 import ApartmentListing from "./ApartmentListing";
 
-const ApartmentList = ({ apartments }: { apartments: Apartment[] }) => {
+const ApartmentList = ({
+  className,
+  apartments,
+}: {
+  className?: any;
+  apartments: Apartment[];
+}) => {
   return (
-    <div>
+    <div className={className}>
       {apartments[0].name
-        ? apartments.map((apart) => (
-            <ApartmentListing key={Math.random()} apartment={apart} />
+        ? apartments.map((apartment) => (
+            <ApartmentListing key={Math.random()} apartment={apartment} />
           ))
         : null}
     </div>

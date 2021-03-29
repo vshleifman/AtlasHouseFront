@@ -1,14 +1,18 @@
 import { Field, Form, Formik } from "formik";
 import moment from "moment";
-import { useDispatch, useSelector } from "react-redux";
-import { setProperties } from "./ApartmentList/PropertySlice";
+import { useDispatch } from "react-redux";
+import { resetFilters, setProperties } from "./ApartmentList/PropertySlice";
 import { setPropertiesThunk } from "./ApartmentList/PropertyThunks";
 import styled from "styled-components";
 import { Apartment } from "types/types";
+import { useContext } from "react";
+import { FilterContext } from "./ApartmentList/Apartments";
 
 const Container = styled.div`
   display: grid;
+  grid-area: search;
   grid-template: "head" 1fr "date" 1fr "resbtn" 1fr/ 1fr;
+  border: 1px black solid;
 `;
 
 const Heading = styled.p`
@@ -48,11 +52,25 @@ const ResetButton = styled.button`
 
 const today = moment();
 
-const DateSearchBar = ({ apartments }: { apartments: Apartment[] }) => {
+const DateSearchBar = ({
+  className,
+  apartments,
+}: {
+  className?: any;
+  apartments: Apartment[];
+}) => {
   const dispatch = useDispatch();
+  //@ts-ignore
+  const {
+    filters,
+    setFilters,
+  }: {
+    filters: Record<string, boolean | Record<string, string>>;
+    setFilters: ({}) => {};
+  } = useContext(FilterContext);
 
   return (
-    <Container>
+    <Container className={className}>
       <Heading>Enter the dates of your visit</Heading>
       <Formik
         initialValues={{
@@ -61,14 +79,23 @@ const DateSearchBar = ({ apartments }: { apartments: Apartment[] }) => {
         }}
         onSubmit={({ from, to }, { setSubmitting }) => {
           setSubmitting(false);
-          const newData = apartments.filter((apart) =>
-            apart.bookings.every(
-              (booking) =>
-                moment(booking.checkIn).toDate() > moment(to).toDate() ||
-                moment(booking.checkOut).toDate() < moment(from).toDate()
-            )
-          );
-          dispatch(setProperties(newData));
+          setFilters({
+            ...filters,
+            dateRange: {
+              from: moment(from).add(1, "h").toISOString(),
+              to: moment(to).add(1, "h").toISOString(),
+            },
+          });
+          dispatch(setPropertiesThunk(filters));
+
+          // const newData = apartments.filter((apart) =>
+          //   apart.bookings.every(
+          //     (booking) =>
+          //       moment(booking.checkIn).toDate() > moment(to).toDate() ||
+          //       moment(booking.checkOut).toDate() < moment(from).toDate()
+          //   )
+          // );
+          // dispatch(setProperties(newData));
         }}
       >
         <StForm>
@@ -87,6 +114,7 @@ const DateSearchBar = ({ apartments }: { apartments: Apartment[] }) => {
       </Formik>
       <ResetButton
         onClick={() => {
+          dispatch(resetFilters());
           dispatch(setPropertiesThunk());
         }}
       >
