@@ -1,6 +1,8 @@
 import moment from "moment";
+import { useContext } from "react";
 import styled from "styled-components";
 import { Apartment } from "types/types";
+import { FilterContext } from "./Apartments";
 
 const Container = styled.div`
   border: 1px solid black;
@@ -36,20 +38,31 @@ const Price = styled(BaseBox)`
 `;
 
 const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
-  const isAvailable = () => {
-    const bool = apartment.bookings.some(
+  const isAvailable = (dateRange: { from: string; to: string }) => {
+    const initialRange = {
+      from: moment().subtract(5, "h").toISOString(),
+      to: moment().add(1, "d").toISOString(),
+    };
+    if (dateRange.from === "") {
+      dateRange = initialRange;
+    }
+
+    const bool = apartment.bookings.every(
       (booking) =>
-        moment(booking.checkIn).toDate() <= moment().toDate() &&
-        moment(booking.checkOut).toDate() >= moment().toDate()
+        moment(booking.checkIn).toISOString() >=
+          moment(dateRange.to).toISOString() ||
+        moment(booking.checkOut).toISOString() <=
+          moment(dateRange.from).toISOString()
     );
-    return !bool;
+    return bool;
   };
+  const { filters } = useContext(FilterContext);
   return (
     <Container data-testid="listing">
       <Photo></Photo>
       <Name>{apartment.name}</Name>
       <Availability>
-        {isAvailable() ? "Available Now" : "Not Currently Available"}
+        {isAvailable(filters.dateRange) ? "Available" : "Not Available"}
       </Availability>
       <Description>a room</Description>
       <Price>{apartment.price}</Price>

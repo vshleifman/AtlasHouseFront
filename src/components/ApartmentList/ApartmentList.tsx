@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { Apartment } from "types/types";
 import ApartmentListing from "./ApartmentListing";
 

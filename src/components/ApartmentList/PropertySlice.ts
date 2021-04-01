@@ -35,16 +35,9 @@ const PropertySlice = createSlice({
   initialState,
   reducers: {
     setProperties(state, action) {
-      state.properties = action.payload;
-    },
-    addFilter(state, action) {
-      console.log(action);
-      //@ts-ignore
+      // console.log(action.payload);
 
-      state.filters[action.payload.amenity] = action.payload.isSelected;
-    },
-    resetFilters(state) {
-      state.filters = initialState.filters;
+      state.properties = action.payload;
     },
     addError(state, action) {
       state.errorMsg = JSON.stringify(action.payload);
@@ -52,11 +45,6 @@ const PropertySlice = createSlice({
   },
 });
 
-export const {
-  setProperties,
-  addError,
-  addFilter,
-  resetFilters,
-} = PropertySlice.actions;
+export const { setProperties, addError } = PropertySlice.actions;
 
 export default PropertySlice.reducer;

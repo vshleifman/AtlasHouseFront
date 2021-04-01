@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Select from "react-select";
 import { Apartment } from "types/types";
 import { useDispatch } from "react-redux";
-import { addFilter, setProperties } from "./PropertySlice";
+import { setProperties } from "./PropertySlice";
 import { useContext } from "react";
 import { FilterContext } from "./Apartments";
 const Container = styled.div`
@@ -38,15 +38,19 @@ const Filter = ({
 }) => {
   const dispatch = useDispatch();
 
-  //@ts-ignore
   const { filters, setFilters } = useContext(FilterContext);
 
   return (
     <Container className={className}>
       <button
         onClick={() => {
-          //@ts-ignore
-          setFilters({ ...filters, balcony: !filters.balcony });
+          setFilters({
+            ...filters,
+            amenities: {
+              ...filters.amenities,
+              balcony: !filters.amenities.balcony,
+            },
+          });
         }}
       >
         setFilter

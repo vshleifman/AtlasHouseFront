@@ -26,16 +26,24 @@ const StFilter = styled(Filter)`
   border: 1px solid black;
 `;
 
-export const FilterContext = createContext(null);
-const FilterProvider = ({ children }: { children: JSX.Element }) => {
-  const [filters, setFilters] = useState({
-    // dateRange: { from: moment().toISOString(), to: moment().toISOString() },
+const initialFiltersState = {
+  dateRange: { from: "", to: "" },
+  amenities: {
     balcony: false,
     bathtub: false,
-  });
+  },
+};
+
+export type FilterState = typeof initialFiltersState;
+
+export const FilterContext = createContext<{
+  filters: FilterState;
+  setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
+}>({ filters: initialFiltersState, setFilters: () => {} });
+const FilterProvider = ({ children }: { children: JSX.Element }) => {
+  const [filters, setFilters] = useState(initialFiltersState);
 
   return (
-    //@ts-ignore
     <FilterContext.Provider value={{ filters, setFilters }}>
       {children}
     </FilterContext.Provider>

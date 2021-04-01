@@ -7,11 +7,13 @@ const customRender = (apartment: Apartment) =>
   render(<ApartmentListing apartment={apartment} />);
 
 test("renders listing with props", () => {
-  const apartment = generateApartment(moment().add(1, "day").toISOString());
+  const apartment = generateApartment(
+    moment().add(1, "day").add(20, "millisecond").toISOString()
+  );
   customRender(apartment);
 
   screen.getByText(apartment.name);
-  screen.getByText("Available Now");
+  screen.getByText("Available");
   screen.getByText(apartment.price);
 });
 
@@ -19,5 +21,5 @@ test('if checkIn is today or eralier and checkOut is today or later, shows "unav
   const apartment = generateApartment();
   customRender(apartment);
 
-  screen.getByText("Not Currently Available");
+  screen.getByText("Not Available");
 });

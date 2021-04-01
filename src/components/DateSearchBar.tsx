@@ -1,7 +1,7 @@
 import { Field, Form, Formik } from "formik";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { resetFilters, setProperties } from "./ApartmentList/PropertySlice";
+import { setProperties } from "./ApartmentList/PropertySlice";
 import { setPropertiesThunk } from "./ApartmentList/PropertyThunks";
 import styled from "styled-components";
 import { Apartment } from "types/types";
@@ -60,14 +60,8 @@ const DateSearchBar = ({
   apartments: Apartment[];
 }) => {
   const dispatch = useDispatch();
-  //@ts-ignore
-  const {
-    filters,
-    setFilters,
-  }: {
-    filters: Record<string, boolean | Record<string, string>>;
-    setFilters: ({}) => {};
-  } = useContext(FilterContext);
+
+  const { filters, setFilters } = useContext(FilterContext);
 
   return (
     <Container className={className}>
@@ -86,16 +80,9 @@ const DateSearchBar = ({
               to: moment(to).add(1, "h").toISOString(),
             },
           });
-          dispatch(setPropertiesThunk(filters));
+          console.log(filters);
 
-          // const newData = apartments.filter((apart) =>
-          //   apart.bookings.every(
-          //     (booking) =>
-          //       moment(booking.checkIn).toDate() > moment(to).toDate() ||
-          //       moment(booking.checkOut).toDate() < moment(from).toDate()
-          //   )
-          // );
-          // dispatch(setProperties(newData));
+          dispatch(setPropertiesThunk(filters));
         }}
       >
         <StForm>
@@ -114,7 +101,6 @@ const DateSearchBar = ({
       </Formik>
       <ResetButton
         onClick={() => {
-          dispatch(resetFilters());
           dispatch(setPropertiesThunk());
         }}
       >

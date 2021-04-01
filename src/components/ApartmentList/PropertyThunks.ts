@@ -1,34 +1,33 @@
 import api from "api/axiosInstance";
 import { AppThunk } from "store/store";
+import { FilterState } from "./Apartments";
 import { setProperties, addError } from "./PropertySlice";
 
-export const setPropertiesThunk = (
-  filters?: Record<string, boolean | Record<string, string>>
-): AppThunk => async (dispatch) => {
+export const setPropertiesThunk = (filters?: FilterState): AppThunk => async (
+  dispatch
+) => {
   let queryString = `/properties`;
 
   if (filters) {
     let paramsString = `?`;
-    Object.keys(filters).forEach((filter) => {
-      if (filter === "dateRange") {
-        paramsString = paramsString.concat(
-          //@ts-ignore
-          `${filter}=checkIn:${filters.dateRange.from};checkOut:${filters.dateRange.to}&`
-        );
-      } else {
-        console.log(filters[filter]);
+    if (filters.dateRange.from !== "") {
+      paramsString = paramsString.concat(
+        `dateRange=from_${filters.dateRange.from};to_${filters.dateRange.to}&`
+      );
+    }
 
-        if (filters[filter] === true) {
-          paramsString = paramsString.concat(
-            //@ts-ignore
-            `${filter}=${filters[filter]}&`
-          );
-        }
+    Object.keys(filters.amenities).forEach((amenity) => {
+      //@ts-ignore
+      if (filters.amenities[amenity] === true) {
+        paramsString = paramsString.concat(
+          // @ts-ignore
+          `amenities=${amenity}:${filters.amenities[amenity]}&`
+        );
       }
     });
-    console.log({ paramsString });
 
-    // queryString = `/properties`.concat(paramsString);
+    queryString = `/properties`.concat(paramsString);
+    console.log({ queryString });
   }
 
   try {
