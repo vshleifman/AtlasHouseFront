@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import Select from "react-select";
 import { Apartment } from "types/types";
-import { useDispatch } from "react-redux";
-import { setProperties } from "./PropertySlice";
 import { useContext } from "react";
 import { FilterContext } from "./Apartments";
+import { Form, Formik } from "formik";
+import FilterRadios from "./FilterRadios";
 const Container = styled.div`
   align-items: start;
 
@@ -12,58 +12,45 @@ const Container = styled.div`
 `;
 
 const Sorter = styled.div``;
-const selectOptions = [
-  { value: "price_Desc", label: "priceDesc" },
-  { value: "price_Asc", label: "priceAsc" },
-  { value: "area_Desc", label: "areaDesc" },
-  { value: "area_Asc", label: "areaAsc" },
+const sortOptions = [
+  { value: "price:desc", label: "priceDesc" },
+  { value: "price:asc", label: "priceAsc" },
+  { value: "area:desc", label: "areaDesc" },
+  { value: "area:asc", label: "areaAsc" },
 ];
-
-const sort = (apartments: Apartment[], sortType: string) => {
-  let sortValue = sortType.split("_");
-  if (apartments[0].name) {
-    const sorted = apartments.sort((a, b) => a.price - b.price);
-    return sorted;
-  } else {
-    console.log("buu");
-  }
-};
 
 const Filter = ({
   className,
-  apartments,
 }: {
   className?: any;
   apartments: Apartment[];
 }) => {
-  const dispatch = useDispatch();
-
   const { filters, setFilters } = useContext(FilterContext);
 
   return (
     <Container className={className}>
-      <button
-        onClick={() => {
-          setFilters({
-            ...filters,
-            amenities: {
-              ...filters.amenities,
-              balcony: !filters.amenities.balcony,
-            },
-          });
-        }}
-      >
-        setFilter
-      </button>
       <Sorter>
         Sort By:
         <Select
-          options={selectOptions}
+          options={sortOptions}
           onChange={(e) => {
-            // dispatch(setProperties());
+            setFilters({ ...filters, sortBy: e!.value });
           }}
         />
       </Sorter>
+      <div>
+        Filter:
+        <Formik
+          initialValues={{ balcony: filters.amenities.balcony }}
+          onSubmit={(values, { setSubmitting }) => {}}
+        >
+          <Form>
+            {Object.keys(filters.amenities).map((amenity) => {
+              return <FilterRadios key={amenity} amenity={amenity} />;
+            })}
+          </Form>
+        </Formik>
+      </div>
     </Container>
   );
 };

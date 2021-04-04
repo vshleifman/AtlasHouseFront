@@ -1,12 +1,12 @@
 import { Field, Form, Formik } from "formik";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { setProperties } from "./ApartmentList/PropertySlice";
 import { setPropertiesThunk } from "./ApartmentList/PropertyThunks";
 import styled from "styled-components";
 import { Apartment } from "types/types";
 import { useContext } from "react";
 import { FilterContext } from "./ApartmentList/Apartments";
+import { initialFiltersState } from "./ApartmentList/Apartments";
 
 const Container = styled.div`
   display: grid;
@@ -69,19 +69,10 @@ const DateSearchBar = ({
       <Formik
         initialValues={{
           from: today.format("yyyy-MM-DD"),
-          to: moment(today).add(1, "week").format("yyyy-MM-DD"),
+          to: moment(today).add(1, "day").format("yyyy-MM-DD"),
         }}
         onSubmit={({ from, to }, { setSubmitting }) => {
           setSubmitting(false);
-          setFilters({
-            ...filters,
-            dateRange: {
-              from: moment(from).add(1, "h").toISOString(),
-              to: moment(to).add(1, "h").toISOString(),
-            },
-          });
-          console.log(filters);
-
           dispatch(setPropertiesThunk(filters));
         }}
       >
@@ -89,11 +80,38 @@ const DateSearchBar = ({
           <DateInput>
             <Lable1>
               <label htmlFor="from">From:</label>
-              <Field id="from" name="from" type="date" />
+              <Field
+                onBlur={(e: any) => {
+                  setFilters({
+                    ...filters,
+                    dateRange: {
+                      ...filters.dateRange,
+                      from: moment(e.target.value).add(1, "h").toISOString(),
+                    },
+                  });
+                }}
+                id="from"
+                name="from"
+                type="date"
+              />
             </Lable1>
+
             <Lable2>
               <label htmlFor="to">To:</label>
-              <Field id="to" name="to" type="date" />
+              <Field
+                onBlur={(e: any) => {
+                  setFilters({
+                    ...filters,
+                    dateRange: {
+                      ...filters.dateRange,
+                      to: moment(e.target.value).add(1, "h").toISOString(),
+                    },
+                  });
+                }}
+                id="to"
+                name="to"
+                type="date"
+              />
             </Lable2>
           </DateInput>
           <Button type="submit">Search Apartments</Button>
@@ -102,6 +120,7 @@ const DateSearchBar = ({
       <ResetButton
         onClick={() => {
           dispatch(setPropertiesThunk());
+          setFilters(initialFiltersState);
         }}
       >
         Reset Filters

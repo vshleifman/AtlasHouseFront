@@ -6,6 +6,8 @@ import { setProperties, addError } from "./PropertySlice";
 export const setPropertiesThunk = (filters?: FilterState): AppThunk => async (
   dispatch
 ) => {
+  // console.log({ filters });
+
   let queryString = `/properties`;
 
   if (filters) {
@@ -18,7 +20,7 @@ export const setPropertiesThunk = (filters?: FilterState): AppThunk => async (
 
     Object.keys(filters.amenities).forEach((amenity) => {
       //@ts-ignore
-      if (filters.amenities[amenity] === true) {
+      if (filters.amenities[amenity] === "true") {
         paramsString = paramsString.concat(
           // @ts-ignore
           `amenities=${amenity}:${filters.amenities[amenity]}&`
@@ -26,8 +28,11 @@ export const setPropertiesThunk = (filters?: FilterState): AppThunk => async (
       }
     });
 
+    if (filters.sortBy !== "") {
+      paramsString = paramsString.concat(`sortBy=${filters.sortBy}&`);
+    }
+
     queryString = `/properties`.concat(paramsString);
-    console.log({ queryString });
   }
 
   try {

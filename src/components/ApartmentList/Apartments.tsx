@@ -26,12 +26,13 @@ const StFilter = styled(Filter)`
   border: 1px solid black;
 `;
 
-const initialFiltersState = {
+export const initialFiltersState = {
   dateRange: { from: "", to: "" },
   amenities: {
     balcony: false,
     bathtub: false,
   },
+  sortBy: "",
 };
 
 export type FilterState = typeof initialFiltersState;

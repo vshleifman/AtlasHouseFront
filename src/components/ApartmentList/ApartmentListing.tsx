@@ -40,9 +40,10 @@ const Price = styled(BaseBox)`
 const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
   const isAvailable = (dateRange: { from: string; to: string }) => {
     const initialRange = {
-      from: moment().subtract(5, "h").toISOString(),
-      to: moment().add(1, "d").toISOString(),
+      from: moment().hour(12).toISOString(),
+      to: moment().hour(14).add(1, "d").toISOString(),
     };
+
     if (dateRange.from === "") {
       dateRange = initialRange;
     }
