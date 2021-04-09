@@ -1,13 +1,11 @@
 import api from "api/axiosInstance";
 import { AppThunk } from "store/store";
-import { FilterState } from "./Apartments";
+import { FilterState } from "./FilterProvider";
 import { setProperties, addError } from "./PropertySlice";
 
 export const setPropertiesThunk = (filters?: FilterState): AppThunk => async (
   dispatch
 ) => {
-  // console.log({ filters });
-
   let queryString = `/properties`;
 
   if (filters) {
@@ -18,11 +16,13 @@ export const setPropertiesThunk = (filters?: FilterState): AppThunk => async (
       );
     }
 
-    Object.keys(filters.amenities).forEach((amenity) => {
-      //@ts-ignore
-      if (filters.amenities[amenity] === "true") {
+    const amenitieyKeys = Object.keys(
+      filters.amenities
+    ) as (keyof FilterState["amenities"])[];
+
+    amenitieyKeys.forEach((amenity) => {
+      if (filters.amenities[amenity] === true) {
         paramsString = paramsString.concat(
-          // @ts-ignore
           `amenities=${amenity}:${filters.amenities[amenity]}&`
         );
       }

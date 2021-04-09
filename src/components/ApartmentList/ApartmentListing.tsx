@@ -2,14 +2,15 @@ import moment from "moment";
 import { useContext } from "react";
 import styled from "styled-components";
 import { Apartment } from "types/types";
-import { FilterContext } from "./Apartments";
+import { FilterContext } from "./FilterProvider";
 
 const Container = styled.div`
-  border: 1px solid black;
-  border-radius: 25px;
   display: grid;
   grid-template: "photo name availability" 1fr "photo description availability" 1fr "photo description price" 1fr / 2fr 3fr 1fr;
   margin: 5px;
+  border-top: 2px orange dotted;
+  border-bottom: 2px orange dotted;
+  padding: 1em 0 1em 0;
 `;
 
 const BaseBox = styled.div`

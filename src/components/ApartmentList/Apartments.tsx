@@ -1,58 +1,22 @@
-import ApartmentList from "components/ApartmentList/ApartmentList";
-import Filter from "components/ApartmentList/Filter";
-import DateSearchBar from "components/DateSearchBar";
-import React, { createContext, useEffect, useState } from "react";
+import ApartmentList from "./ApartmentList";
+import Filter from "./Filter";
+import DateSearchBar from "./DateSearchBar";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPropertiesThunk } from "./PropertyThunks";
 import { propertySelector } from "selectors/selectors";
 import styled from "styled-components";
-import moment from "moment";
+import FilterProvider from "./FilterProvider";
 
 const Container = styled.div`
   display: grid;
-  grid-template: "search search" 1fr "filter list" 2fr ". list" 1fr/ 1fr 8fr;
+  grid-template: "search" auto "filter" auto "list" 1fr / auto;
 `;
-
-const StApartmentList = styled(ApartmentList)`
-  grid-area: list;
-`;
-
-const StSearchBar = styled(DateSearchBar)`
-  grid-area: search;
-`;
-
-const StFilter = styled(Filter)`
-  grid-area: filter;
-  border: 1px solid black;
-`;
-
-export const initialFiltersState = {
-  dateRange: { from: "", to: "" },
-  amenities: {
-    balcony: false,
-    bathtub: false,
-  },
-  sortBy: "",
-};
-
-export type FilterState = typeof initialFiltersState;
-
-export const FilterContext = createContext<{
-  filters: FilterState;
-  setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
-}>({ filters: initialFiltersState, setFilters: () => {} });
-const FilterProvider = ({ children }: { children: JSX.Element }) => {
-  const [filters, setFilters] = useState(initialFiltersState);
-
-  return (
-    <FilterContext.Provider value={{ filters, setFilters }}>
-      {children}
-    </FilterContext.Provider>
-  );
-};
 
 const Apartments = () => {
   const dispatch = useDispatch();
+
+  const reference = useRef(null);
 
   useEffect(() => {
     dispatch(setPropertiesThunk());
@@ -62,9 +26,9 @@ const Apartments = () => {
   return (
     <FilterProvider>
       <Container>
-        <StSearchBar apartments={apartments} />
-        <StApartmentList apartments={apartments} />
-        <StFilter apartments={apartments} />
+        <DateSearchBar />
+        <ApartmentList reference={reference} apartments={apartments} />
+        <Filter reference={reference} />
       </Container>
     </FilterProvider>
   );

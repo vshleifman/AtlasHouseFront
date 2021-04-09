@@ -35,8 +35,6 @@ const PropertySlice = createSlice({
   initialState,
   reducers: {
     setProperties(state, action) {
-      // console.log(action.payload);
-
       state.properties = action.payload;
     },
     addError(state, action) {

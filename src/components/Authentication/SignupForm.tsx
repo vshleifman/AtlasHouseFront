@@ -4,6 +4,13 @@ import { useDispatch } from "react-redux";
 import { authThunk } from "../../reducers/AuthSlice";
 import { useHistory } from "react-router";
 import { MemoryHistory } from "history";
+import { Btn } from "styles/styles";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: grid;
+  place-items: center;
+`;
 
 const SignupForm = () => {
   const dispatch = useDispatch();
@@ -35,23 +42,35 @@ const SignupForm = () => {
       }}
     >
       <Form>
-        <label htmlFor="firstName">First Name</label>
-        <Field id="firstName" name="firstName" type="text" />
-        <ErrorMessage name="firstName" />
-        <br />
-        <label htmlFor="lastName">Last Name</label>
-        <Field id="lastName" name="lastName" type="text" />
-        <ErrorMessage name="lastName" />
-        <br />
-        <label htmlFor="email">Email</label>
-        <Field id="email" name="email" type="email" />
-        <ErrorMessage name="email" />
-        <br />
-        <label htmlFor="password">Password</label>
-        <Field id="password" name="password" type="text" />
-        <ErrorMessage name="password" />
-        <br />
-        <button type="submit">Sign up</button>
+        <Container>
+          <h3>Create a new account</h3>
+
+          <label htmlFor="firstName">
+            <h4>First Name</h4>
+          </label>
+          <Field id="firstName" name="firstName" type="text" />
+          <ErrorMessage name="firstName" />
+
+          <label htmlFor="lastName">
+            <h4>Last Name</h4>
+          </label>
+          <Field id="lastName" name="lastName" type="text" />
+          <ErrorMessage name="lastName" />
+
+          <label htmlFor="email">
+            <h4>Email</h4>
+          </label>
+          <Field id="email" name="email" type="email" />
+          <ErrorMessage name="email" />
+
+          <label htmlFor="password">
+            <h4>Password</h4>
+          </label>
+          <Field id="password" name="password" type="text" />
+          <ErrorMessage name="password" />
+
+          <Btn type="submit">Sign up</Btn>
+        </Container>
       </Form>
     </Formik>
   );

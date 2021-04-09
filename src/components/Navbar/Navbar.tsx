@@ -5,18 +5,30 @@ import styled from "styled-components";
 
 const Container = styled.div`
   display: grid;
-  place-items: baseline;
-  grid-template: "homeLink apartmentsLink bookingsLink contactsOrCustomersLink userName" 1fr / 2fr 1fr 1fr 1fr 3fr;
-  border: 1px solid black;
+  place-items: baseline center;
+  grid-template: "homeLink apartmentsLink bookingsLink contactsOrCustomersLink userName" 1fr / 3fr 1fr auto 1fr 1fr;
   padding: 2px;
-`;
+  font-size: 1.3em;
+` as any;
 
 const BaseLink = styled(NavLink)`
-  margin: 0 1em 0 1em;
+  margin: 1em 1em 0 1em;
+  padding-bottom: 8px;
+  justify-items: end;
+  border-bottom: 2px solid transparent;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: white;
+  font-size: 120%;
+  &:hover {
+    border-bottom: 2px solid orange;
+    transition: border-bottom 0.2s, color 0.2s;
+  }
 `;
 
 const HomeLink = styled(BaseLink)`
-  grid-area: homeLink; ;
+  grid-area: homeLink;
+  justify-self: start;
 `;
 const ApartmentsLink = styled(BaseLink)`
   grid-area: apartmentsLink; ;
@@ -29,32 +41,32 @@ const ContactsOrCustomersLink = styled(BaseLink)`
 `;
 const UserLink = styled(BaseLink)`
   grid-area: userName;
-  text-decoration: none;
-  place-self: end; ;
 `;
 
-const Navbar = () => {
+const Navbar = ({ className }: any) => {
   const userType = useSelector(userSelector).userData.__t;
 
   return (
-    <Container>
-      <HomeLink to="/">AtlasHouse</HomeLink>
-      <ApartmentsLink to="/apartments">Apartments</ApartmentsLink>
-      {userType !== "Guest" ? (
-        <BookingsLink to="/bookings">Bookings</BookingsLink>
-      ) : null}
-      <ContactsOrCustomersLink
-        to={userType !== "Admin" ? "/contacts" : "/customers"}
-      >
-        {userType !== "Admin" ? "Contacts" : "Customers"}
-      </ContactsOrCustomersLink>
+    <>
+      <Container className={className}>
+        <HomeLink to="/">AtlasHouse</HomeLink>
+        <ApartmentsLink to="/apartments">Apartments</ApartmentsLink>
+        {userType !== "Guest" ? (
+          <BookingsLink to="/bookings">Bookings</BookingsLink>
+        ) : null}
+        <ContactsOrCustomersLink
+          to={userType !== "Admin" ? "/contacts" : "/customers"}
+        >
+          {userType !== "Admin" ? "Contacts" : "Customers"}
+        </ContactsOrCustomersLink>
 
-      {userType === "Guest" ? (
-        <UserLink to="/auth">Sign in</UserLink>
-      ) : (
-        <UserLink to="/profile">{userType}</UserLink>
-      )}
-    </Container>
+        {userType === "Guest" ? (
+          <UserLink to="/auth">Sign in</UserLink>
+        ) : (
+          <UserLink to="/profile">{userType}</UserLink>
+        )}
+      </Container>
+    </>
   );
 };
 

@@ -4,6 +4,13 @@ import { useDispatch } from "react-redux";
 import { authThunk } from "../../reducers/AuthSlice";
 import { useHistory } from "react-router";
 import { MemoryHistory } from "history";
+import { Btn } from "styles/styles";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: grid;
+  place-items: center;
+`;
 
 const SigninForm = () => {
   const dispatch = useDispatch();
@@ -22,15 +29,23 @@ const SigninForm = () => {
       }}
     >
       <Form>
-        <label htmlFor="email">Email</label>
-        <Field id="email" name="email" type="email" />
-        <ErrorMessage name="email" />
-        <br />
-        <label htmlFor="password">Password</label>
-        <Field id="password" name="password" type="text" />
-        <ErrorMessage name="password" />
-        <br />
-        <button type="submit">Sign in</button>
+        <Container>
+          <h3>Sign into you account</h3>
+
+          <label htmlFor="email">
+            <h4>Email</h4>
+          </label>
+          <Field id="email" name="email" type="email" />
+          <ErrorMessage name="email" />
+
+          <label htmlFor="password">
+            <h4>Password</h4>
+          </label>
+          <Field id="password" name="password" type="text" />
+          <ErrorMessage name="password" />
+
+          <Btn type="submit">Sign in</Btn>
+        </Container>
       </Form>
     </Formik>
   );
