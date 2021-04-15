@@ -1,22 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import api from "api/axiosInstance";
 import { AppThunk } from "store/store";
-import { User } from "types/types";
+import { InitialUserState } from "types/types";
+
+export const initialUserState: Partial<InitialUserState> = {
+  userData: undefined,
+  errorMsg: undefined,
+};
 
 const UserSlice = createSlice({
   name: "user",
-  initialState: {
-    userData: {
-      __t: "",
-    },
-    errorMsg: "",
-  },
+  initialState: initialUserState,
   reducers: {
     setUser(state, action) {
       state.userData = action.payload;
     },
     addError(state, action) {
-      state.errorMsg = action.payload;
+      state.errorMsg = JSON.stringify(action.payload);
     },
   },
 });
@@ -31,9 +31,9 @@ export const setUserThunk = (): AppThunk => async (dispatch) => {
   }
 };
 
-export const updateUserThunk = (data: Partial<User>): AppThunk => async (
-  dispatch
-) => {
+export const updateUserThunk = (
+  data: Partial<InitialUserState>
+): AppThunk => async (dispatch) => {
   try {
     const response = await api.patch("/users/me", data);
     dispatch(setUser(response.data));

@@ -5,18 +5,34 @@ import styled from "styled-components";
 
 const Container = styled.div`
   display: grid;
-  place-items: baseline;
-  grid-template: "homeLink apartmentsLink bookingsLink contactsOrCustomersLink userName" 1fr / 2fr 1fr 1fr 1fr 3fr;
-  border: 1px solid black;
+  place-items: baseline center;
+  grid-template: "homeLink apartmentsLink bookingsLink contactsOrCustomersLink userName" 1fr / 3fr 1fr auto 1fr 1fr;
   padding: 2px;
+  font-size: 1.3em;
+` as any;
+
+const EmptyContainer = styled(Container)`
+  height: 10vh;
 `;
 
 const BaseLink = styled(NavLink)`
-  margin: 0 1em 0 1em;
+  margin: 1em 1em 0 1em;
+  padding-bottom: 8px;
+  justify-items: end;
+  border-bottom: 2px solid transparent;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: white;
+  font-size: 120%;
+  &:hover {
+    border-bottom: 2px solid orange;
+    transition: border-bottom 0.2s, color 0.2s;
+  }
 `;
 
 const HomeLink = styled(BaseLink)`
-  grid-area: homeLink; ;
+  grid-area: homeLink;
+  justify-self: start;
 `;
 const ApartmentsLink = styled(BaseLink)`
   grid-area: apartmentsLink; ;
@@ -29,35 +45,34 @@ const ContactsOrCustomersLink = styled(BaseLink)`
 `;
 const UserLink = styled(BaseLink)`
   grid-area: userName;
-  text-decoration: none;
-  place-self: end; ;
 `;
-const Navbar = () => {
-  const user = useSelector(userSelector);
-  const checkUserType = () => {
-    if (user.userData.__t) {
-      return user.userData.__t;
-    }
-    return "Guest";
-  };
-  return (
-    <Container>
-      <HomeLink to="/">AtlasHouse</HomeLink>
-      <ApartmentsLink to="/apartments">Apartments</ApartmentsLink>
-      <BookingsLink to="/bookings">Bookings</BookingsLink>
-      <ContactsOrCustomersLink
-        to={checkUserType() !== "Admin" ? "/contacts" : "/customers"}
-      >
-        {checkUserType() !== "Admin" ? "Contacts" : "Customers"}
-      </ContactsOrCustomersLink>
 
-      {checkUserType() === "Guest" ? (
-        <UserLink to="/auth">Sign in</UserLink>
-      ) : (
-        <UserLink to="/profile">{checkUserType()}</UserLink>
-      )}
-    </Container>
-  );
+const Navbar = ({ className }: any) => {
+  const user = useSelector(userSelector).userData;
+  if (!user) {
+    return <EmptyContainer></EmptyContainer>;
+  } else {
+    return (
+      <Container className={className}>
+        <HomeLink to="/">AtlasHouse</HomeLink>
+        <ApartmentsLink to="/apartments">Apartments</ApartmentsLink>
+        {user.role !== 0 ? (
+          <BookingsLink to="/bookings">Bookings</BookingsLink>
+        ) : null}
+        <ContactsOrCustomersLink
+          to={user.role !== 2 ? "/contacts" : "/customers"}
+        >
+          {user.role !== 2 ? "Contacts" : "Customers"}
+        </ContactsOrCustomersLink>
+
+        {user.role === 0 ? (
+          <UserLink to="/auth">Sign in</UserLink>
+        ) : (
+          <UserLink to="/profile">{user.firstName}</UserLink>
+        )}
+      </Container>
+    );
+  }
 };
 
 export default Navbar;

@@ -1,20 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import api from "api/axiosInstance";
 import { AppThunk } from "store/store";
-import { addError } from "./UserSlice";
+import { InitialBookingState } from "types/types";
+
+const initialBookingState: InitialBookingState = {
+  bookings: undefined,
+  errorMsg: undefined,
+};
 
 const BookingSlice = createSlice({
   name: "booking",
-  initialState: {
-    bookings: [],
-    errorMsg: "",
-  },
+  initialState: initialBookingState,
   reducers: {
     setBookings(state, action) {
       state.bookings = action.payload;
     },
     addError(state, action) {
-      state.errorMsg = action.payload;
+      state.errorMsg = JSON.stringify(action.payload);
     },
   },
 });
@@ -28,6 +30,6 @@ export const setBookingsThunk = (): AppThunk => async (dispatch) => {
   }
 };
 
-export const { setBookings } = BookingSlice.actions;
+export const { setBookings, addError } = BookingSlice.actions;
 
 export default BookingSlice.reducer;

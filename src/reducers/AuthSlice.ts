@@ -1,26 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
 import api from "api/axiosInstance";
 import { AppThunk } from "store/store";
-import { setUser, setUserThunk } from "./UserSlice";
+import { initialUserState, setUser, setUserThunk } from "./UserSlice";
+import { MemoryHistory } from "history";
+import { InitialAuthState, User } from "types/types";
+
+const initialAuthState: InitialAuthState = {
+  token: undefined,
+  errorMsg: undefined,
+};
 
 const AuthSlice = createSlice({
   name: "auth",
-  initialState: {
-    token: "",
-    errorMsg: "",
-  },
+  initialState: initialAuthState,
   reducers: {
     signin(state, action) {
-      state.errorMsg = "";
+      state.errorMsg = undefined;
       const token: string = action.payload;
       state.token = token;
     },
     signout(state) {
-      state.errorMsg = "";
-      state.token = "";
+      state.errorMsg = undefined;
+      state.token = undefined;
     },
     addError(state, action) {
-      state.errorMsg = action.payload;
+      state.errorMsg = JSON.stringify(action.payload);
     },
   },
 });
@@ -30,39 +34,30 @@ export const tryAutoSignin = (): AppThunk => (dispatch) => {
   if (token) {
     dispatch(signin(token));
     dispatch(setUserThunk());
-  } //add else
-};
-
-export const signupThunk = (userData: {
-  user: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-  };
-  type: string;
-}): AppThunk => async (dispatch) => {
-  try {
-    const response = await api.post("/signup", userData);
-    dispatch(signin(response.data.token));
-    dispatch(setUser(response.data.user));
-    localStorage.setItem("token", response.data.token);
-    window.history.back();
-  } catch (error) {
-    dispatch(addError(error.response.data.msg));
+  } else {
+    dispatch(setUser({ role: 0 }));
   }
 };
 
-export const signinThunk = (
-  email: string,
-  password: string
+export const authThunk = (
+  endpoint: string,
+  userData: Partial<User>,
+  history: MemoryHistory
 ): AppThunk => async (dispatch) => {
   try {
-    const response = await api.post("/signin", { email, password });
+    let response;
+    if (endpoint === "up") {
+      response = await api.post("/signup", userData);
+    } else {
+      response = await api.post("/signin", {
+        email: userData.email,
+        password: userData.password,
+      });
+    }
     dispatch(signin(response.data.token));
     dispatch(setUser(response.data.user));
     localStorage.setItem("token", response.data.token);
-    window.history.back();
+    history.goBack();
   } catch (error) {
     dispatch(addError(error.response.data.msg));
   }
@@ -73,7 +68,7 @@ export const signoutThunk = (): AppThunk => async (dispatch) => {
     await api.post("/signout");
     localStorage.removeItem("token");
     dispatch(signout());
-    dispatch(setUser({ __t: "" }));
+    dispatch(setUser(initialUserState));
     window.location.replace("/");
   } catch (error) {
     dispatch(addError(error.response.data.msg));

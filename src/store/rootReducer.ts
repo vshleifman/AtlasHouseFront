@@ -2,7 +2,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import authReducer from "../reducers/AuthSlice";
 import userReducer from "../reducers/UserSlice";
 import bookingReducer from "../reducers/BookingSlice";
-import propertyReducer from "reducers/PropertySlice";
+import propertyReducer from "components/ApartmentList/PropertySlice";
 
 const rootReducer = combineReducers({
   authSlice: authReducer,
