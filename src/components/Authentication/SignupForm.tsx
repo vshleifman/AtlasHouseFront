@@ -17,7 +17,12 @@ const SignupForm = () => {
   const history = useHistory() as MemoryHistory;
   return (
     <Formik
-      initialValues={{ firstName: "", email: "", password: "", lastName: "" }}
+      initialValues={{
+        firstName: "",
+        email: "",
+        password: "",
+        lastName: "",
+      }}
       validationSchema={Yup.object({
         firstName: Yup.string().required("Required"),
         lastName: Yup.string().required("Required"),
@@ -30,14 +35,7 @@ const SignupForm = () => {
       ) => {
         setSubmitting(false);
         dispatch(
-          authThunk(
-            "up",
-            {
-              user: { firstName, email, password, lastName },
-              type: "User",
-            },
-            history
-          )
+          authThunk("up", { firstName, email, password, lastName }, history)
         );
       }}
     >

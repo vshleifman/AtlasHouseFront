@@ -49,13 +49,10 @@ it("signs up a user", async () => {
     expect(spyAuth).toHaveBeenCalledWith(
       "up",
       {
-        type: "User",
-        user: {
-          email: "email@gmail.com",
-          password: "password",
-          firstName: "firstName",
-          lastName: "lastName",
-        },
+        email: "email@gmail.com",
+        password: "password",
+        firstName: "firstName",
+        lastName: "lastName",
       },
       history
     )

@@ -20,8 +20,8 @@ const render = (ui: JSX.Element, options = { routes: ["/"] }) => {
 };
 
 export const generateApartment = (
-  checkIn = moment().toISOString(),
-  checkOut = moment().add(1, "week").toISOString(),
+  checkIn = moment().add(2, "days").toISOString(),
+  checkOut = moment().add(2, "week").toISOString(),
   name = "testApartment"
 ) => {
   return {

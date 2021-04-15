@@ -1,20 +1,28 @@
 import { createContext, useState } from "react";
 
-export const initialFiltersState = {
-  dateRange: { from: "", to: "" },
+export const initialFiltersState: FilterState = {
+  dateRange: { from: undefined, to: undefined },
   amenities: {
     balcony: false,
     bathtub: false,
     wifi: false,
   },
-  sortBy: "",
+  sortBy: undefined,
 };
 
-export type FilterState = typeof initialFiltersState;
+export interface FilterState {
+  dateRange: { from: string | undefined; to: string | undefined };
+  amenities: {
+    balcony: boolean | undefined;
+    bathtub: boolean | undefined;
+    wifi: boolean | undefined;
+  };
+  sortBy: string | undefined;
+}
 
 export const FilterContext = createContext<{
   filters: FilterState;
-  setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
+  setFilters: (filters: FilterState) => void;
 }>({ filters: initialFiltersState, setFilters: () => {} });
 
 const FilterProvider = ({ children }: { children: JSX.Element }) => {

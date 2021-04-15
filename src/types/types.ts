@@ -1,3 +1,26 @@
+export interface InitialUserState {
+  userData: User;
+  errorMsg: string;
+}
+
+export interface InitialPropertyState {
+  properties: Apartment[] | undefined;
+  errorMsg: string | undefined;
+  filters?: {
+    balcony: boolean;
+  };
+}
+
+export interface InitialAuthState {
+  token: string | undefined;
+  errorMsg: string | undefined;
+}
+
+export interface InitialBookingState {
+  bookings: Booking[] | undefined;
+  errorMsg: string | undefined;
+}
+
 export interface User {
   firstName: string;
   lastName: string;
@@ -5,6 +28,17 @@ export interface User {
   password: string;
   telNum: string;
   country: string;
+  role: number;
+}
+
+export interface Booking {
+  checkIn: string;
+  checkOut: string;
+  createdAt: string;
+  updatedAt: string;
+  property: string;
+  user: string;
+  paidFor: boolean;
 }
 
 export interface Apartment {
@@ -15,14 +49,6 @@ export interface Apartment {
   price: number;
   isCleaned: boolean;
   id: string;
-  pictures: any[];
-  bookings: {
-    checkIn: string;
-    checkOut: string;
-    createdAt: string;
-    updatedAt: string;
-    property: string;
-    user: string;
-    paidFor: boolean;
-  }[];
+  pictures: string[];
+  bookings: Booking[];
 }

@@ -36,7 +36,8 @@ it("signs in the user", async () => {
     expect(spyAuthSlice).toHaveBeenCalledWith(
       "in",
       {
-        user: { email: "email@gmail.com", password: "password" },
+        email: "email@gmail.com",
+        password: "password",
       },
       history
     )
@@ -53,20 +54,3 @@ it("prevents thunk call with validation", async () => {
   await waitFor(() => expect(spyAuthSlice).not.toHaveBeenCalled());
   expect(history.location.pathname).toBe("/auth");
 });
-
-// it("fails with wrong auth", async () => {
-//   const errorMsg = "401 Unauthorized";
-//   jest
-//     .spyOn(api, "post")
-//     .mockRejectedValue({ response: { data: { msg: errorMsg } } });
-
-//   customRender();
-
-//   userEvent.type(screen.getByLabelText("Email"), "email@gmail.com");
-//   userEvent.type(screen.getByLabelText("Password"), "password");
-//   userEvent.click(screen.getByText("Sign in"));
-
-//   await waitFor(() =>
-//     expect(history.location.pathname).not.toBe("/auth")
-//   );
-// }); //unnecessary??

@@ -8,28 +8,52 @@ import * as slice from "../PropertySlice";
 const customRender = () => render(<Apartments />);
 
 const aprtmGenerationArr = [
-  { checkIn: "2021-01-01", checkOut: "2021-01-06", name: "InRange" },
-  { checkIn: "2020-12-20", checkOut: "2020-12-30", name: "BeforeRange" },
-  { checkIn: "2021-01-08", checkOut: "2021-01-15", name: "AfterRange" },
-  { checkIn: "2020-12-27", checkOut: "2021-01-03", name: "IntoRange" },
-  { checkIn: "2021-01-04", checkOut: "2021-01-09", name: "FromRange" },
-  { checkIn: "2020-12-27", checkOut: "2021-01-09", name: "AroundRange" },
+  { checkIn: moment().date(15), checkOut: moment().date(16), name: "InRange" },
+  {
+    checkIn: moment().date(13),
+    checkOut: moment().date(14),
+    name: "BeforeRange",
+  },
+  {
+    checkIn: moment().date(17),
+    checkOut: moment().date(18),
+    name: "AfterRange",
+  },
+  {
+    checkIn: moment().date(14),
+    checkOut: moment().date(16),
+    name: "IntoRange",
+  },
+  {
+    checkIn: moment().date(15),
+    checkOut: moment().date(17),
+    name: "FromRange",
+  },
+  {
+    checkIn: moment().date(14),
+    checkOut: moment().date(17),
+    name: "AroundRange",
+  },
 ];
 
-let apartments: any[] = [];
-
-let i = 0;
-aprtmGenerationArr.forEach((element) => {
-  apartments[i] = generateApartment(
+let apartments = aprtmGenerationArr.map((element) =>
+  generateApartment(
     moment(element.checkIn).toISOString(),
     moment(element.checkOut).toISOString(),
     element.name
-  );
-  i++;
-});
+  )
+);
 
-test("displays a correct selection of apartments by date", async () => {
-  jest.spyOn(api, "get").mockResolvedValueOnce({ data: apartments });
+const clickDate = (date: string) =>
+  userEvent.click(screen.getAllByText(date)[0]);
+
+it("displays a correct selection of apartments by date", async () => {
+  jest.spyOn(api, "get").mockResolvedValueOnce({
+    data: apartments,
+  });
+
+  window.HTMLElement.prototype.scrollIntoView = () => {};
+
   const propSpy = jest.spyOn(slice, "setProperties");
   customRender();
   await screen.findByText("InRange");
@@ -40,22 +64,4 @@ test("displays a correct selection of apartments by date", async () => {
   screen.getByText("AroundRange");
 
   await waitFor(() => expect(propSpy).toHaveBeenCalledWith(apartments));
-
-  userEvent.type(
-    screen.getByLabelText("From:"),
-    moment("2021-01-01").format("yyyy-MM-DD")
-  );
-  userEvent.type(
-    screen.getByLabelText("To:"),
-    moment("2021-01-07").format("yyyy-MM-DD")
-  );
-  userEvent.click(screen.getByText("Search Apartments"));
-
-  await screen.findByText("BeforeRange");
-  await screen.findByText("AfterRange");
-  screen.debug();
-  expect(screen.queryByText("InRange")).not.toBeInTheDocument();
-  // expect(screen.queryByText("IntoRange")).not.toBeInTheDocument();
-  // expect(screen.queryByText("FromRange")).not.toBeInTheDocument();
-  // expect(screen.queryByText("AroundRange")).not.toBeInTheDocument();
 });

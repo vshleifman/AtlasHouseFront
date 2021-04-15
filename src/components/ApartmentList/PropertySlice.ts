@@ -1,33 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Apartment, InitialPropertyState } from "types/types";
 
-export const initialState = {
-  properties: [
-    {
-      name: String(),
-      codeID: String(),
-      createdAt: String(),
-      updatedAt: String(),
-      price: Number(),
-      isCleaned: Boolean(),
-      id: String(),
-      pictures: Array(),
-      bookings: [
-        {
-          checkIn: String(),
-          checkOut: String(),
-          createdAt: String(),
-          updatedAt: String(),
-          property: String(),
-          user: String(),
-          paidFor: Boolean(),
-        },
-      ],
-    },
-  ],
-  errorMsg: String(),
-  filters: {
-    balcony: Boolean(),
-  },
+const initialState: InitialPropertyState = {
+  properties: undefined,
+  filters: undefined,
+  errorMsg: undefined,
 };
 
 const PropertySlice = createSlice({

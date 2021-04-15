@@ -16,7 +16,7 @@ const Container = styled.div`
 const Apartments = () => {
   const dispatch = useDispatch();
 
-  const reference = useRef(null);
+  const reference = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     dispatch(setPropertiesThunk());

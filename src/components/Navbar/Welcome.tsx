@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { RefObject } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Btn } from "styles/styles";
@@ -35,11 +35,7 @@ const DownBtn = styled(Btn)`
   background-color: rgba(129, 119, 119, 0.89);
 `;
 
-const Welcome = ({
-  reference,
-}: {
-  reference: React.MutableRefObject<null>;
-}) => {
+const Welcome = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
   return (
     <Container>
       <WlcmText>Welcome to Riga</WlcmText>
@@ -48,8 +44,9 @@ const Welcome = ({
       </StLink>
       <DownBtn
         onClick={() => {
-          //@ts-ignore
-          reference.current.scrollIntoView();
+          reference.current !== null
+            ? reference.current.scrollIntoView()
+            : console.log("null");
         }}
       >
         About Us

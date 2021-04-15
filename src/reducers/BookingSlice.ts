@@ -1,13 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import api from "api/axiosInstance";
 import { AppThunk } from "store/store";
+import { InitialBookingState } from "types/types";
+
+const initialBookingState: InitialBookingState = {
+  bookings: undefined,
+  errorMsg: undefined,
+};
 
 const BookingSlice = createSlice({
   name: "booking",
-  initialState: {
-    bookings: [],
-    errorMsg: "",
-  },
+  initialState: initialBookingState,
   reducers: {
     setBookings(state, action) {
       state.bookings = action.payload;

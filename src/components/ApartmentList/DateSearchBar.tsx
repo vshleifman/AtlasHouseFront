@@ -26,14 +26,9 @@ const DateSearchBar = () => {
   const { filters, setFilters } = useContext(FilterContext);
 
   const [startDate, setStartDate] = useState(moment().toDate());
-  const [endDate, setEndDate] = useState(null);
+  const [endDate, setEndDate] = useState(moment().add(1, "d").toDate());
 
-  const onChange = (
-    dates: Date | [Date, Date] | null,
-    event: React.SyntheticEvent<any, Event> | undefined
-  ) => {
-    //@ts-ignore
-    const [start, end] = dates;
+  const onChange = ([start, end]: [Date, Date]) => {
     setStartDate(start);
     setEndDate(end);
   };
@@ -53,7 +48,6 @@ const DateSearchBar = () => {
       <Heading>Enter the dates of your visit</Heading>
       <StDatePicker>
         <DatePicker
-          selected={startDate}
           onChange={onChange}
           onClickOutside={onClickOutside}
           startDate={startDate}

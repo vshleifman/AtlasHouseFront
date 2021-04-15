@@ -1,24 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 import api from "api/axiosInstance";
 import { AppThunk } from "store/store";
-import { initialUserData, setUser, setUserThunk } from "./UserSlice";
+import { initialUserState, setUser, setUserThunk } from "./UserSlice";
 import { MemoryHistory } from "history";
+import { InitialAuthState, User } from "types/types";
+
+const initialAuthState: InitialAuthState = {
+  token: undefined,
+  errorMsg: undefined,
+};
 
 const AuthSlice = createSlice({
   name: "auth",
-  initialState: {
-    token: "",
-    errorMsg: "",
-  },
+  initialState: initialAuthState,
   reducers: {
     signin(state, action) {
-      state.errorMsg = "";
+      state.errorMsg = undefined;
       const token: string = action.payload;
       state.token = token;
     },
     signout(state) {
-      state.errorMsg = "";
-      state.token = "";
+      state.errorMsg = undefined;
+      state.token = undefined;
     },
     addError(state, action) {
       state.errorMsg = JSON.stringify(action.payload);
@@ -31,20 +34,14 @@ export const tryAutoSignin = (): AppThunk => (dispatch) => {
   if (token) {
     dispatch(signin(token));
     dispatch(setUserThunk());
-  } //add else
+  } else {
+    dispatch(setUser({ role: 0 }));
+  }
 };
 
 export const authThunk = (
   endpoint: string,
-  userData: {
-    user: {
-      firstName?: string;
-      lastName?: string;
-      email: string;
-      password: string;
-    };
-    type?: string;
-  },
+  userData: Partial<User>,
   history: MemoryHistory
 ): AppThunk => async (dispatch) => {
   try {
@@ -53,8 +50,8 @@ export const authThunk = (
       response = await api.post("/signup", userData);
     } else {
       response = await api.post("/signin", {
-        email: userData.user.email,
-        password: userData.user.password,
+        email: userData.email,
+        password: userData.password,
       });
     }
     dispatch(signin(response.data.token));
@@ -71,7 +68,7 @@ export const signoutThunk = (): AppThunk => async (dispatch) => {
     await api.post("/signout");
     localStorage.removeItem("token");
     dispatch(signout());
-    dispatch(setUser(initialUserData));
+    dispatch(setUser(initialUserState));
     window.location.replace("/");
   } catch (error) {
     dispatch(addError(error.response.data.msg));

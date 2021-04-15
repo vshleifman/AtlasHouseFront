@@ -6,7 +6,7 @@ import { FilterContext } from "./FilterProvider";
 
 const Container = styled.div`
   display: grid;
-  grid-template: "photo name availability" 1fr "photo description availability" 1fr "photo description price" 1fr / 2fr 3fr 1fr;
+  grid-template: "photo name name" 1fr "photo description price" 1fr "photo description price" 1fr / 2fr 3fr 1fr;
   margin: 5px;
   border-top: 2px orange dotted;
   border-bottom: 2px orange dotted;
@@ -28,9 +28,6 @@ const Photo = styled(BaseBox)`
 const Name = styled(BaseBox)`
   grid-area: name;
 `;
-const Availability = styled(BaseBox)`
-  grid-area: availability;
-`;
 const Description = styled(BaseBox)`
   grid-area: description;
 `;
@@ -39,15 +36,20 @@ const Price = styled(BaseBox)`
 `;
 
 const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
-  const isAvailable = (dateRange: { from: string; to: string }) => {
+  const isAvailable = (dateRange: {
+    from: string | undefined;
+    to: string | undefined;
+  }) => {
     const initialRange = {
       from: moment().hour(12).toISOString(),
       to: moment().hour(14).add(1, "d").toISOString(),
     };
 
-    if (dateRange.from === "") {
+    if (dateRange.from === undefined) {
       dateRange = initialRange;
     }
+
+    console.log(dateRange);
 
     const bool = apartment.bookings.every(
       (booking) =>
@@ -59,13 +61,11 @@ const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
     return bool;
   };
   const { filters } = useContext(FilterContext);
+
   return (
     <Container data-testid="listing">
       <Photo></Photo>
       <Name>{apartment.name}</Name>
-      <Availability>
-        {isAvailable(filters.dateRange) ? "Available" : "Not Available"}
-      </Availability>
       <Description>a room</Description>
       <Price>{apartment.price}</Price>
     </Container>

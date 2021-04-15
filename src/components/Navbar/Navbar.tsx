@@ -11,6 +11,10 @@ const Container = styled.div`
   font-size: 1.3em;
 ` as any;
 
+const EmptyContainer = styled(Container)`
+  height: 10vh;
+`;
+
 const BaseLink = styled(NavLink)`
   margin: 1em 1em 0 1em;
   padding-bottom: 8px;
@@ -44,30 +48,31 @@ const UserLink = styled(BaseLink)`
 `;
 
 const Navbar = ({ className }: any) => {
-  const userType = useSelector(userSelector).userData.__t;
-
-  return (
-    <>
+  const user = useSelector(userSelector).userData;
+  if (!user) {
+    return <EmptyContainer></EmptyContainer>;
+  } else {
+    return (
       <Container className={className}>
         <HomeLink to="/">AtlasHouse</HomeLink>
         <ApartmentsLink to="/apartments">Apartments</ApartmentsLink>
-        {userType !== "Guest" ? (
+        {user.role !== 0 ? (
           <BookingsLink to="/bookings">Bookings</BookingsLink>
         ) : null}
         <ContactsOrCustomersLink
-          to={userType !== "Admin" ? "/contacts" : "/customers"}
+          to={user.role !== 2 ? "/contacts" : "/customers"}
         >
-          {userType !== "Admin" ? "Contacts" : "Customers"}
+          {user.role !== 2 ? "Contacts" : "Customers"}
         </ContactsOrCustomersLink>
 
-        {userType === "Guest" ? (
+        {user.role === 0 ? (
           <UserLink to="/auth">Sign in</UserLink>
         ) : (
-          <UserLink to="/profile">{userType}</UserLink>
+          <UserLink to="/profile">{user.firstName}</UserLink>
         )}
       </Container>
-    </>
-  );
+    );
+  }
 };
 
 export default Navbar;

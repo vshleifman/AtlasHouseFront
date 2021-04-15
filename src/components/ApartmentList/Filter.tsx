@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Select, { OptionsType } from "react-select";
 import { useDispatch } from "react-redux";
-import { useContext } from "react";
+import { RefObject, useContext } from "react";
 import {
   FilterContext,
   initialFiltersState,
@@ -26,11 +26,7 @@ const sortOptions = [
   { value: "area:asc", label: "Area: lowest first" },
 ];
 
-const Filter = ({
-  reference,
-}: {
-  reference?: React.MutableRefObject<null>;
-}) => {
+const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
   const { filters, setFilters } = useContext(FilterContext);
 
   const filterOptions = Object.keys(filters.amenities).map((amenity) => {
@@ -57,6 +53,16 @@ const Filter = ({
     setFilters({ ...filters, amenities: tempAmenities });
   };
 
+  const onClick = (filters?: FilterState) => {
+    if (filters && !filters.dateRange.to) {
+      return alert("Please select an end date!");
+    }
+    dispatch(setPropertiesThunk(filters));
+    reference.current !== null
+      ? reference.current.scrollIntoView()
+      : console.log("null");
+  };
+
   return (
     <Container ref={reference}>
       <div>
@@ -80,23 +86,9 @@ const Filter = ({
         />
       </div>
 
-      <Btn
-        onClick={() => {
-          dispatch(setPropertiesThunk());
-          setFilters(initialFiltersState);
-        }}
-      >
-        Reset Filters
-      </Btn>
+      <Btn onClick={() => onClick()}>Show All Apartments</Btn>
 
-      <Btn
-        style={{ justifySelf: "end" }}
-        onClick={() => {
-          dispatch(setPropertiesThunk(filters));
-          //@ts-ignore
-          reference?.current.scrollIntoView();
-        }}
-      >
+      <Btn style={{ justifySelf: "end" }} onClick={() => onClick(filters)}>
         Search Apartments
       </Btn>
     </Container>

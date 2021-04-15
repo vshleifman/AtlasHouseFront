@@ -1,5 +1,5 @@
-import { render, screen, waitFor } from "testUtils";
-import Navbar, * as navbar from "../Navbar";
+import { render, screen } from "testUtils";
+import Navbar from "../Navbar";
 import * as redux from "react-redux";
 
 const customRender = () => render(<Navbar />);
@@ -11,7 +11,7 @@ beforeEach(() => {
 it("renders the navbar for Guest", () => {
   jest
     .spyOn(redux, "useSelector")
-    .mockReturnValueOnce({ userData: { __t: "Guest" } });
+    .mockReturnValueOnce({ userData: { role: 0 } });
   customRender();
   screen.getByText("AtlasHouse");
   screen.getByText("Apartments");
@@ -22,7 +22,7 @@ it("renders the navbar for Guest", () => {
 it("renders the navbar for Admin", () => {
   jest
     .spyOn(redux, "useSelector")
-    .mockReturnValueOnce({ userData: { __t: "Admin" } });
+    .mockReturnValueOnce({ userData: { role: 2, firstName: "Admin" } });
 
   customRender();
   screen.getByText("AtlasHouse");
@@ -37,7 +37,7 @@ it("renders the navbar for Admin", () => {
 it("renders the navbar for User", () => {
   jest
     .spyOn(redux, "useSelector")
-    .mockReturnValueOnce({ userData: { __t: "User" } });
+    .mockReturnValueOnce({ userData: { role: 1, firstName: "User" } });
 
   customRender();
   screen.getByText("AtlasHouse");

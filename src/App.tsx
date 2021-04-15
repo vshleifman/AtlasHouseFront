@@ -47,15 +47,7 @@ const App = () => {
 
   return (
     <Container>
-      <NavBackground
-        height={() => {
-          if (location.pathname === "/") {
-            return "100vh";
-          } else {
-            return "10vh";
-          }
-        }}
-      >
+      <NavBackground height={location.pathname === "/" ? "100vh" : "10vh"}>
         <Navbar />
         {location.pathname === "/" ? <Welcome reference={ref} /> : null}
       </NavBackground>

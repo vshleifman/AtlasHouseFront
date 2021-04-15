@@ -16,7 +16,6 @@ const ProfilePage = () => {
         <p>First Name: {userData.userData.firstName}</p>
         <p>Last Name: {userData.userData.lastName}</p>
         <p>Email: {userData.userData.email}</p>
-        <p>User Type: {userData.userData.__t}</p>
       </div>
       <button
         onClick={() => {

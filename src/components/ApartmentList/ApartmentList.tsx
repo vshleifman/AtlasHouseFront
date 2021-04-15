@@ -1,3 +1,4 @@
+import { RefObject } from "react";
 import styled from "styled-components";
 import { Apartment } from "types/types";
 import ApartmentListing from "./ApartmentListing";
@@ -11,12 +12,12 @@ const ApartmentList = ({
   reference,
   apartments,
 }: {
-  reference?: React.MutableRefObject<null>;
-  apartments: Apartment[];
+  reference?: RefObject<HTMLDivElement>;
+  apartments: Apartment[] | undefined;
 }) => {
   return (
-    <Container ref={reference}>
-      {apartments[0].name
+    <Container data-testid="list" ref={reference}>
+      {apartments
         ? apartments.map((apartment) => (
             <ApartmentListing key={Math.random()} apartment={apartment} />
           ))

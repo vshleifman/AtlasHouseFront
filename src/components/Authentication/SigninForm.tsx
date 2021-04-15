@@ -25,7 +25,7 @@ const SigninForm = () => {
       })}
       onSubmit={({ email, password }, { setSubmitting }) => {
         setSubmitting(false);
-        dispatch(authThunk("in", { user: { email, password } }, history));
+        dispatch(authThunk("in", { email, password }, history));
       }}
     >
       <Form>
