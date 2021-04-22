@@ -10,6 +10,7 @@ import { tryAutoSignin } from "reducers/AuthSlice";
 import styled from "styled-components";
 import Welcome from "components/Navbar/Welcome";
 import AuthForm from "components/Authentication/AuthForm";
+import AddApartment from "components/ApartmentList/AddApartment";
 
 const Container = styled.div`
   display: grid;
@@ -58,6 +59,7 @@ const App = () => {
           <Route path="/auth" component={AuthForm} />
           <Route path="/contacts" component={Contacts} />
           <Route path="/apartments" component={Apartments} />
+          <Route path="/add_apartment" component={AddApartment} />
           <Route path="/profile" component={ProfilePage} />
         </Switch>
       </StSwitch>

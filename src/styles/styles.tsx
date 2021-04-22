@@ -15,3 +15,8 @@ export const Btn = styled.button`
     transition: border-color 0.2s, background-color 0.2s;
   }
 `;
+
+export const Heading = styled.h3`
+  font-size: 2em;
+  grid-area: head;
+`;
