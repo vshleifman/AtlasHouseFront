@@ -7,14 +7,20 @@ import ProfilePage from "pages/ProfilePage";
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { tryAutoSignin } from "reducers/AuthSlice";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import Welcome from "components/Navbar/Welcome";
 import AuthForm from "components/Authentication/AuthForm";
 import AddApartment from "components/ApartmentList/AddApartment";
 
+const GlobalFonts = createGlobalStyle`
+body {
+    font-family: 'Playfair Display', serif;
+}
+
+`;
 const Container = styled.div`
   display: grid;
-  grid-template: "nav nav nav" auto " . switch . " auto / 1fr 3fr 1fr;
+  grid-template: "nav nav nav" auto " . switch . " auto " . . ." 5em / 1fr 3fr 1fr;
   font-family: "Playfair Display";
   font-size: 1.8vh;
 `;
@@ -48,6 +54,7 @@ const App = () => {
 
   return (
     <Container>
+      <GlobalFonts />
       <NavBackground height={location.pathname === "/" ? "100vh" : "10vh"}>
         <Navbar />
         {location.pathname === "/" ? <Welcome reference={ref} /> : null}

@@ -66,7 +66,7 @@ const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
     <Container data-testid="listing">
       <Photo></Photo>
       <Name>{apartment.name}</Name>
-      <Description>a room</Description>
+      <Description>{apartment.description}</Description>
       <Price>{apartment.price}</Price>
     </Container>
   );

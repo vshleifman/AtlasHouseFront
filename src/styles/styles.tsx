@@ -18,5 +18,6 @@ export const Btn = styled.button`
 
 export const Heading = styled.h3`
   font-size: 2em;
+  font-weight: 100;
   grid-area: head;
 `;

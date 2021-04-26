@@ -59,7 +59,7 @@ const Navbar = ({ className }: any) => {
         {user?.role !== 2 ? "Contacts" : "Customers"}
       </ContactsOrCustomersLink>
 
-      {!user ? (
+      {user?.role === 0 ? (
         <UserLink to="/auth">Sign in</UserLink>
       ) : (
         <UserLink to="/profile">{user?.firstName}</UserLink>

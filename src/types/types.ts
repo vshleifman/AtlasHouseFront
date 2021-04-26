@@ -51,4 +51,5 @@ export interface Apartment {
   id: string;
   pictures: string[];
   bookings: Booking[];
+  description: string;
 }
