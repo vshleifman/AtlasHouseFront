@@ -7,17 +7,23 @@ import ProfilePage from 'pages/ProfilePage';
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { tryAutoSignin } from 'reducers/AuthSlice';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import Welcome from 'components/Navbar/Welcome';
 import AuthForm from 'components/Authentication/AuthForm';
 import ApartmentsSwitch from 'components/ApartmentList/ApartmentsSwitch';
 import rigaPanorama from 'images/Riga_panorama.jpg';
 
+const GlobalFonts = createGlobalStyle`
+body {
+    font-family: 'Playfair Display', serif;
+}
+
+`;
 const Container = styled.div`
-	display: grid;
-	grid-template: 'nav nav nav' auto ' . switch . ' auto / 1fr 3fr 1fr;
-	font-family: 'Playfair Display';
-	font-size: 1.8vh;
+  display: grid;
+  grid-template: "nav nav nav" auto " . switch . " auto " . . ." 5em / 1fr 3fr 1fr;
+  font-family: "Playfair Display";
+  font-size: 1.8vh;
 `;
 
 const StSwitch = styled.div`
@@ -47,23 +53,25 @@ const App = () => {
 
 	const ref = useRef(null);
 
-	return (
-		<Container>
-			<NavBackground height={location.pathname === '/' ? '100vh' : '10vh'}>
-				<Navbar />
-				{location.pathname === '/' ? <Welcome reference={ref} /> : null}
-			</NavBackground>
+  return (
+    <Container>
+      <GlobalFonts />
+      <NavBackground height={location.pathname === "/" ? "100vh" : "10vh"}>
+        <Navbar />
+        {location.pathname === "/" ? <Welcome reference={ref} /> : null}
+      </NavBackground>
 
-			<StSwitch>
-				<Switch>
-					<Route exact path="/" render={() => <Home reference={ref} />} />
-					<Route path="/auth" component={AuthForm} />
-					<Route path="/contacts" component={Contacts} />
-					<Route path="/apartments" component={ApartmentsSwitch} />
-					<Route path="/profile" component={ProfilePage} />
-				</Switch>
-			</StSwitch>
-		</Container>
-	);
+      <StSwitch>
+        <Switch>
+          <Route exact path="/" render={() => <Home reference={ref} />} />
+          <Route path="/auth" component={AuthForm} />
+          <Route path="/contacts" component={Contacts} />
+          <Route path="/apartments" component={Apartments} />
+          <Route path="/add_apartment" component={AddApartment} />
+          <Route path="/profile" component={ProfilePage} />
+        </Switch>
+      </StSwitch>
+    </Container>
+  );
 };
 export default App;
