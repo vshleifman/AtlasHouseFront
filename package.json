@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
+    "@types/react-slick": "^0.23.4",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "formik": "^2.2.6",
@@ -15,6 +16,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.2",
     "react-select": "^4.3.0",
+    "react-slick": "^0.28.1",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^5.2.1",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.5",
@@ -26,12 +29,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -60,6 +57,15 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/react-select": "^4.0.14",
     "@types/styled-components": "^5.1.9",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.25.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-react": "^7.23.2",
     "msw": "^0.28.1"
   }
 }

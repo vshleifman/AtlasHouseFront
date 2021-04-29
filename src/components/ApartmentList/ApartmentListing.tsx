@@ -11,6 +11,11 @@ const Container = styled.div`
   border-top: 2px orange dotted;
   border-bottom: 2px orange dotted;
   padding: 1em 0 1em 0;
+  &:hover {
+    background-color: rgba(13, 15, 146, 0.452);
+    border: 2px orange solid;
+    transition: background-color 0.2s, border 0.2s;
+  }
 `;
 
 const BaseBox = styled.div`
