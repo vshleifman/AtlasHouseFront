@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Select, { OptionsType } from "react-select";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RefObject, useContext } from "react";
 import {
   FilterContext,
@@ -9,15 +9,27 @@ import {
 } from "./FilterProvider";
 import { Btn } from "styles/styles";
 import { setPropertiesThunk } from "./PropertyThunks";
+import { userSelector } from "selectors/selectors";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: grid;
   grid-area: filter;
   align-items: start;
   grid-template-columns: 1fr 1fr;
+  grid-template-areas: "sort filter" "btn btn";
   margin: 1em;
   gap: 1em;
 `;
+
+const StButtons = styled.div`
+  grid-area: btn;
+  display: grid;
+  grid-template-columns: ${(props: any) => props.cols};
+  justify-items: ${(props: any) => props.just};
+` as any;
+
+const StLink = styled(Link)``;
 
 const sortOptions = [
   { value: "price:desc", label: "Price: highest first" },
@@ -29,14 +41,17 @@ const sortOptions = [
 const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
   const { filters, setFilters } = useContext(FilterContext);
 
+  const dispatch = useDispatch();
+
+  const user = useSelector(userSelector).userData;
+  const isAdmin = user?.role === 2;
+
   const filterOptions = Object.keys(filters.amenities).map((amenity) => {
     return {
       value: amenity,
       label: `${amenity.charAt(0).toUpperCase()}${amenity.slice(1)}`,
     };
   });
-
-  const dispatch = useDispatch();
 
   const onFilterSelect = (
     options: OptionsType<{ value: string; label: string }>
@@ -65,7 +80,7 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
 
   return (
     <Container ref={reference}>
-      <div>
+      <div style={{ gridArea: "sort" }}>
         Sort By:
         <Select
           options={sortOptions}
@@ -75,7 +90,7 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
         />
       </div>
 
-      <div>
+      <div style={{ gridArea: "filter" }}>
         Filter:
         <Select
           isMulti
@@ -86,11 +101,25 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
         />
       </div>
 
-      <Btn onClick={() => onClick()}>Show All Apartments</Btn>
+      <StButtons
+        cols={isAdmin ? "1fr 1fr 1fr" : "1fr 1fr"}
+        just={isAdmin ? "center" : "initial"}
+      >
+        {isAdmin ? (
+          <StLink to="/add_apartment">
+            <Btn>Add New Apartment</Btn>
+          </StLink>
+        ) : null}
 
-      <Btn style={{ justifySelf: "end" }} onClick={() => onClick(filters)}>
-        Search Apartments
-      </Btn>
+        <Btn onClick={() => onClick()}>Show All Apartments</Btn>
+
+        <Btn
+          style={!isAdmin ? { justifySelf: "end" } : undefined}
+          onClick={() => onClick(filters)}
+        >
+          Search Apartments
+        </Btn>
+      </StButtons>
     </Container>
   );
 };

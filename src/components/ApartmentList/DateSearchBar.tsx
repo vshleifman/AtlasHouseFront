@@ -4,17 +4,13 @@ import { useContext, useState } from "react";
 import { FilterContext } from "./FilterProvider";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Heading } from "styles/styles";
 
 const Container = styled.div`
   display: grid;
   grid-area: search;
   grid-template: "head" 5em "date" auto/ auto;
   place-items: center;
-`;
-
-const Heading = styled.h3`
-  font-size: 2em;
-  grid-area: head;
 `;
 
 const StDatePicker = styled.div`

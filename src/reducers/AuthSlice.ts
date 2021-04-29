@@ -47,7 +47,7 @@ export const authThunk = (
   try {
     let response;
     if (endpoint === "up") {
-      response = await api.post("/signup", userData);
+      response = await api.post("/signup", { user: userData });
     } else {
       response = await api.post("/signin", {
         email: userData.email,
