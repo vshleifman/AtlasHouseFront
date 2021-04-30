@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { tryAutoSignin } from "reducers/AuthSlice";
-import styled from "styled-components";
-import { Btn } from "styles/styles";
-import SigninFrom from "./SigninForm";
-import SignupFrom from "./SignupForm";
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { tryAutoSignin } from 'reducers/AuthSlice';
+import styled from 'styled-components';
+import { Btn } from 'styles/styles';
+import SigninFrom from './SigninForm';
+import SignupFrom from './SignupForm';
 
 const Container = styled.div`
   display: grid;
@@ -28,7 +28,7 @@ const AuthForm = () => {
       {isSingin === true ? <SigninFrom /> : <SignupFrom />}
 
       <Btn onClick={() => setIsSingin(!isSingin)}>
-        {`Sign ${isSingin ? "up" : "in"} instead`}
+        {`Sign ${isSingin ? 'up' : 'in'} instead`}
       </Btn>
     </Container>
   );

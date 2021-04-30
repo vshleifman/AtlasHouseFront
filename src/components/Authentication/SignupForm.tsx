@@ -1,11 +1,11 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import { useDispatch } from "react-redux";
-import { authThunk } from "../../reducers/AuthSlice";
-import { useHistory } from "react-router";
-import { MemoryHistory } from "history";
-import { Btn } from "styles/styles";
-import styled from "styled-components";
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { authThunk } from '../../reducers/AuthSlice';
+import { useHistory } from 'react-router';
+import { MemoryHistory } from 'history';
+import { Btn } from 'styles/styles';
+import styled from 'styled-components';
 
 const Container = styled.div`
   display: grid;
@@ -18,24 +18,24 @@ const SignupForm = () => {
   return (
     <Formik
       initialValues={{
-        firstName: "",
-        email: "",
-        password: "",
-        lastName: "",
+        firstName: '',
+        email: '',
+        password: '',
+        lastName: '',
       }}
       validationSchema={Yup.object({
-        firstName: Yup.string().required("Required"),
-        lastName: Yup.string().required("Required"),
-        email: Yup.string().email("Invalid email adress").required("Required"),
-        password: Yup.string().min(7).required("Required"),
+        firstName: Yup.string().required('Required'),
+        lastName: Yup.string().required('Required'),
+        email: Yup.string().email('Invalid email adress').required('Required'),
+        password: Yup.string().min(7).required('Required'),
       })}
       onSubmit={(
         { firstName, email, password, lastName },
-        { setSubmitting }
+        { setSubmitting },
       ) => {
         setSubmitting(false);
         dispatch(
-          authThunk("up", { firstName, email, password, lastName }, history)
+          authThunk('up', { firstName, email, password, lastName }, history),
         );
       }}
     >

@@ -1,15 +1,15 @@
-import moment from "moment";
-import styled from "styled-components";
-import { useContext, useState } from "react";
-import { FilterContext } from "./FilterProvider";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { Heading } from "styles/styles";
+import moment from 'moment';
+import styled from 'styled-components';
+import { useContext, useState } from 'react';
+import { FilterContext } from './FilterProvider';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Heading } from 'styles/styles';
 
 const Container = styled.div`
   display: grid;
   grid-area: search;
-  grid-template: "head" 5em "date" auto/ auto;
+  grid-template: 'head' 5em 'date' auto/ auto;
   place-items: center;
 `;
 
@@ -22,7 +22,7 @@ const DateSearchBar = () => {
   const { filters, setFilters } = useContext(FilterContext);
 
   const [startDate, setStartDate] = useState(moment().toDate());
-  const [endDate, setEndDate] = useState(moment().add(1, "d").toDate());
+  const [endDate, setEndDate] = useState(moment().add(1, 'd').toDate());
 
   const onChange = ([start, end]: [Date, Date]) => {
     setStartDate(start);

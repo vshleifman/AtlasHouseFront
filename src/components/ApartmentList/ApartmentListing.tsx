@@ -1,12 +1,12 @@
-import moment from "moment";
-import { useContext } from "react";
-import styled from "styled-components";
-import { Apartment } from "types/types";
-import { FilterContext } from "./FilterProvider";
+import moment from 'moment';
+import { useContext } from 'react';
+import styled from 'styled-components';
+import { Apartment } from 'types/types';
+import { FilterContext } from './FilterProvider';
 
 const Container = styled.div`
   display: grid;
-  grid-template: "photo name name" 1fr "photo description price" 1fr "photo description price" 1fr / 2fr 3fr 1fr;
+  grid-template: 'photo name name' 1fr 'photo description price' 1fr 'photo description price' 1fr / 2fr 3fr 1fr;
   margin: 5px;
   border-top: 2px orange dotted;
   border-bottom: 2px orange dotted;
@@ -47,7 +47,7 @@ const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
   }) => {
     const initialRange = {
       from: moment().hour(12).toISOString(),
-      to: moment().hour(14).add(1, "d").toISOString(),
+      to: moment().hour(14).add(1, 'd').toISOString(),
     };
 
     if (dateRange.from === undefined) {
@@ -57,11 +57,11 @@ const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
     console.log(dateRange);
 
     const bool = apartment.bookings.every(
-      (booking) =>
+      booking =>
         moment(booking.checkIn).toISOString() >=
           moment(dateRange.to).toISOString() ||
         moment(booking.checkOut).toISOString() <=
-          moment(dateRange.from).toISOString()
+          moment(dateRange.from).toISOString(),
     );
     return bool;
   };

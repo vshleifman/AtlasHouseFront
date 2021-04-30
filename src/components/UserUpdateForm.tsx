@@ -1,6 +1,6 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useDispatch } from "react-redux";
-import { updateUserThunk } from "reducers/UserSlice";
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useDispatch } from 'react-redux';
+import { updateUserThunk } from 'reducers/UserSlice';
 
 const UserUpdateForm = () => {
   const dispatch = useDispatch();
@@ -8,17 +8,17 @@ const UserUpdateForm = () => {
   return (
     <Formik
       initialValues={{
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        telNum: "",
-        country: "",
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        telNum: '',
+        country: '',
       }}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(false);
         let valuesToUPD = {};
-        Object.keys(values).forEach((value) => {
+        Object.keys(values).forEach(value => {
           // @ts-ignore
           if (values[value]) {
             // @ts-ignore

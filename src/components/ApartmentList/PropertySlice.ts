@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { Apartment, InitialPropertyState } from "types/types";
+import { createSlice } from '@reduxjs/toolkit';
+import { Apartment, InitialPropertyState } from 'types/types';
 
 const initialState: InitialPropertyState = {
   properties: undefined,
@@ -8,7 +8,7 @@ const initialState: InitialPropertyState = {
 };
 
 const PropertySlice = createSlice({
-  name: "property",
+  name: 'property',
   initialState,
   reducers: {
     setProperties(state, action) {

@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import api from "api/axiosInstance";
-import { AppThunk } from "store/store";
-import { InitialBookingState } from "types/types";
+import { createSlice } from '@reduxjs/toolkit';
+import api from 'api/axiosInstance';
+import { AppThunk } from 'store/store';
+import { InitialBookingState } from 'types/types';
 
 const initialBookingState: InitialBookingState = {
   bookings: undefined,
@@ -9,7 +9,7 @@ const initialBookingState: InitialBookingState = {
 };
 
 const BookingSlice = createSlice({
-  name: "booking",
+  name: 'booking',
   initialState: initialBookingState,
   reducers: {
     setBookings(state, action) {
@@ -21,9 +21,9 @@ const BookingSlice = createSlice({
   },
 });
 
-export const setBookingsThunk = (): AppThunk => async (dispatch) => {
+export const setBookingsThunk = (): AppThunk => async dispatch => {
   try {
-    const response = await api.get("/bookings");
+    const response = await api.get('/bookings');
     dispatch(setBookings(response.data));
   } catch (error) {
     dispatch(addError(error));

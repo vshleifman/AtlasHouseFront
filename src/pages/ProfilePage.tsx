@@ -1,7 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
-import { signoutThunk } from "reducers/AuthSlice";
-import { userSelector } from "selectors/selectors";
-import styled from "styled-components";
+import { useDispatch, useSelector } from 'react-redux';
+import { signoutThunk } from 'reducers/AuthSlice';
+import { userSelector } from 'selectors/selectors';
+import styled from 'styled-components';
 
 const Container = styled.div`
   display: grid;

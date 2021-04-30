@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
-import api from "api/axiosInstance";
-import { AppThunk } from "store/store";
-import { initialUserState, setUser, setUserThunk } from "./UserSlice";
-import { MemoryHistory } from "history";
-import { InitialAuthState, User } from "types/types";
+import { createSlice } from '@reduxjs/toolkit';
+import api from 'api/axiosInstance';
+import { AppThunk } from 'store/store';
+import { initialUserState, setUser, setUserThunk } from './UserSlice';
+import { MemoryHistory } from 'history';
+import { InitialAuthState, User } from 'types/types';
 
 const initialAuthState: InitialAuthState = {
   token: undefined,
@@ -11,7 +11,7 @@ const initialAuthState: InitialAuthState = {
 };
 
 const AuthSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState: initialAuthState,
   reducers: {
     signin(state, action) {
@@ -29,8 +29,8 @@ const AuthSlice = createSlice({
   },
 });
 
-export const tryAutoSignin = (): AppThunk => (dispatch) => {
-  const token = localStorage.getItem("token");
+export const tryAutoSignin = (): AppThunk => dispatch => {
+  const token = localStorage.getItem('token');
   if (token) {
     dispatch(signin(token));
     dispatch(setUserThunk());
@@ -42,34 +42,34 @@ export const tryAutoSignin = (): AppThunk => (dispatch) => {
 export const authThunk = (
   endpoint: string,
   userData: Partial<User>,
-  history: MemoryHistory
-): AppThunk => async (dispatch) => {
+  history: MemoryHistory,
+): AppThunk => async dispatch => {
   try {
     let response;
-    if (endpoint === "up") {
-      response = await api.post("/signup", { user: userData });
+    if (endpoint === 'up') {
+      response = await api.post('/signup', { user: userData });
     } else {
-      response = await api.post("/signin", {
+      response = await api.post('/signin', {
         email: userData.email,
         password: userData.password,
       });
     }
     dispatch(signin(response.data.token));
     dispatch(setUser(response.data.user));
-    localStorage.setItem("token", response.data.token);
+    localStorage.setItem('token', response.data.token);
     history.goBack();
   } catch (error) {
     dispatch(addError(error.response.data.msg));
   }
 };
 
-export const signoutThunk = (): AppThunk => async (dispatch) => {
+export const signoutThunk = (): AppThunk => async dispatch => {
   try {
-    await api.post("/signout");
-    localStorage.removeItem("token");
+    await api.post('/signout');
+    localStorage.removeItem('token');
     dispatch(signout());
     dispatch(setUser(initialUserState));
-    window.location.replace("/");
+    window.location.replace('/');
   } catch (error) {
     dispatch(addError(error.response.data.msg));
   }

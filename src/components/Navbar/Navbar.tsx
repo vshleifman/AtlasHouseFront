@@ -1,12 +1,12 @@
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { userSelector } from "selectors/selectors";
-import styled from "styled-components";
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { userSelector } from 'selectors/selectors';
+import styled from 'styled-components';
 
 const Container = styled.div`
   display: grid;
   place-items: baseline center;
-  grid-template: "homeLink apartmentsLink bookingsLink contactsOrCustomersLink userName" 1fr / 3fr 1fr auto 1fr 1fr;
+  grid-template: 'homeLink apartmentsLink bookingsLink contactsOrCustomersLink userName' 1fr / 3fr 1fr auto 1fr 1fr;
   padding: 2px;
   font-size: 1.3em;
 ` as any;
@@ -54,9 +54,9 @@ const Navbar = ({ className }: any) => {
         <BookingsLink to="/bookings">Bookings</BookingsLink>
       ) : null}
       <ContactsOrCustomersLink
-        to={user?.role !== 2 ? "/contacts" : "/customers"}
+        to={user?.role !== 2 ? '/contacts' : '/customers'}
       >
-        {user?.role !== 2 ? "Contacts" : "Customers"}
+        {user?.role !== 2 ? 'Contacts' : 'Customers'}
       </ContactsOrCustomersLink>
 
       {user?.role === 0 ? (

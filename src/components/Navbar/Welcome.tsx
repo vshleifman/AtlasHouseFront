@@ -1,11 +1,11 @@
-import { RefObject } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { Btn } from "styles/styles";
+import { RefObject } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { Btn } from 'styles/styles';
 
 const Container = styled.div`
   display: grid;
-  grid-template: ". wlcmText ." 1fr " . . . " 1fr "aprtm . down" 1fr / 1fr 1fr 1fr;
+  grid-template: '. wlcmText .' 1fr ' . . . ' 1fr 'aprtm . down' 1fr / 1fr 1fr 1fr;
   padding-top: 30vh;
   grid-area: welcome;
 `;
@@ -46,7 +46,7 @@ const Welcome = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
         onClick={() => {
           reference.current !== null
             ? reference.current.scrollIntoView()
-            : console.log("null");
+            : console.log('null');
         }}
       >
         About Us

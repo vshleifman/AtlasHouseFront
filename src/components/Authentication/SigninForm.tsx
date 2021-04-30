@@ -1,11 +1,11 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import { useDispatch } from "react-redux";
-import { authThunk } from "../../reducers/AuthSlice";
-import { useHistory } from "react-router";
-import { MemoryHistory } from "history";
-import { Btn } from "styles/styles";
-import styled from "styled-components";
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { authThunk } from '../../reducers/AuthSlice';
+import { useHistory } from 'react-router';
+import { MemoryHistory } from 'history';
+import { Btn } from 'styles/styles';
+import styled from 'styled-components';
 
 const Container = styled.div`
   display: grid;
@@ -18,14 +18,14 @@ const SigninForm = () => {
 
   return (
     <Formik
-      initialValues={{ email: "", password: "" }}
+      initialValues={{ email: '', password: '' }}
       validationSchema={Yup.object({
-        email: Yup.string().email("Invalid email adress").required("Required"),
-        password: Yup.string().min(7).required("Required"),
+        email: Yup.string().email('Invalid email adress').required('Required'),
+        password: Yup.string().min(7).required('Required'),
       })}
       onSubmit={({ email, password }, { setSubmitting }) => {
         setSubmitting(false);
-        dispatch(authThunk("in", { email, password }, history));
+        dispatch(authThunk('in', { email, password }, history));
       }}
     >
       <Form>

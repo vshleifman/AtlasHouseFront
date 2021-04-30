@@ -1,23 +1,23 @@
-import styled from "styled-components";
-import Select, { OptionsType } from "react-select";
-import { useDispatch, useSelector } from "react-redux";
-import { RefObject, useContext } from "react";
+import styled from 'styled-components';
+import Select, { OptionsType } from 'react-select';
+import { useDispatch, useSelector } from 'react-redux';
+import { RefObject, useContext } from 'react';
 import {
   FilterContext,
   initialFiltersState,
   FilterState,
-} from "./FilterProvider";
-import { Btn } from "styles/styles";
-import { setPropertiesThunk } from "./PropertyThunks";
-import { userSelector } from "selectors/selectors";
-import { Link } from "react-router-dom";
+} from './FilterProvider';
+import { Btn } from 'styles/styles';
+import { setPropertiesThunk } from './PropertyThunks';
+import { userSelector } from 'selectors/selectors';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   display: grid;
   grid-area: filter;
   align-items: start;
   grid-template-columns: 1fr 1fr;
-  grid-template-areas: "sort filter" "btn btn";
+  grid-template-areas: 'sort filter' 'btn btn';
   margin: 1em;
   gap: 1em;
 `;
@@ -32,10 +32,10 @@ const StButtons = styled.div`
 const StLink = styled(Link)``;
 
 const sortOptions = [
-  { value: "price:desc", label: "Price: highest first" },
-  { value: "price:asc", label: "Price: lowest first" },
-  { value: "area:desc", label: "Area: highest first" },
-  { value: "area:asc", label: "Area: lowest first" },
+  { value: 'price:desc', label: 'Price: highest first' },
+  { value: 'price:asc', label: 'Price: lowest first' },
+  { value: 'area:desc', label: 'Area: highest first' },
+  { value: 'area:asc', label: 'Area: lowest first' },
 ];
 
 const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
@@ -46,7 +46,7 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
   const user = useSelector(userSelector).userData;
   const isAdmin = user?.role === 2;
 
-  const filterOptions = Object.keys(filters.amenities).map((amenity) => {
+  const filterOptions = Object.keys(filters.amenities).map(amenity => {
     return {
       value: amenity,
       label: `${amenity.charAt(0).toUpperCase()}${amenity.slice(1)}`,
@@ -54,14 +54,14 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
   });
 
   const onFilterSelect = (
-    options: OptionsType<{ value: string; label: string }>
+    options: OptionsType<{ value: string; label: string }>,
   ) => {
-    type FilterKey = keyof FilterState["amenities"];
-    const values = options.map((item) => item.value) as FilterKey[];
+    type FilterKey = keyof FilterState['amenities'];
+    const values = options.map(item => item.value) as FilterKey[];
 
     const tempAmenities = { ...initialFiltersState.amenities };
 
-    values.forEach((val) => {
+    values.forEach(val => {
       tempAmenities[val] = true;
     });
 
@@ -70,27 +70,27 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
 
   const onClick = (filters?: FilterState) => {
     if (filters && !filters.dateRange.to) {
-      return alert("Please select an end date!");
+      return alert('Please select an end date!');
     }
     dispatch(setPropertiesThunk(filters));
     reference.current !== null
       ? reference.current.scrollIntoView()
-      : console.log("null");
+      : console.log('null');
   };
 
   return (
     <Container ref={reference}>
-      <div style={{ gridArea: "sort" }}>
+      <div style={{ gridArea: 'sort' }}>
         Sort By:
         <Select
           options={sortOptions}
-          onChange={(e) => {
+          onChange={e => {
             setFilters({ ...filters, sortBy: e!.value });
           }}
         />
       </div>
 
-      <div style={{ gridArea: "filter" }}>
+      <div style={{ gridArea: 'filter' }}>
         Filter:
         <Select
           isMulti
@@ -102,8 +102,8 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
       </div>
 
       <StButtons
-        cols={isAdmin ? "1fr 1fr 1fr" : "1fr 1fr"}
-        just={isAdmin ? "center" : "initial"}
+        cols={isAdmin ? '1fr 1fr 1fr' : '1fr 1fr'}
+        just={isAdmin ? 'center' : 'initial'}
       >
         {isAdmin ? (
           <StLink to="/add_apartment">
@@ -114,7 +114,7 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
         <Btn onClick={() => onClick()}>Show All Apartments</Btn>
 
         <Btn
-          style={!isAdmin ? { justifySelf: "end" } : undefined}
+          style={!isAdmin ? { justifySelf: 'end' } : undefined}
           onClick={() => onClick(filters)}
         >
           Search Apartments

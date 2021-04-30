@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import api from "api/axiosInstance";
-import { AppThunk } from "store/store";
-import { InitialUserState } from "types/types";
+import { createSlice } from '@reduxjs/toolkit';
+import api from 'api/axiosInstance';
+import { AppThunk } from 'store/store';
+import { InitialUserState } from 'types/types';
 
 export const initialUserState: Partial<InitialUserState> = {
   userData: undefined,
@@ -9,7 +9,7 @@ export const initialUserState: Partial<InitialUserState> = {
 };
 
 const UserSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState: initialUserState,
   reducers: {
     setUser(state, action) {
@@ -21,9 +21,9 @@ const UserSlice = createSlice({
   },
 });
 
-export const setUserThunk = (): AppThunk => async (dispatch) => {
+export const setUserThunk = (): AppThunk => async dispatch => {
   try {
-    const response = await api.get("/users/me");
+    const response = await api.get('/users/me');
 
     dispatch(setUser(response.data));
   } catch (error) {
@@ -32,10 +32,10 @@ export const setUserThunk = (): AppThunk => async (dispatch) => {
 };
 
 export const updateUserThunk = (
-  data: Partial<InitialUserState>
-): AppThunk => async (dispatch) => {
+  data: Partial<InitialUserState>,
+): AppThunk => async dispatch => {
   try {
-    const response = await api.patch("/users/me", data);
+    const response = await api.patch('/users/me', data);
     dispatch(setUser(response.data));
   } catch (error) {
     dispatch(addError(error.response.data.msg));
