@@ -1,17 +1,16 @@
-import Navbar from './components/Navbar/Navbar';
-import { Route, Switch, useLocation } from 'react-router-dom';
-import Home from './pages/Home';
-import Contacts from 'pages/Contacts';
-import Apartments from 'components/ApartmentList/Apartments';
-import ProfilePage from 'pages/ProfilePage';
-import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { tryAutoSignin } from 'reducers/AuthSlice';
-import styled, { createGlobalStyle } from 'styled-components';
-import Welcome from 'components/Navbar/Welcome';
-import AuthForm from 'components/Authentication/AuthForm';
-import ApartmentsSwitch from 'components/ApartmentList/ApartmentsSwitch';
-import rigaPanorama from 'images/Riga_panorama.jpg';
+import Navbar from "./components/Navbar/Navbar";
+import { Route, Switch, useLocation } from "react-router-dom";
+import Home from "./pages/Home";
+import Contacts from "pages/Contacts";
+import Apartments from "components/ApartmentList/Apartments";
+import ProfilePage from "pages/ProfilePage";
+import { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { tryAutoSignin } from "reducers/AuthSlice";
+import styled, { createGlobalStyle } from "styled-components";
+import Welcome from "components/Navbar/Welcome";
+import AuthForm from "components/Authentication/AuthForm";
+import AddApartment from "components/ApartmentList/AddApartment";
 
 const GlobalFonts = createGlobalStyle`
 body {
@@ -27,31 +26,31 @@ const Container = styled.div`
 `;
 
 const StSwitch = styled.div`
-	grid-area: switch;
-	margin-top: 2em;
-	display: grid;
+  grid-area: switch;
+  margin-top: 2em;
+  display: grid;
 `;
 
 const NavBackground = styled.header`
-	grid-area: nav;
-	background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-		url('${rigaPanorama}');
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
-	height: ${(props: any) => props.height};
+  grid-area: nav;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("https://upload.wikimedia.org/wikipedia/commons/b/b8/Riga_panorama.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: ${(props: any) => props.height};
 ` as any;
 
 const App = () => {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	const location = useLocation();
+  const location = useLocation();
 
-	useEffect(() => {
-		dispatch(tryAutoSignin());
-	}, [dispatch]);
+  useEffect(() => {
+    dispatch(tryAutoSignin());
+  }, [dispatch]);
 
-	const ref = useRef(null);
+  const ref = useRef(null);
 
   return (
     <Container>
