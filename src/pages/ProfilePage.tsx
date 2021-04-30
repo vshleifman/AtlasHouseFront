@@ -10,23 +10,26 @@ const Container = styled.div`
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const user = useSelector(userSelector).userData;
-
-  return (
-    <Container>
-      <div>
-        <p>First Name: {user?.firstName}</p>
-        <p>Last Name: {user?.lastName}</p>
-        <p>Email: {user?.email}</p>
-      </div>
-      <button
-        onClick={() => {
-          dispatch(signoutThunk());
-        }}
-      >
-        Signout
-      </button>
-    </Container>
-  );
+  if (!user) {
+    return <Container></Container>;
+  } else {
+    return (
+      <Container>
+        <div>
+          <p>First Name: {user.firstName}</p>
+          <p>Last Name: {user.lastName}</p>
+          <p>Email: {user.email}</p>
+        </div>
+        <button
+          onClick={() => {
+            dispatch(signoutThunk());
+          }}
+        >
+          Signout
+        </button>
+      </Container>
+    );
+  }
 };
 
 export default ProfilePage;
