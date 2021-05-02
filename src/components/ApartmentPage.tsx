@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { Btn } from 'styles/styles';
 import { Apartment } from 'types/types';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
+import rigaPan from 'images/Riga_panorama.jpg';
+import Carousel from 'react-bootstrap/carousel';
 
 const Container = styled.div`
   display: grid;
-  grid-template: '. head .' 1fr 'carousel carousel carousel' 3fr '. descblock .' auto / 1fr 3fr 1fr;
+  grid-template: '. head .' 1fr 'carousel carousel carousel' 8fr '. descblock .' auto / 1fr 3fr 1fr;
   place-items: stretch;
   width: 100vw;
 `;
@@ -21,12 +21,12 @@ const BaseUnit = styled.div`
   display: grid;
   place-items: center;
 `;
-const Carousel = styled(BaseUnit)`
-  grid-area: carousel;
-  border: 1px solid black;
-  background: rgba(24, 13, 128, 0.548);
-  color: brown;
-`;
+// const Carousel = styled(BaseUnit)`
+//   grid-area: carousel;
+//   border: 1px solid black;
+//   /* background: rgba(24, 13, 128, 0.548); */
+//   color: brown;
+// `;
 
 const StSlider = styled(Slider)`
   max-width: 90vw;
@@ -57,24 +57,31 @@ const sliderSettings = {
   centerPadding: '0px',
 };
 
+const TestDiv = styled.div`
+  /* height: 100%;
+  width: 100%; */
+  background: red;
+  display: grid;
+  place-items: inherit;
+  grid-area: carousel;
+`;
+
 const ApartmentPage = ({ apartment }: { apartment: Apartment }) => {
   console.log(apartment.codeID);
 
   return (
     <Container>
       <Heading>{apartment.name || 'banana'}</Heading>
-      <Carousel>
-        <StSlider {...sliderSettings}>
-          <div
-            style={{
-              backgroundImage:
-                'https://upload.wikimedia.org/wikipedia/commons/b/b8/Riga_panorama.jpg',
-            }}
-          ></div>
-          <div>2</div>
-          <div>3</div>
-        </StSlider>
-      </Carousel>
+      <TestDiv>
+        <Carousel>
+          <Carousel.Item>
+            <div>1</div>
+          </Carousel.Item>
+          <Carousel.Item>
+            <div>2</div>
+          </Carousel.Item>
+        </Carousel>
+      </TestDiv>
       <DescBlock>
         <Description>{apartment.description}</Description>
         <Amenities>Amenities</Amenities>

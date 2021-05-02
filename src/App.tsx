@@ -12,12 +12,19 @@ import AuthForm from 'components/Authentication/AuthForm';
 import ApartmentsSwitch from 'components/ApartmentList/ApartmentsSwitch';
 import rigaPanorama from 'images/Riga_panorama.jpg';
 import AddApartment from 'components/ApartmentList/AddApartment';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const GlobalFonts = createGlobalStyle`
 body {
 	font-family: 'Playfair Display', serif;
 }
 
+a {
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+}
 `;
 const Container = styled.div`
   display: grid;
@@ -34,8 +41,7 @@ const StSwitch = styled.div`
 
 const NavBackground = styled.header`
   grid-area: nav;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url('${rigaPanorama}');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${rigaPanorama}');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
