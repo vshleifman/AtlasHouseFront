@@ -13,18 +13,18 @@ import ApartmentsSwitch from 'components/ApartmentList/ApartmentsSwitch';
 import rigaPanorama from 'images/Riga_panorama.jpg';
 import AddApartment from 'components/ApartmentList/AddApartment';
 
-const GlobalFonts = createGlobalStyle`
-body {
-	font-family: 'Playfair Display', serif;
-}
-
-a {
-  &:hover {
-    text-decoration: none;
-    color: inherit;
+const GlobalStyles = createGlobalStyle`
+  body {
+    font-family: 'Playfair Display', serif;
   }
-}
+
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+  }
 `;
+
 const Container = styled.div`
   display: grid;
   grid-template: 'nav nav nav' auto ' . switch . ' auto ' . . .' 5em / 1fr 3fr 1fr;
@@ -60,7 +60,7 @@ const App = () => {
 
   return (
     <Container>
-      <GlobalFonts />
+      <GlobalStyles />
       <NavBackground height={location.pathname === '/' ? '100vh' : '10vh'}>
         <Navbar />
         {location.pathname === '/' ? <Welcome reference={ref} /> : null}

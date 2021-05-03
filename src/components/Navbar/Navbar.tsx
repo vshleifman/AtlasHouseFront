@@ -9,7 +9,7 @@ const Container = styled.div`
   grid-template: 'homeLink apartmentsLink bookingsLink contactsOrCustomersLink userName' 1fr / 3fr 1fr auto 1fr 1fr;
   padding: 2px;
   font-size: 1.3em;
-` as any;
+`;
 
 const BaseLink = styled(NavLink)`
   margin: 1em 1em 0 1em;
@@ -43,19 +43,15 @@ const UserLink = styled(BaseLink)`
   grid-area: userName;
 `;
 
-const Navbar = ({ className }: any) => {
+const Navbar = () => {
   const user = useSelector(userSelector).userData;
 
   return (
-    <Container className={className}>
+    <Container>
       <HomeLink to="/">AtlasHouse</HomeLink>
       <ApartmentsLink to="/apartments">Apartments</ApartmentsLink>
-      {user?.role !== 0 ? (
-        <BookingsLink to="/bookings">Bookings</BookingsLink>
-      ) : null}
-      <ContactsOrCustomersLink
-        to={user?.role !== 2 ? '/contacts' : '/customers'}
-      >
+      {user?.role !== 0 ? <BookingsLink to="/bookings">Bookings</BookingsLink> : null}
+      <ContactsOrCustomersLink to={user?.role !== 2 ? '/contacts' : '/customers'}>
         {user?.role !== 2 ? 'Contacts' : 'Customers'}
       </ContactsOrCustomersLink>
 

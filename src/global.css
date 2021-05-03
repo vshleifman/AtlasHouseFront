@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-navbar: #fad400;
+  --color-primary: #456990;
+  --color-secondary: #fad400;
+  --color-success: #7dcd85;
+  --color-error: #ee4266;
+
+  @apply text-[62.5%];
+  @apply lg:text-[56.25%];
+  @apply md:text-[50%];
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

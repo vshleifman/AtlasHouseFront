@@ -80,7 +80,7 @@ const ApartmentPage = ({ apartment }: { apartment: Apartment }) => {
 
   return (
     <Container>
-      <Heading>{apartment.name || 'banana'}</Heading>
+      <Heading>{apartment.name}</Heading>
       <Carousel>
         <Slider dots={true}>
           <TestDiv />
