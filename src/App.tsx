@@ -12,7 +12,6 @@ import AuthForm from 'components/Authentication/AuthForm';
 import ApartmentsSwitch from 'components/ApartmentList/ApartmentsSwitch';
 import rigaPanorama from 'images/Riga_panorama.jpg';
 import AddApartment from 'components/ApartmentList/AddApartment';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const GlobalFonts = createGlobalStyle`
 body {

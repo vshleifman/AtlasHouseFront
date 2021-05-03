@@ -5,6 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import store from 'store/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 ReactDOM.render(
   <React.StrictMode>
