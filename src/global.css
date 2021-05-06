@@ -4,8 +4,9 @@
 
 :root {
   --color-navbar: #fad400;
-  --color-primary: #456990;
-  --color-secondary: #fad400;
+  --color-primary: rgba(65, 90, 233, 0.288);
+  --color-secondary: orange;
+  --color-hover: rgba(21, 34, 107, 0.788);
   --color-success: #7dcd85;
   --color-error: #ee4266;
 
