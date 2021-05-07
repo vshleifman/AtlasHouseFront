@@ -6,14 +6,19 @@ import ProfilePage from 'pages/ProfilePage';
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { tryAutoSignin } from 'reducers/AuthSlice';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import Welcome from 'components/Navbar/Welcome';
 import AuthForm from 'components/Authentication/AuthForm';
 import ApartmentsSwitch from 'components/ApartmentList/ApartmentsSwitch';
 import rigaPanorama from 'images/Riga_panorama.jpg';
 import AddApartment from 'components/ApartmentList/AddApartment';
 
-const GlobalStyles = createGlobalStyle`
+const Container = styled.div`
+  display: grid;
+  grid-template: 'nav nav nav' auto ' . switch . ' auto ' . . .' 5em / 1fr 3fr 1fr;
+  font-family: 'Playfair Display';
+  font-size: 1.8vh;
+
   body {
     font-family: 'Playfair Display', serif;
   }
@@ -23,13 +28,6 @@ const GlobalStyles = createGlobalStyle`
       text-decoration: none;
     }
   }
-`;
-
-const Container = styled.div`
-  display: grid;
-  grid-template: 'nav nav nav' auto ' . switch . ' auto ' . . .' 5em / 1fr 3fr 1fr;
-  font-family: 'Playfair Display';
-  font-size: 1.8vh;
 `;
 
 const StSwitch = styled.div`
@@ -60,7 +58,6 @@ const App = () => {
 
   return (
     <Container>
-      <GlobalStyles />
       <NavBackground height={location.pathname === '/' ? '100vh' : '10vh'}>
         <Navbar />
         {location.pathname === '/' ? <Welcome reference={ref} /> : null}

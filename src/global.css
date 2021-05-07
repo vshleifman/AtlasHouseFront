@@ -14,9 +14,3 @@
   @apply lg:text-[56.25%];
   @apply md:text-[50%];
 }
-
-.flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
