@@ -4,13 +4,8 @@ import { useDispatch } from 'react-redux';
 import { authThunk } from '../../reducers/AuthSlice';
 import { useHistory } from 'react-router';
 import { MemoryHistory } from 'history';
-import { Btn } from 'styles/styles';
+import { Btn, Heading } from 'styles/styles';
 import styled from 'styled-components';
-
-const Container = styled.div`
-  display: grid;
-  place-items: center;
-`;
 
 const SignupForm = () => {
   const dispatch = useDispatch();
@@ -29,19 +24,14 @@ const SignupForm = () => {
         email: Yup.string().email('Invalid email adress').required('Required'),
         password: Yup.string().min(7).required('Required'),
       })}
-      onSubmit={(
-        { firstName, email, password, lastName },
-        { setSubmitting },
-      ) => {
+      onSubmit={({ firstName, email, password, lastName }, { setSubmitting }) => {
         setSubmitting(false);
-        dispatch(
-          authThunk('up', { firstName, email, password, lastName }, history),
-        );
+        dispatch(authThunk('up', { firstName, email, password, lastName }, history));
       }}
     >
       <Form>
-        <Container>
-          <h3>Create a new account</h3>
+        <div>
+          <Heading>Create a new account</Heading>
 
           <label htmlFor="firstName">
             <h4>First Name</h4>
@@ -68,7 +58,7 @@ const SignupForm = () => {
           <ErrorMessage name="password" />
 
           <Btn type="submit">Sign up</Btn>
-        </Container>
+        </div>
       </Form>
     </Formik>
   );

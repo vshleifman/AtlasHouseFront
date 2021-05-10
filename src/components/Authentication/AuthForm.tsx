@@ -3,15 +3,21 @@ import { useDispatch } from 'react-redux';
 import { tryAutoSignin } from 'reducers/AuthSlice';
 import styled from 'styled-components';
 import { Btn } from 'styles/styles';
+import tw from 'twin.macro';
 import SigninFrom from './SigninForm';
 import SignupFrom from './SignupForm';
 
 const Container = styled.div`
-  display: grid;
-  place-items: center;
-  place-self: center;
-  border: 2px double orange;
-  width: 35em;
+  ${tw`flex flex-col items-center border-2 border-secondary border-double p-2`}
+  input {
+    ${tw`custom-input mt-0.5`}
+  }
+  label {
+    ${tw`mt-2`}
+  }
+  div {
+    ${tw`flex flex-col items-center`}
+  }
 `;
 
 const AuthForm = () => {
@@ -27,9 +33,7 @@ const AuthForm = () => {
     <Container>
       {isSingin === true ? <SigninFrom /> : <SignupFrom />}
 
-      <Btn onClick={() => setIsSingin(!isSingin)}>
-        {`Sign ${isSingin ? 'up' : 'in'} instead`}
-      </Btn>
+      <Btn onClick={() => setIsSingin(!isSingin)}>{`Sign ${isSingin ? 'up' : 'in'} instead`}</Btn>
     </Container>
   );
 };

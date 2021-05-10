@@ -12,12 +12,14 @@ import AuthForm from 'components/Authentication/AuthForm';
 import ApartmentsSwitch from 'components/ApartmentList/ApartmentsSwitch';
 import rigaPanorama from 'images/Riga_panorama.jpg';
 import AddApartment from 'components/ApartmentList/AddApartment';
+import tw from 'twin.macro';
 
 const Container = styled.div`
-  display: grid;
-  grid-template: 'nav nav nav' auto ' . switch . ' auto ' . . .' 5em / 1fr 3fr 1fr;
+  ${tw`flex flex-col items-center`}
+  /* display: grid;
+  grid-template: 'nav nav nav' auto ' . switch . ' auto ' . . .' 5em / 1fr 3fr 1fr; */
   font-family: 'Playfair Display';
-  font-size: 1.8vh;
+  font-size: 1.5rem;
 
   body {
     font-family: 'Playfair Display', serif;
@@ -31,13 +33,13 @@ const Container = styled.div`
 `;
 
 const StSwitch = styled.div`
-  grid-area: switch;
   margin-top: 2em;
-  display: grid;
+  justify-content: center;
+  display: flex;
 `;
 
 const NavBackground = styled.header`
-  grid-area: nav;
+  width: 100vw;
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${rigaPanorama}');
   background-size: cover;
   background-position: center;

@@ -10,7 +10,7 @@ const Container = styled.div`
 
   input,
   textarea {
-    ${tw`input`}
+    ${tw`custom-input`}
   }
   form > div {
     margin-top: 2rem;
@@ -103,7 +103,7 @@ const AddApartment = () => {
               <ErrorMessage name="mainPhoto" /> */}
           </div>
 
-          <Btn tw="place-self-center" type="submit">
+          <Btn tw="place-self-center w-22" type="submit">
             add apartment
           </Btn>
         </Form>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Btn } from 'styles/styles';
+import { Btn, Heading } from 'styles/styles';
 import { Apartment } from 'types/types';
 import Slider from 'react-slick';
 import rigaPan from 'images/Riga_panorama.jpg';
@@ -9,12 +9,6 @@ const Container = styled.div`
   grid-template: '. head .' 1fr 'carousel carousel carousel' 3fr '. descblock .' auto / 1fr 3fr 1fr;
   place-items: stretch;
   width: 100vw;
-`;
-const Heading = styled.h3`
-  font-size: 2em;
-  grid-area: head;
-  font-weight: inherit;
-  place-self: center;
 `;
 const BaseUnit = styled.div`
   display: grid;
@@ -73,26 +67,36 @@ const TestDiv = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   height: 20em;
+  max-height: 20em;
 `;
 
+const CustomNextArrow = ({ className, to, onClick }: any) => (
+  <button type="button" onClick={onClick} className={`button button--text button--icon ${className}`} aria-label={to}>
+    <div className="icon">a</div>
+  </button>
+);
+
 const ApartmentPage = ({ apartment }: { apartment: Apartment }) => {
-  console.log(apartment.codeID);
+  const onClick = () => {};
 
   return (
     <Container>
       <Heading>{apartment.name}</Heading>
       <Carousel>
-        <Slider dots={true}>
+        <Slider dots={true} nextArrow={<CustomNextArrow />}>
           <TestDiv />
           <div>2</div>
           <div>3</div>
         </Slider>
       </Carousel>
+      {/* <ReactModal /> */}
 
       <DescBlock>
         <Description>{apartment.description}</Description>
         <Amenities>Amenities</Amenities>
-        <BookBtn>Book Apartment</BookBtn>
+        <BookBtn onClick={onClick} tw="w-22">
+          Book Apartment
+        </BookBtn>
       </DescBlock>
     </Container>
   );

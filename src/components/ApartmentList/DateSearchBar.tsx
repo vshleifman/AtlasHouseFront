@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { useContext, useState } from 'react';
 import { FilterContext } from './FilterProvider';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { Heading } from 'styles/styles';
+// import StDatePicker from './DatePickerRestyle';
 
 const Container = styled.div`
   display: grid;
@@ -13,9 +13,11 @@ const Container = styled.div`
   place-items: center;
 `;
 
-const StDatePicker = styled.div`
-  grid-area: date;
-  margin: 2em 0;
+const StDatePicker = styled(DatePicker)`
+  background-color: red;
+  .react-datepicker {
+    background: red;
+  }
 `;
 
 const DateSearchBar = () => {
@@ -42,7 +44,7 @@ const DateSearchBar = () => {
   return (
     <Container>
       <Heading>Enter the dates of your visit</Heading>
-      <StDatePicker>
+      <div tw="grid-area[date] my-4 text-3xl">
         <DatePicker
           onChange={onChange}
           onClickOutside={onClickOutside}
@@ -51,8 +53,9 @@ const DateSearchBar = () => {
           selectsRange
           monthsShown={2}
           inline
+          fixedHeight={true}
         />
-      </StDatePicker>
+      </div>
     </Container>
   );
 };

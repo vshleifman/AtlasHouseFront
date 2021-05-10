@@ -2,11 +2,7 @@ import styled from 'styled-components';
 import Select, { OptionsType } from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import { RefObject, useContext } from 'react';
-import {
-  FilterContext,
-  initialFiltersState,
-  FilterState,
-} from './FilterProvider';
+import { FilterContext, initialFiltersState, FilterState } from './FilterProvider';
 import { Btn } from 'styles/styles';
 import { setPropertiesThunk } from './PropertyThunks';
 import { userSelector } from 'selectors/selectors';
@@ -53,9 +49,7 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
     };
   });
 
-  const onFilterSelect = (
-    options: OptionsType<{ value: string; label: string }>,
-  ) => {
+  const onFilterSelect = (options: OptionsType<{ value: string; label: string }>) => {
     type FilterKey = keyof FilterState['amenities'];
     const values = options.map(item => item.value) as FilterKey[];
 
@@ -73,9 +67,7 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
       return alert('Please select an end date!');
     }
     dispatch(setPropertiesThunk(filters));
-    reference.current !== null
-      ? reference.current.scrollIntoView()
-      : console.log('null');
+    reference.current !== null ? reference.current.scrollIntoView() : console.log('null');
   };
 
   return (
@@ -101,25 +93,21 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
         />
       </div>
 
-      <StButtons
-        cols={isAdmin ? '1fr 1fr 1fr' : '1fr 1fr'}
-        just={isAdmin ? 'center' : 'initial'}
-      >
+      <div tw="flex grid-area[btn]">
         {isAdmin ? (
-          <StLink to="/add_apartment">
-            <Btn>Add New Apartment</Btn>
-          </StLink>
+          <Btn tw="flex ">
+            <Link tw="flex flex-col flex-basis[100%] min-h-full justify-center" to="/add_apartment">
+              Add New Apartment
+            </Link>
+          </Btn>
         ) : null}
 
         <Btn onClick={() => onClick()}>Show All Apartments</Btn>
 
-        <Btn
-          style={!isAdmin ? { justifySelf: 'end' } : undefined}
-          onClick={() => onClick(filters)}
-        >
+        <Btn style={!isAdmin ? { justifySelf: 'end' } : undefined} onClick={() => onClick(filters)}>
           Search Apartments
         </Btn>
-      </StButtons>
+      </div>
     </Container>
   );
 };

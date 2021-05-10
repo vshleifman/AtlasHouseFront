@@ -1,66 +1,37 @@
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { userSelector } from 'selectors/selectors';
-import styled from 'styled-components';
-
-const Container = styled.div`
-  display: grid;
-  place-items: baseline center;
-  grid-template: 'homeLink apartmentsLink bookingsLink contactsOrCustomersLink userName' 1fr / 3fr 1fr auto 1fr 1fr;
-  padding: 2px;
-  font-size: 1.3em;
-`;
+import tw, { styled } from 'twin.macro';
 
 const BaseLink = styled(NavLink)`
-  margin: 1em 1em 0 1em;
-  padding-bottom: 8px;
-  justify-items: end;
-  border-bottom: 2px solid transparent;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: white;
-  font-size: 120%;
-  &:hover {
-    border-bottom: 2px solid orange;
-    transition: border-bottom 0.2s, color 0.2s;
-  }
-`;
-
-const HomeLink = styled(BaseLink)`
-  grid-area: homeLink;
-  justify-self: start;
-`;
-const ApartmentsLink = styled(BaseLink)`
-  grid-area: apartmentsLink; ;
-`;
-const BookingsLink = styled(BaseLink)`
-  grid-area: bookingsLink; ;
-`;
-const ContactsOrCustomersLink = styled(BaseLink)`
-  grid-area: contactsOrCustomersLink; ;
-`;
-const UserLink = styled(BaseLink)`
-  grid-area: userName;
+  ${tw`mt-0.5 mx-2 pb-1 border-b-2 border-color[transparent] uppercase no-underline flex-grow text-white
+  hover:border-secondary transition-all duration-200
+`}
 `;
 
 const Navbar = () => {
   const user = useSelector(userSelector).userData;
 
   return (
-    <Container>
-      <HomeLink to="/">AtlasHouse</HomeLink>
-      <ApartmentsLink to="/apartments">Apartments</ApartmentsLink>
-      {user?.role !== 0 ? <BookingsLink to="/bookings">Bookings</BookingsLink> : null}
-      <ContactsOrCustomersLink to={user?.role !== 2 ? '/contacts' : '/customers'}>
-        {user?.role !== 2 ? 'Contacts' : 'Customers'}
-      </ContactsOrCustomersLink>
-
-      {user?.role === 0 ? (
-        <UserLink to="/auth">Sign in</UserLink>
-      ) : (
-        <UserLink to="/profile">{user?.firstName}</UserLink>
-      )}
-    </Container>
+    <div tw="text-4xl flex items-center height[10vh] p-0.5 justify-between">
+      <div>
+        <BaseLink to="/">AtlasHouse</BaseLink>
+      </div>
+      <div>
+        <BaseLink to="/apartments">Apartments</BaseLink>
+        {user?.role !== 0 ? <BaseLink to="/bookings">Bookings</BaseLink> : null}
+        <BaseLink to={user?.role !== 2 ? '/contacts' : '/customers'}>
+          {user?.role !== 2 ? 'Contacts' : 'Customers'}
+        </BaseLink>
+      </div>
+      <div tw="text-align[end]">
+        {user?.role === 0 ? (
+          <BaseLink to="/auth">Sign in</BaseLink>
+        ) : (
+          <BaseLink to="/profile">{user?.firstName}</BaseLink>
+        )}
+      </div>
+    </div>
   );
 };
 

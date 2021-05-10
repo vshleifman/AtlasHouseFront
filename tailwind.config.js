@@ -22,6 +22,7 @@ const spacing = {
   10: '10rem',
   15: '15rem',
   20: '20rem',
+  22: '22rem',
   25: '25rem',
   30: '30rem',
   35: '35rem',
@@ -83,6 +84,10 @@ module.exports = {
       white: '#fff',
       yellow: '#FFD100',
     },
+    minWidth: spacing,
+    maxWidth: spacing,
+    minHeight: spacing,
+    maxHeight: spacing,
     extend: {
       backgroundImage: theme => ({
         thinPlusSvg:
@@ -93,23 +98,20 @@ module.exports = {
       translate: {
         px: '1px',
       },
-      minHeight: {
-        3: '3rem',
-      },
     },
   },
   variants: {
     extend: {},
   },
   plugins: [
-    plugin(({ addUtilities }) => {
+    plugin(({ addUtilities, theme, e }) => {
       addUtilities({
         '.flex-center': {
           display: 'flex',
           'justify-content': 'center',
           'align-items': 'center',
         },
-        '.input': {
+        '.custom-input': {
           'min-height': '5rem',
           'min-width': '60rem',
           border: '1px solid gray',
@@ -117,6 +119,16 @@ module.exports = {
           padding: '1rem',
         },
       });
+
+      const flexBasis = theme('flexBasis') ?? theme('width');
+
+      const flexBasisUtilities = Object.entries(flexBasis).map(([key, value]) => ({
+        [`.${e(`flex-basis-${key}`)}`]: {
+          'flex-basis': value,
+        },
+      }));
+
+      addUtilities(flexBasisUtilities);
     }),
   ],
 };
