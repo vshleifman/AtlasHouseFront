@@ -4,20 +4,12 @@ import { useContext, useState } from 'react';
 import { FilterContext } from './FilterProvider';
 import DatePicker from 'react-datepicker';
 import { Heading } from 'styles/styles';
-// import StDatePicker from './DatePickerRestyle';
 
 const Container = styled.div`
   display: grid;
   grid-area: search;
   grid-template: 'head' 5em 'date' auto/ auto;
   place-items: center;
-`;
-
-const StDatePicker = styled(DatePicker)`
-  background-color: red;
-  .react-datepicker {
-    background: red;
-  }
 `;
 
 const DateSearchBar = () => {

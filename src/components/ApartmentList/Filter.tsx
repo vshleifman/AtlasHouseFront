@@ -18,15 +18,6 @@ const Container = styled.div`
   gap: 1em;
 `;
 
-const StButtons = styled.div`
-  grid-area: btn;
-  display: grid;
-  grid-template-columns: ${(props: any) => props.cols};
-  justify-items: ${(props: any) => props.just};
-` as any;
-
-const StLink = styled(Link)``;
-
 const sortOptions = [
   { value: 'price:desc', label: 'Price: highest first' },
   { value: 'price:asc', label: 'Price: lowest first' },

@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 import { Btn, Heading } from 'styles/styles';
-import { Apartment } from 'types/types';
 import Slider from 'react-slick';
 import rigaPan from 'images/Riga_panorama.jpg';
+import { useLocation } from 'react-router';
+import { useSelector } from 'react-redux';
+import { propertySelector } from 'selectors/selectors';
+import ReactModal from 'react-modal';
+import { useState } from 'react';
 
 const Container = styled.div`
   display: grid;
@@ -39,8 +43,6 @@ const Carousel = styled(BaseUnit)`
     align-self: end;
     position: relative;
     bottom: 3em;
-    z-index: 200;
-    color: yellow;
   }
 `;
 
@@ -76,12 +78,19 @@ const CustomNextArrow = ({ className, to, onClick }: any) => (
   </button>
 );
 
-const ApartmentPage = ({ apartment }: { apartment: Apartment }) => {
-  const onClick = () => {};
+const ApartmentPage = () => {
+  const location = useLocation();
+  const apartmentCode = location.pathname.replace('/apartments/', '');
+  const apartment = useSelector(propertySelector).properties?.find(apartm => apartm.codeID === apartmentCode);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const onClick = () => {
+    setIsOpen(true);
+  };
 
   return (
     <Container>
-      <Heading>{apartment.name}</Heading>
+      <Heading tw="place-self-center">{apartment?.name}</Heading>
       <Carousel>
         <Slider dots={true} nextArrow={<CustomNextArrow />}>
           <TestDiv />
@@ -89,10 +98,12 @@ const ApartmentPage = ({ apartment }: { apartment: Apartment }) => {
           <div>3</div>
         </Slider>
       </Carousel>
-      {/* <ReactModal /> */}
+      <ReactModal isOpen={isOpen}>
+        <div>hihi</div>
+      </ReactModal>
 
       <DescBlock>
-        <Description>{apartment.description}</Description>
+        <Description>{apartment?.description}</Description>
         <Amenities>Amenities</Amenities>
         <BookBtn onClick={onClick} tw="w-22">
           Book Apartment
