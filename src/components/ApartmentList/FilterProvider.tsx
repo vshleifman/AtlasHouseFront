@@ -1,7 +1,11 @@
+import moment from 'moment';
 import { createContext, useState } from 'react';
 
 export const initialFiltersState: FilterState = {
-  dateRange: { from: undefined, to: undefined },
+  dateRange: {
+    from: moment().hour(15).minute(0).second(0).toISOString(),
+    to: moment().add(1, 'd').hour(12).minute(0).second(0).toISOString(),
+  },
   amenities: {
     balcony: false,
     bathtub: false,
@@ -28,11 +32,7 @@ export const FilterContext = createContext<{
 const FilterProvider = ({ children }: { children: JSX.Element }) => {
   const [filters, setFilters] = useState(initialFiltersState);
 
-  return (
-    <FilterContext.Provider value={{ filters, setFilters }}>
-      {children}
-    </FilterContext.Provider>
-  );
+  return <FilterContext.Provider value={{ filters, setFilters }}>{children}</FilterContext.Provider>;
 };
 
 export default FilterProvider;

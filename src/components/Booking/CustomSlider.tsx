@@ -1,6 +1,6 @@
 import Slider from 'react-slick';
 import { styled } from 'twin.macro';
-import rigaPan from 'images/Riga_panorama.jpg';
+// import rigaPan from 'images/Riga_panorama.jpg';
 import balda from 'images/baldaquin1.jpeg';
 
 const Carousel = styled.div`

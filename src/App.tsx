@@ -13,6 +13,7 @@ import ApartmentsSwitch from 'components/ApartmentList/ApartmentsSwitch';
 import rigaPanorama from 'images/Riga_panorama.jpg';
 import AddApartment from 'components/ApartmentList/AddApartment';
 import tw from 'twin.macro';
+import Bookings from 'components/Booking/Bookings';
 
 const Container = styled.div`
   ${tw`flex flex-col items-center`}
@@ -73,6 +74,7 @@ const App = () => {
           <Route path="/apartments" component={ApartmentsSwitch} />
           <Route path="/add_apartment" component={AddApartment} />
           <Route path="/profile" component={ProfilePage} />
+          <Route path="/bookings" component={Bookings} />
         </Switch>
       </StSwitch>
     </Container>

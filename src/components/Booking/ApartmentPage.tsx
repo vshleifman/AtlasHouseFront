@@ -4,7 +4,7 @@ import { useLocation } from 'react-router';
 import { useSelector } from 'react-redux';
 import { propertySelector } from 'selectors/selectors';
 import ReactModal from 'react-modal';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import BookingModal from './BookingModal';
 import tw from 'twin.macro';
 import CustomSlider from './CustomSlider';

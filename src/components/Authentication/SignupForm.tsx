@@ -5,7 +5,6 @@ import { authThunk } from '../../reducers/AuthSlice';
 import { useHistory } from 'react-router';
 import { MemoryHistory } from 'history';
 import { Btn, Heading } from 'styles/styles';
-import styled from 'styled-components';
 
 const SignupForm = () => {
   const dispatch = useDispatch();

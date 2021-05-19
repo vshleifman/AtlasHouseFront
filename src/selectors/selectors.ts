@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { RootState } from '../store/rootReducer';
 
 export const authSelector = (state: RootState) => state.authSlice;

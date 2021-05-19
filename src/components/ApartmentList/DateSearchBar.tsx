@@ -15,8 +15,8 @@ const Container = styled.div`
 const DateSearchBar = () => {
   const { filters, setFilters } = useContext(FilterContext);
 
-  const [startDate, setStartDate] = useState(moment().hour(15).toDate());
-  const [endDate, setEndDate] = useState(moment().add(1, 'd').hour(12).toDate());
+  const [startDate, setStartDate] = useState(moment().hour(15).minute(0).second(0).toDate());
+  const [endDate, setEndDate] = useState(moment().add(1, 'd').hour(12).minute(0).second(0).toDate());
 
   const onChange = ([start, end]: [Date, Date]) => {
     setStartDate(start);
@@ -27,8 +27,8 @@ const DateSearchBar = () => {
     setFilters({
       ...filters,
       dateRange: {
-        from: moment(startDate).hour(15).toISOString(),
-        to: moment(endDate).hour(12).toISOString(),
+        from: moment(startDate).hour(15).minute(0).second(0).toISOString(),
+        to: moment(endDate).hour(12).minute(0).second(0).toISOString(),
       },
     });
   };

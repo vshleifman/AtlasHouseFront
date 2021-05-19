@@ -30,14 +30,15 @@ export const setBookingsThunk = (): AppThunk => async dispatch => {
   }
 };
 
-export const postBookingThunk = (bookingData: Partial<Booking>): AppThunk => async dispatch => {
-  try {
-    const response = await api.post('/bookings', bookingData);
-    console.log(response);
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const postBookingThunk =
+  (bookingData: Partial<Booking>): AppThunk =>
+  async dispatch => {
+    try {
+      await api.post('/bookings', bookingData);
+    } catch (error) {
+      dispatch(addError(error));
+    }
+  };
 
 export const { setBookings, addError } = BookingSlice.actions;
 

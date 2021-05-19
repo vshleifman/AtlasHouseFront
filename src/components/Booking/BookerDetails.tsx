@@ -1,22 +1,41 @@
 import { FilterContext } from 'components/ApartmentList/FilterProvider';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import moment from 'moment';
-import { RefObject, useContext } from 'react';
-import { useDispatch } from 'react-redux';
-import { postBookingThunk } from 'reducers/BookingSlice';
+import { RefObject, useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { postBookingThunk, setBookingsThunk } from 'reducers/BookingSlice';
+import { bookingSelector, userSelector } from 'selectors/selectors';
 import { Apartment } from 'types/types';
+import binaryFinder from './binaryBookingFinder';
+import { BookingContext } from './BookingProvider';
 
 const BookerDetails = ({
   formikRef,
-  initialValues,
   apartment,
 }: {
   formikRef: RefObject<FormikProps<typeof initialValues>>;
-  initialValues: any;
   apartment?: Apartment;
 }) => {
-  const { filters } = useContext(FilterContext);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setBookingsThunk());
+  }, [dispatch]);
+
+  const { filters } = useContext(FilterContext);
+  const { setIsOpen } = useContext(BookingContext);
+
+  const user = useSelector(userSelector).userData;
+  const bookings = useSelector(bookingSelector).bookings;
+
+  const initialValues = {
+    checkIn: filters.dateRange.from,
+    checkOut: filters.dateRange.to,
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    amount: 1,
+  };
+
   return (
     <Formik
       innerRef={formikRef}
@@ -24,14 +43,26 @@ const BookerDetails = ({
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(false);
 
-        dispatch(
-          postBookingThunk({
-            checkIn: values.checkIn,
-            checkOut: values.checkOut,
-            property: apartment?.id,
-            amount: values.amount,
-          }),
-        );
+        const isAvailable = binaryFinder(bookings || [], {
+          checkIn: filters.dateRange.from!,
+          checkOut: filters.dateRange.to!,
+        });
+
+        if (isAvailable) {
+          dispatch(
+            postBookingThunk({
+              checkIn: values.checkIn,
+              checkOut: values.checkOut,
+              property: apartment?.id,
+              amount: values.amount,
+            }),
+          );
+
+          dispatch(setBookingsThunk());
+        } else {
+          alert('Not currently available');
+          setIsOpen(false);
+        }
       }}
     >
       <Form tw="grid grid-template-columns[1fr 2fr] place-items-center">
