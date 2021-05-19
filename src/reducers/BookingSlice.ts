@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import api from 'api/axiosInstance';
 import { AppThunk } from 'store/store';
-import { InitialBookingState } from 'types/types';
+import { Booking, InitialBookingState } from 'types/types';
 
 const initialBookingState: InitialBookingState = {
   bookings: undefined,
@@ -27,6 +27,15 @@ export const setBookingsThunk = (): AppThunk => async dispatch => {
     dispatch(setBookings(response.data));
   } catch (error) {
     dispatch(addError(error));
+  }
+};
+
+export const postBookingThunk = (bookingData: Partial<Booking>): AppThunk => async dispatch => {
+  try {
+    const response = await api.post('/bookings', bookingData);
+    console.log(response);
+  } catch (error) {
+    console.log(error);
   }
 };
 

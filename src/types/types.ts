@@ -39,6 +39,7 @@ export interface Booking {
   property: string;
   user: string;
   paidFor: boolean;
+  amount: number;
 }
 
 export interface Apartment {
@@ -47,6 +48,7 @@ export interface Apartment {
   createdAt: string;
   updatedAt: string;
   price: number;
+  amenities: Record<string, boolean>;
   isCleaned: boolean;
   id: string;
   pictures: string[];

@@ -5,7 +5,6 @@ import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { propertySelector } from 'selectors/selectors';
 import styled from 'styled-components';
-import FilterProvider from './FilterProvider';
 
 const Container = styled.div`
   display: grid;
@@ -17,13 +16,11 @@ const Apartments = () => {
 
   const apartments = useSelector(propertySelector).properties;
   return (
-    <FilterProvider>
-      <Container>
-        <DateSearchBar />
-        <ApartmentList reference={reference} apartments={apartments} />
-        <Filter reference={reference} />
-      </Container>
-    </FilterProvider>
+    <Container>
+      <DateSearchBar />
+      <ApartmentList reference={reference} apartments={apartments} />
+      <Filter reference={reference} />
+    </Container>
   );
 };
 

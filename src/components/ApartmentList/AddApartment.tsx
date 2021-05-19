@@ -71,7 +71,7 @@ const AddApartment = () => {
       >
         <Form tw="flex flex-col justify-between" encType="multipart/form-data">
           {formFields.map(field => (
-            <div tw="flex flex-col">
+            <div tw="flex flex-col" key={field.name}>
               <label htmlFor={field.name}>{field.text}</label>
               {field.type === 'textarea' ? (
                 <Field name={field.name} placeholder={field.placeholder} as={field.type} />

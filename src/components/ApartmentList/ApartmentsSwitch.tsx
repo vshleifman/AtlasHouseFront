@@ -1,10 +1,12 @@
-import ApartmentPage from 'components/ApartmentPage';
+import ApartmentPage from 'components/Booking/ApartmentPage';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useRouteMatch } from 'react-router';
 import { propertySelector } from 'selectors/selectors';
 import Apartments from './Apartments';
 import { setPropertiesThunk } from './PropertyThunks';
+import FilterProvider from './FilterProvider';
+import BookingProvider from 'components/Booking/BookingProvider';
 
 const ApartmentsSwitch = () => {
   const dispatch = useDispatch();
@@ -22,10 +24,12 @@ const ApartmentsSwitch = () => {
   ));
 
   return (
-    <Switch>
-      <Route exact path={path} component={Apartments} />
-      {routes}
-    </Switch>
+    <FilterProvider>
+      <Switch>
+        <Route exact path={path} component={Apartments} />
+        <BookingProvider>{routes}</BookingProvider>
+      </Switch>
+    </FilterProvider>
   );
 };
 

@@ -58,6 +58,8 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
       return alert('Please select an end date!');
     }
     dispatch(setPropertiesThunk(filters));
+    console.log(filters);
+
     reference.current !== null ? reference.current.scrollIntoView() : console.log('null');
   };
 
