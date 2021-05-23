@@ -1,4 +1,7 @@
 import { useContext } from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { userSelector } from 'selectors/selectors';
 import { Btn } from 'styles/styles';
 import { styled } from 'twin.macro';
 import { BookingContext } from './BookingProvider';
@@ -12,10 +15,16 @@ const DescBlock = styled.div`
 
 const DescriptionBlock = () => {
   const { apartment, setIsOpen } = useContext(BookingContext);
+  const user = useSelector(userSelector).userData;
+  const history = useHistory();
 
   let amenities = Object.keys(apartment?.amenities ?? {});
 
   const onClick = () => {
+    if (user?.role === 0) {
+      alert('Please Sign In');
+      return history.push('/auth');
+    }
     setIsOpen(true);
   };
 

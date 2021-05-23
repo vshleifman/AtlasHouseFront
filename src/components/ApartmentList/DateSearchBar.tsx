@@ -1,25 +1,20 @@
 import moment from 'moment';
-import styled from 'styled-components';
-import { useContext, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { FilterContext } from './FilterProvider';
 import DatePicker from 'react-datepicker';
-import { Heading } from 'styles/styles';
-
-const Container = styled.div`
-  display: grid;
-  grid-area: search;
-  grid-template: 'head' 5em 'date' auto/ auto;
-  place-items: center;
-`;
+import Filter from './Filter';
 
 const DateSearchBar = () => {
   const { filters, setFilters } = useContext(FilterContext);
 
-  const [startDate, setStartDate] = useState(moment().hour(15).minute(0).second(0).toDate());
-  const [endDate, setEndDate] = useState(moment().add(1, 'd').hour(12).minute(0).second(0).toDate());
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const onChange = ([start, end]: [Date, Date]) => {
+    // @ts-ignore
     setStartDate(start);
+    // @ts-ignore
+
     setEndDate(end);
   };
 
@@ -33,10 +28,11 @@ const DateSearchBar = () => {
     });
   };
 
+  const reference = useRef<HTMLDivElement>(null);
+
   return (
-    <Container>
-      <Heading>Enter the dates of your visit</Heading>
-      <div tw="grid-area[date] my-4 text-3xl">
+    <div tw="flex gap-1">
+      <div tw="my-4 text-3xl">
         <DatePicker
           onChange={onChange}
           onClickOutside={onClickOutside}
@@ -46,9 +42,12 @@ const DateSearchBar = () => {
           monthsShown={2}
           inline
           fixedHeight={true}
+          selected={startDate}
+          disabledKeyboardNavigation
         />
       </div>
-    </Container>
+      <Filter reference={reference} />
+    </div>
   );
 };
 

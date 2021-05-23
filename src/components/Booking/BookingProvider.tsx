@@ -2,12 +2,12 @@ import { createContext, useState } from 'react';
 import { Apartment } from 'types/types';
 
 export const BookingContext = createContext<{
-  apartment?: Apartment;
+  apartment: Apartment;
   setApartment: (apartment: Apartment) => void;
   isOpen: boolean;
   setIsOpen: (bool: boolean) => void;
 }>({
-  apartment: undefined,
+  apartment: {} as Apartment,
   setApartment: () => {},
   isOpen: false,
   setIsOpen: () => {},

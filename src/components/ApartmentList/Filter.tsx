@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import Select, { OptionsType } from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import { RefObject, useContext } from 'react';
@@ -7,16 +6,6 @@ import { Btn } from 'styles/styles';
 import { setPropertiesThunk } from './PropertyThunks';
 import { userSelector } from 'selectors/selectors';
 import { Link } from 'react-router-dom';
-
-const Container = styled.div`
-  display: grid;
-  grid-area: filter;
-  align-items: start;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: 'sort filter' 'btn btn';
-  margin: 1em;
-  gap: 1em;
-`;
 
 const sortOptions = [
   { value: 'price:desc', label: 'Price: highest first' },
@@ -58,50 +47,48 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
       return alert('Please select an end date!');
     }
     dispatch(setPropertiesThunk(filters));
-    console.log(filters);
 
     reference.current !== null ? reference.current.scrollIntoView() : console.log('null');
   };
 
   return (
-    <Container ref={reference}>
-      <div style={{ gridArea: 'sort' }}>
-        Sort By:
-        <Select
-          options={sortOptions}
-          onChange={e => {
-            setFilters({ ...filters, sortBy: e!.value });
-          }}
-        />
+    <>
+      <div tw="m-1 gap-1 w-30 flex flex-col items-stretch justify-center" ref={reference}>
+        <div style={{ gridArea: 'sort' }}>
+          Sort By:
+          <Select
+            options={sortOptions}
+            onChange={e => {
+              setFilters({ ...filters, sortBy: e!.value });
+            }}
+          />
+        </div>
+
+        <div style={{ gridArea: 'filter' }}>
+          Filter:
+          <Select
+            isMulti
+            className="basic-multi-select"
+            classNamePrefix="select"
+            options={filterOptions}
+            onChange={onFilterSelect}
+          />
+        </div>
+
+        <div tw="flex grid-area[btn]">
+          <Btn onClick={() => onClick(filters)}>Filter Apartments</Btn>
+
+          <Btn onClick={() => onClick()}>Reset Filters</Btn>
+        </div>
       </div>
-
-      <div style={{ gridArea: 'filter' }}>
-        Filter:
-        <Select
-          isMulti
-          className="basic-multi-select"
-          classNamePrefix="select"
-          options={filterOptions}
-          onChange={onFilterSelect}
-        />
-      </div>
-
-      <div tw="flex grid-area[btn]">
-        {isAdmin ? (
-          <Btn tw="flex ">
-            <Link tw="flex flex-col flex-basis[100%] min-h-full justify-center" to="/add_apartment">
-              Add New Apartment
-            </Link>
-          </Btn>
-        ) : null}
-
-        <Btn onClick={() => onClick()}>Show All Apartments</Btn>
-
-        <Btn style={!isAdmin ? { justifySelf: 'end' } : undefined} onClick={() => onClick(filters)}>
-          Search Apartments
+      {isAdmin ? (
+        <Btn tw="flex w-3 h-3 rounded-full items-center top[136%] left[77%] absolute">
+          <Link tw="flex flex-col text-5xl flex-basis[100%] min-h-full justify-center" to="/add_apartment">
+            +
+          </Link>
         </Btn>
-      </div>
-    </Container>
+      ) : null}
+    </>
   );
 };
 

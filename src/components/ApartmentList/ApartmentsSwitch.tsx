@@ -8,7 +8,7 @@ import { setPropertiesThunk } from './PropertyThunks';
 import FilterProvider from './FilterProvider';
 import BookingProvider from 'components/Booking/BookingProvider';
 
-const ApartmentsSwitch = () => {
+const ApartmentsSwitch = ({ reference }: { reference: React.MutableRefObject<null> }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,12 +24,14 @@ const ApartmentsSwitch = () => {
   ));
 
   return (
-    <FilterProvider>
-      <Switch>
-        <Route exact path={path} component={Apartments} />
-        <BookingProvider>{routes}</BookingProvider>
-      </Switch>
-    </FilterProvider>
+    <div ref={reference}>
+      <FilterProvider>
+        <Switch>
+          <Route exact path={path} component={Apartments} />
+          <BookingProvider>{routes}</BookingProvider>
+        </Switch>
+      </FilterProvider>
+    </div>
   );
 };
 

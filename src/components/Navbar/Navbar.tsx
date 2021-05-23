@@ -13,16 +13,16 @@ const Navbar = () => {
   const user = useSelector(userSelector).userData;
 
   return (
-    <div tw="text-4xl flex items-center height[10vh] p-0.5 justify-between">
-      <div>
-        <BaseLink to="/">AtlasHouse</BaseLink>
+    <div tw="text-2xl mx-4 flex items-center height[10vh] p-0.5 justify-between">
+      <div tw="flex-grow[2]">
+        <BaseLink tw="text-4xl border-none" to="/">
+          AtlasHouse
+        </BaseLink>
       </div>
       <div>
-        <BaseLink to="/apartments">Apartments</BaseLink>
+        <BaseLink to="/about">About Us</BaseLink>
         {user?.role !== 0 ? <BaseLink to="/bookings">Bookings</BaseLink> : null}
-        <BaseLink to={user?.role !== 2 ? '/contacts' : '/customers'}>
-          {user?.role !== 2 ? 'Contacts' : 'Customers'}
-        </BaseLink>
+        <BaseLink to={user?.role !== 2 ? '/contacts' : ''}>{user?.role !== 2 ? 'Contacts' : null}</BaseLink>
       </div>
       <div tw="text-align[end]">
         {user?.role === 0 ? (

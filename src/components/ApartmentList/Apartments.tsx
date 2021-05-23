@@ -19,7 +19,7 @@ const Apartments = () => {
     <Container>
       <DateSearchBar />
       <ApartmentList reference={reference} apartments={apartments} />
-      <Filter reference={reference} />
+      {/* <Filter reference={reference} /> */}
     </Container>
   );
 };

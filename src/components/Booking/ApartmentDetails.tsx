@@ -1,6 +1,9 @@
-import { Apartment } from 'types/types';
+import { useContext } from 'react';
+import { BookingContext } from './BookingProvider';
 
-const ApartmentDetails = ({ apartment }: { apartment?: Apartment }) => {
+const ApartmentDetails = () => {
+  const { apartment } = useContext(BookingContext);
+
   return (
     <div tw="grid grid-template-columns[1fr 2fr] place-items-center">
       <label htmlFor="aprtm">Apartment Name</label>

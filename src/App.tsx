@@ -1,6 +1,6 @@
 import Navbar from './components/Navbar/Navbar';
 import { Route, Switch, useLocation } from 'react-router-dom';
-import Home from './pages/Home';
+import About from './pages/About';
 import Contacts from 'pages/Contacts';
 import ProfilePage from 'pages/ProfilePage';
 import { useEffect, useRef } from 'react';
@@ -68,13 +68,14 @@ const App = () => {
 
       <StSwitch>
         <Switch>
-          <Route exact path="/" render={() => <Home reference={ref} />} />
+          <Route exact path="/" render={() => <ApartmentsSwitch reference={ref} />} />
           <Route path="/auth" component={AuthForm} />
           <Route path="/contacts" component={Contacts} />
           <Route path="/apartments" component={ApartmentsSwitch} />
           <Route path="/add_apartment" component={AddApartment} />
           <Route path="/profile" component={ProfilePage} />
           <Route path="/bookings" component={Bookings} />
+          <Route path="/about" component={About} />
         </Switch>
       </StSwitch>
     </Container>

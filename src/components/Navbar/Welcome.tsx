@@ -1,57 +1,25 @@
 import { RefObject } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { Btn } from 'styles/styles';
-
-const Container = styled.div`
-  display: grid;
-  grid-template: '. wlcmText .' 1fr ' . . . ' 1fr 'aprtm . down' 1fr / 1fr 1fr 1fr;
-  padding-top: 30vh;
-  grid-area: welcome;
-`;
-
-const WlcmText = styled.p`
-  grid-area: wlcmText;
-  place-self: center;
-  font-size: 190%;
-  color: white;
-`;
-
-const AprtmBtn = styled(Btn)`
-  background-color: white;
-  color: black;
-  text-decoration: none;
-`;
-
-const StLink = styled(Link)`
-  color: inherit;
-  justify-self: end;
-  grid-area: aprtm;
-`;
-
-const DownBtn = styled(Btn)`
-  justify-self: start;
-  grid-area: down;
-  background-color: rgba(129, 119, 119, 0.89);
-`;
 
 const Welcome = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
   return (
-    <Container>
-      <WlcmText>Welcome to Riga</WlcmText>
-      <StLink to="/apartments">
-        <AprtmBtn>View Apartments</AprtmBtn>
-      </StLink>
-      <DownBtn
-        onClick={() => {
-          reference.current !== null
-            ? reference.current.scrollIntoView()
-            : console.log('null');
-        }}
-      >
-        About Us
-      </DownBtn>
-    </Container>
+    <div tw="padding-top[30vh] flex flex-col">
+      <p tw="margin-bottom[8rem] self-center text-5xl text-white">Welcome to Riga</p>
+      <div tw="flex justify-evenly mt-4">
+        <Btn
+          tw="bg-white no-underline flex-grow-0"
+          onClick={() => {
+            reference.current !== null ? reference.current.scrollIntoView() : console.log('null');
+          }}
+        >
+          View Apartments
+        </Btn>
+        <Link tw="flex-grow-0" to="/about">
+          <Btn tw="bg-light-gray opacity-60 hover:opacity-95">About Us</Btn>
+        </Link>
+      </div>
+    </div>
   );
 };
 

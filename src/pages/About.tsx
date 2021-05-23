@@ -33,7 +33,7 @@ const Divider = styled.div`
   background-color: orange;
 `;
 
-const Home = ({ reference }: { reference: React.MutableRefObject<null> }) => {
+const About = ({ reference }: { reference: React.MutableRefObject<null> }) => {
   return (
     <Container ref={reference}>
       <Section>
@@ -87,4 +87,4 @@ const Home = ({ reference }: { reference: React.MutableRefObject<null> }) => {
   );
 };
 
-export default Home;
+export default About;

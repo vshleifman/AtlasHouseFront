@@ -26,7 +26,7 @@ const ApartmentList = ({
     <Container data-testid="list" ref={reference}>
       {apartments
         ? apartments.map(apartment => (
-            <StLink key={apartment.codeID} to={`${path}/${apartment.codeID}`}>
+            <StLink key={apartment.codeID} to={`apartments/${apartment.codeID}`}>
               <ApartmentListing apartment={apartment} />
             </StLink>
           ))

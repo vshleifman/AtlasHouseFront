@@ -41,10 +41,7 @@ const Price = styled(BaseBox)`
 `;
 
 const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
-  const isAvailable = (dateRange: {
-    from: string | undefined;
-    to: string | undefined;
-  }) => {
+  const isAvailable = (dateRange: { from: string | undefined; to: string | undefined }) => {
     const initialRange = {
       from: moment().hour(12).toISOString(),
       to: moment().hour(14).add(1, 'd').toISOString(),
@@ -54,14 +51,10 @@ const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
       dateRange = initialRange;
     }
 
-    console.log(dateRange);
-
     const bool = apartment.bookings.every(
       booking =>
-        moment(booking.checkIn).toISOString() >=
-          moment(dateRange.to).toISOString() ||
-        moment(booking.checkOut).toISOString() <=
-          moment(dateRange.from).toISOString(),
+        moment(booking.checkIn).toISOString() >= moment(dateRange.to).toISOString() ||
+        moment(booking.checkOut).toISOString() <= moment(dateRange.from).toISOString(),
     );
     return bool;
   };
