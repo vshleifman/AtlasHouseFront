@@ -1,37 +1,25 @@
-import { RefObject } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
-import styled from 'styled-components';
-import { Apartment } from 'types/types';
+import { useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { propertySelector } from 'selectors/selectors';
 import ApartmentListing from './ApartmentListing';
 
-const Container = styled.div`
-  grid-area: list;
-  margin-top: 2em;
-`;
-
-const StLink = styled(Link)`
-  text-decoration: none;
-  color: black;
-`;
-const ApartmentList = ({
-  reference,
-  apartments,
-}: {
-  reference?: RefObject<HTMLDivElement>;
-  apartments: Apartment[] | undefined;
-}) => {
-  const { path } = useRouteMatch();
+const ApartmentList = () => {
+  const reference = useRef<HTMLDivElement>(null);
+  const apartments = useSelector(propertySelector).properties;
 
   return (
-    <Container data-testid="list" ref={reference}>
-      {apartments
-        ? apartments.map(apartment => (
-            <StLink key={apartment.codeID} to={`apartments/${apartment.codeID}`}>
-              <ApartmentListing apartment={apartment} />
-            </StLink>
-          ))
-        : null}
-    </Container>
+    <div tw="mt-2 self-center" data-testid="list" ref={reference}>
+      {apartments ? (
+        apartments.map(apartment => (
+          <Link tw="no-underline color[black]" key={apartment.codeID} to={`apartments/${apartment.codeID}`}>
+            <ApartmentListing key={apartment.codeID} apartment={apartment} />
+          </Link>
+        ))
+      ) : (
+        <h3 tw="py-4 text-3xl">No Properties Found</h3>
+      )}
+    </div>
   );
 };
 

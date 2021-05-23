@@ -17,7 +17,7 @@ const Bookings = () => {
     <div>
       {bookings?.map((booking: Booking) => (
         <div>
-          <p>{(booking.property as Apartment).name}</p>
+          <p>{booking.property}</p>
           <p>{booking.user}</p>
           <p>{booking.checkIn}</p>
           <p>{booking.checkOut}</p>

@@ -5,7 +5,7 @@ import { createStoreInstance } from 'store/store';
 import { createMemoryHistory } from 'history';
 import moment from 'moment';
 
-const testStore = createStoreInstance();
+export const testStore = createStoreInstance();
 
 const render = (ui: JSX.Element, options = { routes: ['/'] }) => {
   const history = createMemoryHistory({ initialEntries: options.routes });
@@ -26,7 +26,7 @@ export const generateApartment = (
 ) => {
   return {
     name,
-    codeID: '123',
+    codeID: Math.floor(Math.random() * 10),
     createdAt: moment().toISOString(),
     updatedAt: moment().toISOString(),
     price: 333,
