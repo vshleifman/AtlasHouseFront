@@ -15,7 +15,7 @@ export const initialFiltersState: FilterState = {
 };
 
 export interface FilterState {
-  dateRange: { from: string | undefined; to: string | undefined };
+  dateRange: { from: string; to: string };
   amenities: {
     balcony: boolean | undefined;
     bathtub: boolean | undefined;

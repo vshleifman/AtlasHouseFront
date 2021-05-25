@@ -1,5 +1,7 @@
-import moment from 'moment';
-import { useContext } from 'react';
+import binaryFinder from 'components/Booking/binaryBookingFinder';
+import { useContext, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setBookingsThunk } from 'reducers/BookingSlice';
 import styled from 'styled-components';
 import { Apartment } from 'types/types';
 import { FilterContext } from './FilterProvider';
@@ -39,31 +41,38 @@ const Description = styled(BaseBox)`
 const Price = styled(BaseBox)`
   grid-area: price;
 `;
+const Available = styled.div`
+  height: 2rem;
+  width: 2rem;
+  border-radius: 100%;
+  border: 1px orange solid;
+  margin-right: 1rem;
+`;
 
 const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
-  const isAvailable = (dateRange: { from: string | undefined; to: string | undefined }) => {
-    const initialRange = {
-      from: moment().hour(12).toISOString(),
-      to: moment().hour(14).add(1, 'd').toISOString(),
-    };
+  const dispatch = useDispatch();
 
-    if (dateRange.from === undefined) {
-      dateRange = initialRange;
-    }
+  useEffect(() => {
+    dispatch(setBookingsThunk());
+  }, [dispatch]);
 
-    const bool = apartment.bookings.every(
-      booking =>
-        moment(booking.checkIn).toISOString() >= moment(dateRange.to).toISOString() ||
-        moment(booking.checkOut).toISOString() <= moment(dateRange.from).toISOString(),
-    );
-    return bool;
-  };
+  const bookings = apartment.bookings;
+
   const { filters } = useContext(FilterContext);
+
+  // let isAvailable;
+
+  // if (bookings) {
+  //   isAvailable = binaryFinder(bookings, { checkIn: filters.dateRange.from, checkOut: filters.dateRange.to });
+  // }
 
   return (
     <Container data-testid="listing">
       <Photo></Photo>
-      <Name>{apartment.name}</Name>
+      <Name tw="flex">
+        <p tw="flex justify-center flex-grow">{apartment.name}</p>
+        {/* <Available style={{ background: isAvailable ? 'green' : 'red' }} /> */}
+      </Name>
       <Description>{apartment.description}</Description>
       <Price>{apartment.price}</Price>
     </Container>

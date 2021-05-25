@@ -9,7 +9,7 @@ const ApartmentList = () => {
   const apartments = useSelector(propertySelector).properties;
 
   return (
-    <div tw="mt-2 self-center" data-testid="list" ref={reference}>
+    <div tw="mt-2 self-stretch" data-testid="list" ref={reference}>
       {apartments ? (
         apartments.map(apartment => (
           <Link tw="no-underline color[black]" key={apartment.codeID} to={`apartments/${apartment.codeID}`}>

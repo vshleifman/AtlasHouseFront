@@ -26,13 +26,15 @@ export const generateApartment = (
 ) => {
   return {
     name,
-    codeID: Math.floor(Math.random() * 10),
+    codeID: `${Math.floor(Math.random() * 10)}`,
     createdAt: moment().toISOString(),
     updatedAt: moment().toISOString(),
     price: 333,
     isCleaned: false,
     id: 'id1234567890abcd',
     pictures: [],
+    amenities: {},
+    description: 'testDesc',
     bookings: [
       {
         checkIn,
@@ -42,6 +44,7 @@ export const generateApartment = (
         property: 'id1234567890abcd',
         user: 'testUser',
         paidFor: false,
+        amount: 1,
       },
     ],
   };

@@ -24,8 +24,10 @@ const BookingSlice = createSlice({
 export const setBookingsThunk = (): AppThunk => async dispatch => {
   try {
     const response = await api.get('/bookings');
+    console.log({ response });
     dispatch(setBookings(response.data));
   } catch (error) {
+    console.log({ error });
     dispatch(addError(error));
   }
 };
