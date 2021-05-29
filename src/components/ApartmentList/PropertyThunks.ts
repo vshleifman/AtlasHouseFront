@@ -21,19 +21,19 @@ const cleanObject = (object: object) => {
   });
 };
 
-export const setPropertiesThunk = (
-  filters?: FilterState,
-): AppThunk => async dispatch => {
-  const queryParams = { ...filters, amenities: { ...filters?.amenities } };
+export const setPropertiesThunk =
+  (filters?: FilterState): AppThunk =>
+  async dispatch => {
+    const queryParams = { ...filters, amenities: { ...filters?.amenities } };
 
-  cleanObject(queryParams);
+    cleanObject(queryParams);
 
-  try {
-    const response = await api.get('/properties', {
-      params: queryParams,
-    });
-    dispatch(setProperties(response.data));
-  } catch (error) {
-    dispatch(addError(error.message));
-  }
-};
+    try {
+      const response = await api.get('/properties', {
+        params: queryParams,
+      });
+      dispatch(setProperties(response.data));
+    } catch (error) {
+      dispatch(addError(error.message));
+    }
+  };

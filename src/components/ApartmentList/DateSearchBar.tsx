@@ -1,59 +1,61 @@
 import moment from 'moment';
-import styled from 'styled-components';
-import { useContext, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { FilterContext } from './FilterProvider';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { Heading } from 'styles/styles';
-
-const Container = styled.div`
-  display: grid;
-  grid-area: search;
-  grid-template: 'head' 5em 'date' auto/ auto;
-  place-items: center;
-`;
-
-const StDatePicker = styled.div`
-  grid-area: date;
-  margin: 2em 0;
-`;
+import Filter from './Filter';
+import { checkTimes } from 'types/types';
+import { useDispatch } from 'react-redux';
+import { setPropertiesThunk } from './PropertyThunks';
 
 const DateSearchBar = () => {
+  const dispatch = useDispatch();
+
   const { filters, setFilters } = useContext(FilterContext);
 
-  const [startDate, setStartDate] = useState(moment().toDate());
-  const [endDate, setEndDate] = useState(moment().add(1, 'd').toDate());
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
-  const onChange = ([start, end]: [Date, Date]) => {
+  console.log(filters);
+
+  const onChange = async ([start, end]: [Date, Date]) => {
     setStartDate(start);
     setEndDate(end);
-  };
 
-  const onClickOutside = () => {
-    setFilters({
+    if (!end) return;
+
+    const newFilters = {
       ...filters,
       dateRange: {
-        from: moment(startDate).toISOString(),
-        to: moment(endDate).toISOString(),
+        from: moment(start).hour(checkTimes.checkIn).minute(0).second(0).toISOString(),
+        to: moment(end).hour(checkTimes.checkOut).minute(0).second(0).toISOString(),
       },
-    });
+    };
+
+    setFilters(newFilters);
+
+    dispatch(setPropertiesThunk(newFilters));
   };
 
+  const reference = useRef<HTMLDivElement>(null);
+
   return (
-    <Container>
-      <Heading>Enter the dates of your visit</Heading>
-      <StDatePicker>
+    <div tw="flex gap-1">
+      <div tw="my-4 text-3xl">
         <DatePicker
           onChange={onChange}
-          onClickOutside={onClickOutside}
+          // onClickOutside={onClickOutside}
           startDate={startDate}
           endDate={endDate}
           selectsRange
           monthsShown={2}
           inline
+          fixedHeight={true}
+          selected={startDate}
+          disabledKeyboardNavigation
         />
-      </StDatePicker>
-    </Container>
+      </div>
+      <Filter reference={reference} />
+    </div>
   );
 };
 

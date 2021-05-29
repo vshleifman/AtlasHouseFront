@@ -1,28 +1,37 @@
-import ApartmentPage from 'components/ApartmentPage';
-import Spinner from 'components/Spinner';
-import { useSelector } from 'react-redux';
+import ApartmentPage from 'components/Booking/ApartmentPage';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useRouteMatch } from 'react-router';
 import { propertySelector } from 'selectors/selectors';
 import Apartments from './Apartments';
+import { setPropertiesThunk } from './PropertyThunks';
+import FilterProvider from './FilterProvider';
+import BookingProvider from 'components/Booking/BookingProvider';
 
-const ApartmentsSwitch = () => {
+const ApartmentsSwitch = ({ reference }: { reference: React.MutableRefObject<null> }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setPropertiesThunk());
+  }, [dispatch]);
+
   const apartments = useSelector(propertySelector).properties;
 
   const { path } = useRouteMatch();
 
   const routes = apartments?.map(aprtm => (
-    <Route
-      path={`${path}/${aprtm.codeID}`}
-      key={aprtm.codeID}
-      render={() => <ApartmentPage apartment={aprtm} />}
-    />
+    <Route path={`/apartments/${aprtm.codeID}`} key={aprtm.codeID} component={ApartmentPage} />
   ));
 
   return (
-    <Switch>
-      <Route exact path={path} component={Apartments} />
-      {routes}
-    </Switch>
+    <div ref={reference}>
+      <FilterProvider>
+        <Switch>
+          <Route exact path={path} component={Apartments} />
+          <BookingProvider>{routes}</BookingProvider>
+        </Switch>
+      </FilterProvider>
+    </div>
   );
 };
 

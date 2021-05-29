@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Apartment, InitialPropertyState } from 'types/types';
+import { InitialPropertyState } from 'types/types';
 
 const initialState: InitialPropertyState = {
   properties: undefined,

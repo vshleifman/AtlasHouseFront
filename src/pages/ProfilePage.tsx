@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signoutThunk } from 'reducers/AuthSlice';
 import { userSelector } from 'selectors/selectors';
 import styled from 'styled-components';
+import { Btn } from 'styles/styles';
 
 const Container = styled.div`
   display: grid;
@@ -20,13 +21,13 @@ const ProfilePage = () => {
           <p>Last Name: {user.lastName}</p>
           <p>Email: {user.email}</p>
         </div>
-        <button
+        <Btn
           onClick={() => {
             dispatch(signoutThunk());
           }}
         >
           Signout
-        </button>
+        </Btn>
       </Container>
     );
   }

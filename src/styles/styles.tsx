@@ -1,23 +1,16 @@
 import styled from 'styled-components';
+import tw from 'twin.macro';
 
 export const Btn = styled.button`
-  font-family: inherit;
-  font-size: inherit;
-  border: 1px black solid;
-  height: 5.5em;
-  width: 13.5em;
-  padding: 0.5em;
-  margin: 1em;
-  text-transform: uppercase;
+  ${tw`h-10 p-0.5 m-1 w-22 uppercase border border-solid flex-grow`}
   &:hover {
-    border-color: orange;
-    background-color: rgba(59, 127, 204, 0.815);
-    transition: border-color 0.2s, background-color 0.2s;
+    ${tw`bg-hover border-secondary text-white transition-all duration-200`}
   }
 `;
 
 export const Heading = styled.h3`
-  font-size: 2em;
+  ${tw`text-6xl my-4`};
+
   font-weight: 100;
   grid-area: head;
 `;

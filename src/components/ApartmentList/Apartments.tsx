@@ -1,36 +1,26 @@
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { userSelector } from 'selectors/selectors';
+import { Btn } from 'styles/styles';
 import ApartmentList from './ApartmentList';
-import Filter from './Filter';
 import DateSearchBar from './DateSearchBar';
-import { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setPropertiesThunk } from './PropertyThunks';
-import { propertySelector } from 'selectors/selectors';
-import styled from 'styled-components';
-import FilterProvider from './FilterProvider';
-
-const Container = styled.div`
-  display: grid;
-  grid-template: 'search' auto 'filter' auto 'list' 1fr / auto;
-`;
 
 const Apartments = () => {
-  const dispatch = useDispatch();
+  const user = useSelector(userSelector).userData;
+  const isAdmin = user?.role === 2;
 
-  const reference = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    dispatch(setPropertiesThunk());
-  }, [dispatch]);
-
-  const apartments = useSelector(propertySelector).properties;
   return (
-    <FilterProvider>
-      <Container>
-        <DateSearchBar />
-        <ApartmentList reference={reference} apartments={apartments} />
-        <Filter reference={reference} />
-      </Container>
-    </FilterProvider>
+    <div tw="flex flex-col">
+      <DateSearchBar />
+      {isAdmin ? (
+        <Btn tw="flex w-3 h-3 rounded-full items-center margin[-2rem 1rem] self-end">
+          <Link tw="flex flex-col text-5xl flex-basis[100%] min-h-full justify-center" to="/add_apartment">
+            +
+          </Link>
+        </Btn>
+      ) : null}
+      <ApartmentList />
+    </div>
   );
 };
 

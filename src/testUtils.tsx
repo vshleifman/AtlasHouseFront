@@ -4,8 +4,9 @@ import { Router } from 'react-router-dom';
 import { createStoreInstance } from 'store/store';
 import { createMemoryHistory } from 'history';
 import moment from 'moment';
+import { checkTimes } from 'types/types';
 
-const testStore = createStoreInstance();
+export const testStore = createStoreInstance();
 
 const render = (ui: JSX.Element, options = { routes: ['/'] }) => {
   const history = createMemoryHistory({ initialEntries: options.routes });
@@ -26,22 +27,25 @@ export const generateApartment = (
 ) => {
   return {
     name,
-    codeID: '123',
+    codeID: `${Math.floor(Math.random() * 10)}`,
     createdAt: moment().toISOString(),
     updatedAt: moment().toISOString(),
     price: 333,
     isCleaned: false,
     id: 'id1234567890abcd',
     pictures: [],
+    amenities: {},
+    description: 'testDesc',
     bookings: [
       {
-        checkIn,
-        checkOut,
+        checkIn: moment(checkIn).hour(checkTimes.checkIn).minute(0).second(0).toISOString(),
+        checkOut: moment(checkOut).hour(checkTimes.checkOut).minute(0).second(0).toISOString(),
         createdAt: moment().toISOString(),
         updatedAt: moment().toISOString(),
         property: 'id1234567890abcd',
         user: 'testUser',
         paidFor: false,
+        amount: 1,
       },
     ],
   };
