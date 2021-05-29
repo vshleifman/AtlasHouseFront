@@ -8,26 +8,14 @@ const Carousel = styled.div`
   place-items: initial;
   border: 1px solid black;
   background: rgba(0, 0, 0, 0.712);
-
-  .slick-slider {
-    display: grid;
-    width: 100vw;
-  }
-
-  .slick-dots {
-    align-self: end;
-    position: relative;
-    bottom: 1rem;
-  }
 `;
 
-const TestDiv = styled.div`
-  background-image: url('${balda}');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 20em;
-  max-height: 20em;
+const PhotoContainer = styled.div`
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 35rem;
+  padding: 0 8rem;
 `;
 
 const NextArrow = styled.div`
@@ -40,6 +28,7 @@ const NextArrow = styled.div`
 
 const PrevArrow = styled.div`
   left: 25px;
+  z-index: 1;
   &::before {
     font-size: 2rem;
     content: '<';
@@ -59,20 +48,34 @@ const CustomSlider = () => {
     <Carousel>
       <Slider
         dots={true}
-        // customPaging={i => {
-        //   return (
-        //     <a>
-        //       <div tw="border border-dark-gray rounded-full h-1 w-1 bg-white active:opacity-60 visited:opacity-60"></div>
-        //     </a>
-        //   );
-        // }}
-        // dotsClass="slick-dots slick-thumb"
+        infinite={true}
+        speed={500}
+        slidesToShow={1}
+        slidesToScroll={1}
+        dotsClass="slick-dots slick-thumb"
         nextArrow={<CustomNextArrow />}
         prevArrow={<CustomPrevArrow />}
       >
-        <TestDiv />
-        <div>2</div>
-        <div>3</div>
+        {/* <TestDiv /> */}
+
+        <PhotoContainer>
+          <div
+            style={{
+              backgroundImage: `url(${balda})`,
+              height: '30rem',
+              width: 'auto',
+              backgroundSize: 'contain',
+              backgroundRepeat: ' no-repeat',
+              backgroundPosition: 'center',
+            }}
+          ></div>
+        </PhotoContainer>
+        <PhotoContainer>2</PhotoContainer>
+        <PhotoContainer>3</PhotoContainer>
+        <PhotoContainer>4</PhotoContainer>
+        <PhotoContainer>5</PhotoContainer>
+        <PhotoContainer>6</PhotoContainer>
+        <PhotoContainer>7</PhotoContainer>
       </Slider>
     </Carousel>
   );

@@ -14,11 +14,10 @@ import rigaPanorama from 'images/Riga_panorama.jpg';
 import AddApartment from 'components/ApartmentList/AddApartment';
 import tw from 'twin.macro';
 import Bookings from 'components/Booking/Bookings';
+import { setPropertiesThunk } from 'components/ApartmentList/PropertyThunks';
 
 const Container = styled.div`
   ${tw`flex flex-col items-center`}
-  /* display: grid;
-  grid-template: 'nav nav nav' auto ' . switch . ' auto ' . . .' 5em / 1fr 3fr 1fr; */
   font-family: 'Playfair Display';
   font-size: 1.5rem;
 
@@ -55,6 +54,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(tryAutoSignin());
+    dispatch(setPropertiesThunk());
   }, [dispatch]);
 
   const ref = useRef(null);

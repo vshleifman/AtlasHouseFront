@@ -4,6 +4,7 @@ import { Router } from 'react-router-dom';
 import { createStoreInstance } from 'store/store';
 import { createMemoryHistory } from 'history';
 import moment from 'moment';
+import { checkTimes } from 'types/types';
 
 export const testStore = createStoreInstance();
 
@@ -37,8 +38,8 @@ export const generateApartment = (
     description: 'testDesc',
     bookings: [
       {
-        checkIn,
-        checkOut,
+        checkIn: moment(checkIn).hour(checkTimes.checkIn).minute(0).second(0).toISOString(),
+        checkOut: moment(checkOut).hour(checkTimes.checkOut).minute(0).second(0).toISOString(),
         createdAt: moment().toISOString(),
         updatedAt: moment().toISOString(),
         property: 'id1234567890abcd',

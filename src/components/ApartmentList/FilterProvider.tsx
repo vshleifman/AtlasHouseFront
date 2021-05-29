@@ -1,10 +1,11 @@
 import moment from 'moment';
 import { createContext, useState } from 'react';
+import { checkTimes } from 'types/types';
 
 export const initialFiltersState: FilterState = {
   dateRange: {
-    from: moment().hour(15).minute(0).second(0).toISOString(),
-    to: moment().add(1, 'd').hour(12).minute(0).second(0).toISOString(),
+    from: moment().hour(checkTimes.checkIn).minute(0).second(0).toISOString(),
+    to: moment().add(1, 'd').hour(checkTimes.checkOut).minute(0).second(0).toISOString(),
   },
   amenities: {
     balcony: false,

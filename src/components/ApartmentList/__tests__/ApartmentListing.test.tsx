@@ -19,10 +19,7 @@ const apartment = generateApartment(moment().add(1, 'day').add(100, 'millisecond
 // });
 
 it('renders listing with props', () => {
-  jest.spyOn(api, 'get').mockImplementationOnce(async () => {
-    const data = apartment.bookings;
-    return { data };
-  });
+  jest.spyOn(api, 'get').mockResolvedValueOnce({ data: apartment.bookings });
 
   const sliceSpy = jest.spyOn(bookingSlice, 'setBookingsThunk');
 

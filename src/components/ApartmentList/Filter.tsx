@@ -1,11 +1,9 @@
 import Select, { OptionsType } from 'react-select';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { RefObject, useContext } from 'react';
 import { FilterContext, initialFiltersState, FilterState } from './FilterProvider';
 import { Btn } from 'styles/styles';
 import { setPropertiesThunk } from './PropertyThunks';
-import { userSelector } from 'selectors/selectors';
-import { Link } from 'react-router-dom';
 
 const sortOptions = [
   { value: 'price:desc', label: 'Price: highest first' },
@@ -14,13 +12,10 @@ const sortOptions = [
   { value: 'area:asc', label: 'Area: lowest first' },
 ];
 
-const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
+const Filter = ({ reference }: { reference?: RefObject<HTMLDivElement> }) => {
   const { filters, setFilters } = useContext(FilterContext);
 
   const dispatch = useDispatch();
-
-  const user = useSelector(userSelector).userData;
-  const isAdmin = user?.role === 2;
 
   const filterOptions = Object.keys(filters.amenities).map(amenity => {
     return {
@@ -48,7 +43,7 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
     }
     dispatch(setPropertiesThunk(filters));
 
-    reference.current !== null ? reference.current.scrollIntoView() : console.log('null');
+    reference?.current !== null ? reference?.current.scrollIntoView() : console.log('null');
   };
 
   return (
@@ -81,13 +76,6 @@ const Filter = ({ reference }: { reference: RefObject<HTMLDivElement> }) => {
           <Btn onClick={() => onClick()}>Reset Filters</Btn>
         </div>
       </div>
-      {isAdmin ? (
-        <Btn tw="flex w-3 h-3 rounded-full items-center top[136%] left[77%] absolute">
-          <Link tw="flex flex-col text-5xl flex-basis[100%] min-h-full justify-center" to="/add_apartment">
-            +
-          </Link>
-        </Btn>
-      ) : null}
     </>
   );
 };

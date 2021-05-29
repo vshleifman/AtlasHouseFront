@@ -1,9 +1,14 @@
 import api from 'api/axiosInstance';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useEffect } from 'react';
 import Dropzone from 'react-dropzone';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
+import { propertySelector } from 'selectors/selectors';
 import { Btn, Heading } from 'styles/styles';
 import tw, { styled } from 'twin.macro';
 import * as Yup from 'yup';
+import { setPropertiesThunk } from './PropertyThunks';
 
 const Container = styled.div`
   ${tw`flex flex-col items-center`}
@@ -44,28 +49,39 @@ const AddApartment = () => {
       type: 'textarea',
     },
   ];
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const apartmentCode = location.pathname.replace('/add_apartment/', '');
+
+  const apartment = useSelector(propertySelector).properties?.find(apartm => apartm.codeID === apartmentCode);
+  const initialValues = {
+    name: apartment ? apartment.name : '',
+    description: apartment ? apartment.description : '',
+    mainPhoto: undefined,
+    otherPhotos: apartment ? apartment.pictures : undefined,
+    codeID: apartment ? apartment.codeID : '',
+    price: apartment ? apartment.price : '',
+  };
 
   return (
     <Container>
       <Heading tw="flex[10rem]">Add A New Apartment</Heading>
       <Formik
-        initialValues={{
-          name: '',
-          description: '',
-          mainPhoto: undefined,
-          otherPhotos: undefined,
-          codeID: '',
-          price: '',
-        }}
+        initialValues={initialValues}
         validationSchema={Yup.object({
           name: Yup.string().required('Required'),
           codeID: Yup.string().required('Required'),
         })}
-        onSubmit={(values, { resetForm }) => {
+        onSubmit={async (values, { resetForm }) => {
           try {
-            api.post('/properties', values);
-            alert('Added!');
-            resetForm();
+            if (apartment) {
+              await api.patch(`/properties/${apartment.id}`, values);
+              dispatch(setPropertiesThunk());
+            } else {
+              await api.post('/properties', values);
+            }
+            alert(apartment ? 'Updated!' : 'Added!');
+            if (!apartment) resetForm();
           } catch (error) {}
         }}
       >
@@ -104,7 +120,7 @@ const AddApartment = () => {
           </div>
 
           <Btn tw="place-self-center w-22" type="submit">
-            add apartment
+            {apartment ? 'update apartment' : 'add apartment'}
           </Btn>
         </Form>
       </Formik>

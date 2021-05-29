@@ -55,3 +55,8 @@ export interface Apartment {
   bookings: Booking[];
   description: string;
 }
+
+export enum checkTimes {
+  checkIn = 15,
+  checkOut = 12,
+}

@@ -3,29 +3,37 @@ import { useContext, useRef, useState } from 'react';
 import { FilterContext } from './FilterProvider';
 import DatePicker from 'react-datepicker';
 import Filter from './Filter';
+import { checkTimes } from 'types/types';
+import { useDispatch } from 'react-redux';
+import { setPropertiesThunk } from './PropertyThunks';
 
 const DateSearchBar = () => {
+  const dispatch = useDispatch();
+
   const { filters, setFilters } = useContext(FilterContext);
 
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
-  const onChange = ([start, end]: [Date, Date]) => {
-    // @ts-ignore
+  console.log(filters);
+
+  const onChange = async ([start, end]: [Date, Date]) => {
     setStartDate(start);
-    // @ts-ignore
-
     setEndDate(end);
-  };
 
-  const onClickOutside = () => {
-    setFilters({
+    if (!end) return;
+
+    const newFilters = {
       ...filters,
       dateRange: {
-        from: moment(startDate).hour(15).minute(0).second(0).toISOString(),
-        to: moment(endDate).hour(12).minute(0).second(0).toISOString(),
+        from: moment(start).hour(checkTimes.checkIn).minute(0).second(0).toISOString(),
+        to: moment(end).hour(checkTimes.checkOut).minute(0).second(0).toISOString(),
       },
-    });
+    };
+
+    setFilters(newFilters);
+
+    dispatch(setPropertiesThunk(newFilters));
   };
 
   const reference = useRef<HTMLDivElement>(null);
@@ -35,7 +43,7 @@ const DateSearchBar = () => {
       <div tw="my-4 text-3xl">
         <DatePicker
           onChange={onChange}
-          onClickOutside={onClickOutside}
+          // onClickOutside={onClickOutside}
           startDate={startDate}
           endDate={endDate}
           selectsRange
