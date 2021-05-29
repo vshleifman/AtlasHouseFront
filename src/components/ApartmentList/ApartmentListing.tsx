@@ -1,10 +1,8 @@
-import binaryFinder from 'components/Booking/binaryBookingFinder';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setBookingsThunk } from 'reducers/BookingSlice';
 import styled from 'styled-components';
 import { Apartment } from 'types/types';
-import { FilterContext } from './FilterProvider';
 
 const Container = styled.div`
   display: grid;
@@ -41,13 +39,6 @@ const Description = styled(BaseBox)`
 const Price = styled(BaseBox)`
   grid-area: price;
 `;
-const Available = styled.div`
-  height: 2rem;
-  width: 2rem;
-  border-radius: 100%;
-  border: 1px orange solid;
-  margin-right: 1rem;
-`;
 
 const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
   const dispatch = useDispatch();
@@ -56,22 +47,11 @@ const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
     dispatch(setBookingsThunk());
   }, [dispatch]);
 
-  const bookings = apartment.bookings;
-
-  const { filters } = useContext(FilterContext);
-
-  // let isAvailable;
-
-  // if (bookings) {
-  //   isAvailable = binaryFinder(bookings, { checkIn: filters.dateRange.from, checkOut: filters.dateRange.to });
-  // }
-
   return (
     <Container data-testid="listing">
       <Photo></Photo>
       <Name tw="flex">
         <p tw="flex justify-center flex-grow">{apartment.name}</p>
-        {/* <Available style={{ background: isAvailable ? 'green' : 'red' }} /> */}
       </Name>
       <Description>{apartment.description}</Description>
       <Price>{apartment.price}</Price>

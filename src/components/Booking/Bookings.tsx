@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBookingsThunk } from 'reducers/BookingSlice';
 import { bookingSelector } from 'selectors/selectors';
-import { Apartment, Booking } from 'types/types';
+import { Booking } from 'types/types';
 
 const Bookings = () => {
   const dispatch = useDispatch();

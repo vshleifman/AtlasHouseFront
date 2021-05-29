@@ -47,7 +47,7 @@ const ApartmentPage = () => {
 
   useEffect(() => {
     setApartment(apartment!);
-  }, []);
+  }, [apartment, setApartment]);
 
   return (
     <Container>

@@ -1,6 +1,5 @@
 import api from 'api/axiosInstance';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useEffect } from 'react';
 import Dropzone from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -54,6 +53,7 @@ const AddApartment = () => {
   const apartmentCode = location.pathname.replace('/add_apartment/', '');
 
   const apartment = useSelector(propertySelector).properties?.find(apartm => apartm.codeID === apartmentCode);
+
   const initialValues = {
     name: apartment ? apartment.name : '',
     description: apartment ? apartment.description : '',
