@@ -3,7 +3,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import { RefObject, useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { adminBookingThunk, postBookingThunk, setBookingsThunk } from 'reducers/BookingSlice';
+import { adminBookingThunk, postBookingThunk, setBookingsThunk } from 'components/Booking/BookingThunks';
 import { bookingSelector, userSelector } from 'selectors/selectors';
 import binaryFinder from './binaryBookingFinder';
 import { BookingContext } from './BookingProvider';

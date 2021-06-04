@@ -1,7 +1,5 @@
 import Slider from 'react-slick';
 import { styled } from 'twin.macro';
-// import rigaPan from 'images/Riga_panorama.jpg';
-import balda from 'images/baldaquin1.jpeg';
 
 const Carousel = styled.div`
   grid-area: carousel;
@@ -14,6 +12,7 @@ const PhotoContainer = styled.div`
   display: flex !important;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   min-height: 35rem;
   padding: 0 8rem;
 `;
@@ -43,7 +42,7 @@ const CustomPrevArrow = ({ className, style, onClick }: any) => {
   return <PrevArrow className={className} onClick={onClick} />;
 };
 
-const CustomSlider = () => {
+const CustomSlider = ({ photos }: { photos?: any[] }) => {
   return (
     <Carousel>
       <Slider
@@ -56,26 +55,13 @@ const CustomSlider = () => {
         nextArrow={<CustomNextArrow />}
         prevArrow={<CustomPrevArrow />}
       >
-        {/* <TestDiv /> */}
-
-        <PhotoContainer>
-          <div
-            style={{
-              backgroundImage: `url(${balda})`,
-              height: '30rem',
-              width: 'auto',
-              backgroundSize: 'contain',
-              backgroundRepeat: ' no-repeat',
-              backgroundPosition: 'center',
-            }}
-          ></div>
-        </PhotoContainer>
-        <PhotoContainer>2</PhotoContainer>
-        <PhotoContainer>3</PhotoContainer>
-        <PhotoContainer>4</PhotoContainer>
-        <PhotoContainer>5</PhotoContainer>
-        <PhotoContainer>6</PhotoContainer>
-        <PhotoContainer>7</PhotoContainer>
+        {photos?.map(photo => (
+          <PhotoContainer key={photo}>
+            <div>
+              <img tw="h-30" src={`data:image/jpg;base64, ${photo}`} />
+            </div>
+          </PhotoContainer>
+        ))}
       </Slider>
     </Carousel>
   );

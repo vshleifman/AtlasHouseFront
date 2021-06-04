@@ -11,7 +11,7 @@ import Welcome from 'components/Navbar/Welcome';
 import AuthForm from 'components/Authentication/AuthForm';
 import ApartmentsSwitch from 'components/ApartmentList/ApartmentsSwitch';
 import rigaPanorama from 'images/Riga_panorama.jpg';
-import AddApartment from 'components/ApartmentList/AddApartment';
+import AddApartment from 'components/ApartmentList/AddApartments/AddApartment';
 import tw from 'twin.macro';
 import Bookings from 'components/Booking/Bookings';
 import { setPropertiesThunk } from 'components/ApartmentList/PropertyThunks';

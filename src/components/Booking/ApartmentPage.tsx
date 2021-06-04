@@ -58,7 +58,7 @@ const ApartmentPage = () => {
         ) : null}
       </div>
 
-      <CustomSlider />
+      <CustomSlider photos={apartment?.pictures} />
 
       <ReactModal isOpen={isOpen} ariaHideApp={false}>
         <BookingModal />

@@ -15,8 +15,6 @@ const DateSearchBar = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
-  console.log(filters);
-
   const onChange = async ([start, end]: [Date, Date]) => {
     setStartDate(start);
     setEndDate(end);
@@ -43,7 +41,6 @@ const DateSearchBar = () => {
       <div tw="my-4 text-3xl">
         <DatePicker
           onChange={onChange}
-          // onClickOutside={onClickOutside}
           startDate={startDate}
           endDate={endDate}
           selectsRange

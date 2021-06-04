@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setBookingsThunk } from 'reducers/BookingSlice';
+import { setBookingsThunk } from 'components/Booking/BookingThunks';
 import styled from 'styled-components';
 import { Apartment } from 'types/types';
 
@@ -46,10 +46,9 @@ const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
   useEffect(() => {
     dispatch(setBookingsThunk());
   }, [dispatch]);
-
   return (
     <Container data-testid="listing">
-      <Photo></Photo>
+      {/* <Photo>{apartment.pictures[0]}</Photo> */}
       <Name tw="flex">
         <p tw="flex justify-center flex-grow">{apartment.name}</p>
       </Name>

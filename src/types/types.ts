@@ -18,6 +18,7 @@ export interface InitialAuthState {
 
 export interface InitialBookingState {
   bookings: Booking[] | undefined;
+  ownBookings: Booking[] | undefined;
   errorMsg: string | undefined;
 }
 
@@ -36,8 +37,8 @@ export interface Booking {
   checkOut: string;
   createdAt: string;
   updatedAt: string;
-  property: string;
-  user: string;
+  property: string | Apartment;
+  user: string | User;
   paidFor: boolean;
   amount: number;
 }
