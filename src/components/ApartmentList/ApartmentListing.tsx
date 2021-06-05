@@ -10,6 +10,8 @@ const Container = styled.div`
   margin: 5px;
   border-top: 2px orange dotted;
   border-bottom: 2px orange dotted;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
   padding: 1em 0 1em 0;
   &:hover {
     background-color: rgba(13, 15, 146, 0.452);
@@ -28,7 +30,6 @@ const BaseBox = styled.div`
 
 const Photo = styled(BaseBox)`
   grid-area: photo;
-  height: 180px;
 `;
 const Name = styled(BaseBox)`
   grid-area: name;
@@ -48,7 +49,9 @@ const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
   }, [dispatch]);
   return (
     <Container data-testid="listing">
-      {/* <Photo>{apartment.pictures[0]}</Photo> */}
+      <Photo>
+        <img tw="max-h-20" src={`data:image/jpg;base64, ${apartment.pictures[0]}`} alt="" />
+      </Photo>
       <Name tw="flex">
         <p tw="flex justify-center flex-grow">{apartment.name}</p>
       </Name>

@@ -71,7 +71,7 @@ const AddApartment = () => {
         dropzone={dropzone}
         picturesState={picturesState}
         setter={setPicturesState}
-        pictureData={picturesState[i]}
+        pictureFile={picturesState[i]}
       />,
     );
   }

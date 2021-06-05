@@ -58,7 +58,7 @@ const CustomSlider = ({ photos }: { photos?: any[] }) => {
         {photos?.map(photo => (
           <PhotoContainer key={photo}>
             <div>
-              <img tw="h-30" src={`data:image/jpg;base64, ${photo}`} />
+              <img tw="h-30" src={`data:image/jpg;base64, ${photo}`} alt="" />
             </div>
           </PhotoContainer>
         ))}

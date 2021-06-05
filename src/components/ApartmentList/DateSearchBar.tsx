@@ -37,7 +37,7 @@ const DateSearchBar = () => {
   const reference = useRef<HTMLDivElement>(null);
 
   return (
-    <div tw="flex gap-1">
+    <div tw="flex gap-1 justify-center">
       <div tw="my-4 text-3xl">
         <DatePicker
           onChange={onChange}

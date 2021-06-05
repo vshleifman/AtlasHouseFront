@@ -14,7 +14,7 @@ const Bookings = () => {
 
   useEffect(() => {
     isAdmin ? dispatch(setBookingsThunk()) : dispatch(setOwnBookingsThunk());
-  }, [dispatch]);
+  }, [dispatch, isAdmin]);
 
   const bookingKind = isAdmin ? 'bookings' : 'ownBookings';
 
