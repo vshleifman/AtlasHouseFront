@@ -44,11 +44,6 @@ const PicInput = ({
       {...dropzone.getRootProps()}
     >
       <input {...dropzone.getInputProps()} />
-      <img
-        tw="h-full transition-all duration-200 hover:opacity-30"
-        src={picture64 ? `data:image/jpg;base64, ${picture64}` : undefined}
-        alt=""
-      />
     </div>
   );
 
@@ -61,7 +56,7 @@ const PicInput = ({
     >
       <img
         tw="h-full transition-all duration-200 hover:opacity-30"
-        src={picture64 ? `data:image/jpg;base64, ${picture64}` : undefined}
+        src={picture64 ? `data:${currentPictureFile.type};base64, ${picture64}` : undefined}
         alt=""
       />
     </div>

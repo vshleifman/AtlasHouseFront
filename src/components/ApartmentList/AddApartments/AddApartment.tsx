@@ -42,7 +42,6 @@ const AddApartment = () => {
 
       const initialPicState = await Promise.all(
         apartment.pictures.map(async pic => {
-          console.log({ pic: pic.buffer });
           const res = await fetch(`data:${pic.mimetype};base64, ${pic.buffer}`);
           const blob = await res.blob();
           return new File([blob], pic.originalname, {

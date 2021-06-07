@@ -43,6 +43,7 @@ const Price = styled(BaseBox)`
 
 const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
   const dispatch = useDispatch();
+  const pic = apartment?.pictures[0];
 
   useEffect(() => {
     dispatch(setBookingsThunk());
@@ -50,7 +51,7 @@ const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
   return (
     <Container data-testid="listing">
       <Photo>
-        <img tw="max-h-20" src={`data:image/jpg;base64, ${apartment.pictures[0]}`} alt="" />
+        <img tw="max-h-20" src={`data:${pic?.mimetype};base64, ${pic?.buffer}`} alt="" />
       </Photo>
       <Name tw="flex">
         <p tw="flex justify-center flex-grow">{apartment.name}</p>

@@ -1,10 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBookingsThunk, setOwnBookingsThunk } from 'components/Booking/BookingThunks';
 import { bookingSelector, userSelector } from 'selectors/selectors';
+// import { Document, Page, View, Text } from '@react-pdf/renderer';
 import { Apartment, Booking, User } from 'types/types';
 import moment from 'moment';
 import NoBookings from './NoBookings';
+import { Btn } from 'styles/styles';
+import ReactModal from 'react-modal';
+import InvoiceModal from './InvoiceModal';
 
 const Bookings = () => {
   const dispatch = useDispatch();
@@ -16,6 +20,8 @@ const Bookings = () => {
     isAdmin ? dispatch(setBookingsThunk()) : dispatch(setOwnBookingsThunk());
   }, [dispatch, isAdmin]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const bookingKind = isAdmin ? 'bookings' : 'ownBookings';
 
   const bookings = useSelector(bookingSelector)[bookingKind];
@@ -25,17 +31,39 @@ const Bookings = () => {
   }
 
   return (
+    // <Document>
+    //   <Page size="A4">
+    //     <View>
+    //       <Text>baranka</Text>
+    //     </View>
+    //   </Page>
+    // </Document>
+
     <div>
       {bookings?.map((booking: Booking) => (
-        <div tw="w-60 p-1 m-1 border border-dark-gray" key={booking.createdAt}>
-          <p>
-            Apartment: {(booking.property as Apartment).name} ({(booking.property as Apartment).codeID})
-          </p>
-          <p>First Name: {(booking.user as User).firstName}</p>
-          <p>Last Name: {(booking.user as User).lastName}</p>
-          <p>Check In: {moment(booking.checkIn).format('DD/MM/YYYY')}</p>
-          <p>Check Out: {moment(booking.checkOut).format('DD/MM/YYYY')}</p>
-          <p>Paid For: {booking.paidFor.toString()}</p>
+        <div tw="w-60 p-1 m-1 border border-dark-gray flex justify-around items-stretch" key={booking.createdAt}>
+          <div>
+            <p>
+              Apartment: {(booking.property as Apartment).name} ({(booking.property as Apartment).codeID})
+            </p>
+            <p>First Name: {(booking.user as User).firstName}</p>
+            <p>Last Name: {(booking.user as User).lastName}</p>
+            <p>Check In: {moment(booking.checkIn).format('DD/MM/YYYY')}</p>
+            <p>Check Out: {moment(booking.checkOut).format('DD/MM/YYYY')}</p>
+            <p>Paid For: {booking.paidFor.toString()}</p>
+          </div>
+          <div>
+            <Btn
+              onClick={() => {
+                setIsOpen(true);
+              }}
+            >
+              Create Invoice
+            </Btn>
+            <ReactModal isOpen={isOpen} ariaHideApp={false}>
+              <InvoiceModal setIsOpen={setIsOpen} />
+            </ReactModal>
+          </div>
         </div>
       ))}
     </div>
