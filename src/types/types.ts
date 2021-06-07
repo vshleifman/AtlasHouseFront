@@ -43,6 +43,15 @@ export interface Booking {
   amount: number;
 }
 
+export interface PictureFile {
+  fieldname: string;
+  originalname: string;
+  mimetype: string;
+  encoding: string;
+  buffer: Buffer;
+  size: number;
+}
+
 export interface Apartment {
   name: string;
   codeID: string;
@@ -52,7 +61,7 @@ export interface Apartment {
   amenities: Record<string, boolean>;
   isCleaned: boolean;
   id: string;
-  pictures: string[];
+  pictures: PictureFile[];
   bookings: Booking[];
   description: string;
 }

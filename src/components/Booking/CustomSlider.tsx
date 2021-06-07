@@ -1,5 +1,6 @@
 import Slider from 'react-slick';
 import { styled } from 'twin.macro';
+import { PictureFile } from 'types/types';
 
 const Carousel = styled.div`
   grid-area: carousel;
@@ -42,7 +43,7 @@ const CustomPrevArrow = ({ className, style, onClick }: any) => {
   return <PrevArrow className={className} onClick={onClick} />;
 };
 
-const CustomSlider = ({ photos }: { photos?: any[] }) => {
+const CustomSlider = ({ photos }: { photos?: PictureFile[] }) => {
   return (
     <Carousel>
       <Slider
@@ -56,9 +57,9 @@ const CustomSlider = ({ photos }: { photos?: any[] }) => {
         prevArrow={<CustomPrevArrow />}
       >
         {photos?.map(photo => (
-          <PhotoContainer key={photo}>
+          <PhotoContainer key={photo.size}>
             <div>
-              <img tw="h-30" src={`data:image/jpg;base64, ${photo}`} alt="" />
+              <img tw="h-30" src={`data:${photo.mimetype};base64, ${photo.buffer}`} alt="" />
             </div>
           </PhotoContainer>
         ))}

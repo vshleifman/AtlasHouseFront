@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, Form, Formik, useFormikContext } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import formFields from './apartmentFormFields';
 import PicInput from './PicInput';
 import handleFormSubmit from './handleFormSubmit';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const Container = styled.div`
   ${tw`flex flex-col items-center`}
@@ -30,32 +30,39 @@ const AddApartment = () => {
   const apartmentCode = location.pathname.replace('/add_apartment/', '');
   const apartment = useSelector(propertySelector).properties?.find(apartm => apartm.codeID === apartmentCode);
   const dispatch = useDispatch();
-  const formik = useFormikContext();
 
-  const initialPicState = apartment?.pictures
-    ? [{ picture: '', name: '' }].concat(
-        apartment?.pictures.map(pic => {
-          return { picture: pic, name: '' };
+  const emptyPicFile = new File([''], '', { type: 'image/jpg' });
+  const [picturesState, setPicturesState] = useState<File[]>([emptyPicFile]);
+
+  useEffect(() => {
+    const initPicStateSetter = async () => {
+      if (!apartment?.pictures) {
+        return;
+      }
+
+      const initialPicState = await Promise.all(
+        apartment.pictures.map(async pic => {
+          console.log({ pic: pic.buffer });
+          const res = await fetch(`data:${pic.mimetype};base64, ${pic.buffer}`);
+          const blob = await res.blob();
+          return new File([blob], pic.originalname, {
+            type: pic.mimetype,
+          });
         }),
-      )
-    : [{ picture: '', name: '' }];
+      );
 
-  const [picturesState, setPicturesState] = useState(initialPicState);
+      setPicturesState([...picturesState, ...initialPicState]);
+    };
+
+    initPicStateSetter();
+  }, []);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
-      let newPicState: any = picturesState;
-      acceptedFiles.forEach(async file => {
-        console.log(file);
-        let binary = '';
-        const bytes = new Uint8Array(await file.arrayBuffer());
-        const len = bytes.byteLength;
-        for (let i = 0; i < len; i++) {
-          binary += String.fromCharCode(bytes[i]);
-        }
-        newPicState = [...newPicState, { picture: window.btoa(binary), name: file.name }];
-        setPicturesState(newPicState);
-      });
+      let newPicState: File[] = picturesState;
+
+      newPicState = [...newPicState, ...acceptedFiles];
+      setPicturesState(newPicState);
     },
     [picturesState],
   );
@@ -70,8 +77,8 @@ const AddApartment = () => {
         key={i}
         dropzone={dropzone}
         picturesState={picturesState}
-        setter={setPicturesState}
-        pictureFile={picturesState[i]}
+        setPictureState={setPicturesState}
+        currentPictureFile={picturesState[i]}
       />,
     );
   }
@@ -92,7 +99,7 @@ const AddApartment = () => {
           name: Yup.string().required('Required'),
           codeID: Yup.string().required('Required'),
         })}
-        onSubmit={values => handleFormSubmit(dispatch, formik, values, dropzone.acceptedFiles, apartment)}
+        onSubmit={(values, { resetForm }) => handleFormSubmit(dispatch, resetForm, values, picturesState, apartment)}
       >
         <Form tw="flex flex-col justify-between">
           {formFields.map(field => (

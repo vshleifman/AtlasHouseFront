@@ -1,19 +1,18 @@
 import api from 'api/axiosInstance';
-import { FormikContextType } from 'formik';
 import { Dispatch } from 'react';
 import { Apartment } from 'types/types';
 import { setPropertiesThunk } from '../PropertyThunks';
 
 const handleFormSubmit = async (
   dispatch: Dispatch<any>,
-  formik: FormikContextType<unknown>,
+  resetForm: () => void,
   values: {
     name: string;
     description: string;
     codeID: string;
     price: number | undefined;
   },
-  acceptedFiles: File[],
+  picturesState: File[],
   apartment?: Apartment,
 ) => {
   const formData = new FormData();
@@ -24,7 +23,7 @@ const handleFormSubmit = async (
     if (value) formData.append(key, value.toString());
   }
 
-  acceptedFiles.forEach(file => {
+  picturesState.forEach(file => {
     formData.append('pictures', file);
   });
 
@@ -41,7 +40,7 @@ const handleFormSubmit = async (
     }
 
     alert(apartment ? 'Updated!' : 'Added!');
-    if (!apartment) formik.resetForm();
+    if (!apartment) resetForm();
   } catch (error) {
     console.log(error);
   }

@@ -1,21 +1,39 @@
+import { useEffect, useState } from 'react';
 import { DropzoneState } from 'react-dropzone';
 
 const PicInput = ({
   dropzone,
   picturesState,
-  setter,
-  pictureData,
+  setPictureState,
+  currentPictureFile,
 }: {
   dropzone: DropzoneState;
-  picturesState: typeof pictureData[];
-  setter: (arg: any) => void;
-  pictureData: { picture: string; name: string };
+  picturesState: File[];
+  setPictureState: (arg: any) => void;
+  currentPictureFile: File;
 }) => {
-  const isEmptyInput = pictureData.picture === '';
+  const isEmptyFile = currentPictureFile.name === '';
+
+  const [picture64, setPicture64] = useState('');
+
+  useEffect(() => {
+    const fileTo64 = async () => {
+      let binary = '';
+      const bytes = new Uint8Array(await currentPictureFile.arrayBuffer());
+      bytes.forEach(byte => (binary += String.fromCharCode(byte)));
+      setPicture64(window.btoa(binary));
+    };
+
+    fileTo64();
+  }, [currentPictureFile]);
 
   const onClickErase = () => {
-    const redactedPicturesState = picturesState.filter(picture => picture.picture !== pictureData.picture);
-    setter(redactedPicturesState);
+    const redactedPicturesState = picturesState.concat();
+    redactedPicturesState.splice(
+      redactedPicturesState.findIndex(pictureFile => pictureFile.name === currentPictureFile.name),
+      1,
+    );
+    setPictureState(redactedPicturesState);
   };
 
   const EmptyInput = (
@@ -28,7 +46,8 @@ const PicInput = ({
       <input {...dropzone.getInputProps()} />
       <img
         tw="h-full transition-all duration-200 hover:opacity-30"
-        src={pictureData.picture ? `data:image/jpg;base64, ${pictureData.picture}` : undefined}
+        src={picture64 ? `data:image/jpg;base64, ${picture64}` : undefined}
+        alt=""
       />
     </div>
   );
@@ -42,12 +61,13 @@ const PicInput = ({
     >
       <img
         tw="h-full transition-all duration-200 hover:opacity-30"
-        src={pictureData.picture ? `data:image/jpg;base64, ${pictureData.picture}` : undefined}
+        src={picture64 ? `data:image/jpg;base64, ${picture64}` : undefined}
+        alt=""
       />
     </div>
   );
 
-  return <>{isEmptyInput ? EmptyInput : FilledInput}</>;
+  return <>{isEmptyFile ? EmptyInput : FilledInput}</>;
 };
 
 export default PicInput;
