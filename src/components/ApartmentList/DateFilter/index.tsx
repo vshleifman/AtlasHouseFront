@@ -49,6 +49,7 @@ const DateSearchBar = () => {
           fixedHeight={true}
           selected={startDate}
           disabledKeyboardNavigation
+          minDate={moment().toDate()}
         />
       </div>
       <Filter reference={reference} />

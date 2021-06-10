@@ -8,8 +8,8 @@ const Container = styled.div`
   display: grid;
   grid-template: 'photo name name' 1fr 'photo description price' 1fr 'photo description price' 1fr / 2fr 3fr 1fr;
   margin: 5px;
-  border-top: 2px orange dotted;
-  border-bottom: 2px orange dotted;
+  border-top: 2px orange solid;
+  border-bottom: 2px transparent dotted;
   border-left: 2px solid transparent;
   border-right: 2px solid transparent;
   padding: 1em 0 1em 0;
@@ -21,7 +21,7 @@ const Container = styled.div`
 `;
 
 const BaseBox = styled.div`
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: grid;
 
   place-items: center;
@@ -51,13 +51,23 @@ const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
   return (
     <Container data-testid="listing">
       <Photo>
-        <img tw="max-h-20" src={`data:${pic?.mimetype};base64, ${pic?.buffer}`} alt="" />
+        <img
+          tw="max-h-20"
+          src={
+            pic
+              ? `data:${pic?.mimetype};base64, ${pic?.buffer}`
+              : 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+          }
+          alt=""
+        />
       </Photo>
-      <Name tw="flex">
-        <p tw="flex justify-center flex-grow">{apartment.name}</p>
+      <Name tw="place-self-center justify-center w-20 pb-1 flex border-b border-secondary">
+        <p tw="flex justify-center text-4xl ">{apartment.name}</p>
       </Name>
-      <Description>{apartment.description}</Description>
-      <Price>{apartment.price}</Price>
+      <Description tw="justify-start max-w-40">
+        <p>{apartment.description || 'No description yet'}</p>
+      </Description>
+      <Price>{apartment.price} €</Price>
     </Container>
   );
 };
