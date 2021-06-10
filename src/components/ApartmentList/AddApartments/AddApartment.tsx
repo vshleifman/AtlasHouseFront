@@ -44,7 +44,7 @@ const AddApartment = () => {
         apartment.pictures.map(async pic => {
           const res = await fetch(`data:${pic.mimetype};base64, ${pic.buffer}`);
           const blob = await res.blob();
-          return new File([blob], pic.originalname, {
+          return new File([blob], pic.name, {
             type: pic.mimetype,
           });
         }),

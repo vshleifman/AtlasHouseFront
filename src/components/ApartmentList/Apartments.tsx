@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { userSelector } from 'selectors/selectors';
 import { Btn } from 'styles/styles';
 import ApartmentList from './ApartmentList';
-import DateSearchBar from './DateSearchBar';
+import DateSearchBar from './DateFilter';
 
 const Apartments = () => {
   const user = useSelector(userSelector).userData;

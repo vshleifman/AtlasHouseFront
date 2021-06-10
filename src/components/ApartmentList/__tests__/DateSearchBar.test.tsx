@@ -1,4 +1,4 @@
 import { render } from 'testUtils';
-import DateSearchBar from '../DateSearchBar';
+import DateSearchBar from '../DateFilter';
 
 const customRender = () => render(<DateSearchBar />);

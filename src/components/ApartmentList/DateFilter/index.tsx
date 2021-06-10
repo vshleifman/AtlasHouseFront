@@ -1,12 +1,11 @@
 import moment from 'moment';
 import { useContext, useRef, useState } from 'react';
-import { FilterContext } from './FilterProvider';
+import { FilterContext } from '../FilterProvider';
 import DatePicker from 'react-datepicker';
-import Filter from './Filter';
+import Filter from '../Filter';
 import { checkTimes } from 'types/types';
 import { useDispatch } from 'react-redux';
-import { setPropertiesThunk } from './PropertyThunks';
-import PickerWrapper from './DatePickerRestyle';
+import { setPropertiesThunk } from '../PropertyThunks';
 
 const DateSearchBar = () => {
   const dispatch = useDispatch();
@@ -40,19 +39,17 @@ const DateSearchBar = () => {
   return (
     <div tw="flex gap-1 justify-center">
       <div tw="my-4 text-3xl">
-        <PickerWrapper>
-          <DatePicker
-            onChange={onChange}
-            startDate={startDate}
-            endDate={endDate}
-            selectsRange
-            monthsShown={2}
-            inline
-            fixedHeight={true}
-            selected={startDate}
-            disabledKeyboardNavigation
-          />
-        </PickerWrapper>
+        <DatePicker
+          onChange={onChange}
+          startDate={startDate}
+          endDate={endDate}
+          selectsRange
+          monthsShown={2}
+          inline
+          fixedHeight={true}
+          selected={startDate}
+          disabledKeyboardNavigation
+        />
       </div>
       <Filter reference={reference} />
     </div>
