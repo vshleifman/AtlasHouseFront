@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { BookingContext } from './BookingProvider';
 
-const ModalCloseButton = () => {
+const ModalCloseButton = ({ setIsOpenProp }: { setIsOpenProp?: (arg: boolean) => void }) => {
   const { setIsOpen } = useContext(BookingContext);
   return (
     <div tw="flex flex-col">
-      <button tw="self-end mb-2" onClick={() => setIsOpen(false)}>
+      <button tw="self-end mb-2" onClick={() => (setIsOpenProp ? setIsOpenProp(false) : setIsOpen(false))}>
         <svg
           tw="hover:transform hover:scale-110 transition-all duration-75"
           width="24"

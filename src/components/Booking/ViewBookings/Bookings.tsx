@@ -31,14 +31,6 @@ const Bookings = () => {
   }
 
   return (
-    // <Document>
-    //   <Page size="A4">
-    //     <View>
-    //       <Text>baranka</Text>
-    //     </View>
-    //   </Page>
-    // </Document>
-
     <div>
       {bookings?.map((booking: Booking) => (
         <div tw="w-60 p-1 m-1 border border-dark-gray flex justify-around items-stretch" key={booking.createdAt}>
@@ -61,7 +53,7 @@ const Bookings = () => {
               Create Invoice
             </Btn>
             <ReactModal isOpen={isOpen} ariaHideApp={false}>
-              <InvoiceModal setIsOpen={setIsOpen} />
+              <InvoiceModal booking={booking} setIsOpen={setIsOpen} />
             </ReactModal>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import DatePicker from 'react-datepicker';
 import { styled } from 'twin.macro';
 
-const StDatePicker = styled(DatePicker)`
+const PickerWrapper = styled.div`
   .react-datepicker {
     font-size: 0.8em;
     border-radius: 0.3em;
@@ -163,4 +163,4 @@ const StDatePicker = styled(DatePicker)`
   }
 `;
 
-export default StDatePicker;
+export default PickerWrapper;

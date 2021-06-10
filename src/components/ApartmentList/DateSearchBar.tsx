@@ -6,6 +6,7 @@ import Filter from './Filter';
 import { checkTimes } from 'types/types';
 import { useDispatch } from 'react-redux';
 import { setPropertiesThunk } from './PropertyThunks';
+import PickerWrapper from './DatePickerRestyle';
 
 const DateSearchBar = () => {
   const dispatch = useDispatch();
@@ -39,17 +40,19 @@ const DateSearchBar = () => {
   return (
     <div tw="flex gap-1 justify-center">
       <div tw="my-4 text-3xl">
-        <DatePicker
-          onChange={onChange}
-          startDate={startDate}
-          endDate={endDate}
-          selectsRange
-          monthsShown={2}
-          inline
-          fixedHeight={true}
-          selected={startDate}
-          disabledKeyboardNavigation
-        />
+        <PickerWrapper>
+          <DatePicker
+            onChange={onChange}
+            startDate={startDate}
+            endDate={endDate}
+            selectsRange
+            monthsShown={2}
+            inline
+            fixedHeight={true}
+            selected={startDate}
+            disabledKeyboardNavigation
+          />
+        </PickerWrapper>
       </div>
       <Filter reference={reference} />
     </div>
