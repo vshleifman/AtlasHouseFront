@@ -14,7 +14,7 @@ const Apartments = () => {
       <DateSearchBar />
       {isAdmin ? (
         <Btn tw="flex w-3 h-3 rounded-full items-center margin[-2rem 1rem] self-end">
-          <Link tw="flex flex-col text-5xl flex-basis[100%] min-h-full justify-center" to="/add_apartment">
+          <Link tw="text-5xl" to="/add_apartment">
             +
           </Link>
         </Btn>
