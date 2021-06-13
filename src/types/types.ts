@@ -49,7 +49,7 @@ export interface Apartment {
   createdAt: string;
   updatedAt: string;
   price: number;
-  amenities: Record<string, boolean>;
+  amenities: amenitiesList;
   isCleaned: boolean;
   id: string;
   pictures: { buffer: string; name: string; mimetype: string }[];
@@ -60,4 +60,23 @@ export interface Apartment {
 export enum checkTimes {
   checkIn = 15,
   checkOut = 12,
+}
+
+export interface amenitiesList {
+  balcony: boolean;
+  bathtub: boolean;
+  shower: boolean;
+  wifi: boolean;
+  tv: boolean;
+  cutlery: boolean;
+  microwave: boolean;
+  oven: boolean;
+  kettle: boolean;
+  cooker: boolean;
+  fridge: boolean;
+  washingMachine: boolean;
+  iron: boolean;
+  ironingBoard: boolean;
+  linen: boolean;
+  towels: boolean;
 }

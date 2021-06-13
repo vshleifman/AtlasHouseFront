@@ -19,10 +19,6 @@ const Container = styled.div`
   grid-template: '. head .' 1fr 'carousel carousel carousel' 3fr '. descblock .' auto / 1fr 3fr 1fr;
   place-items: stretch;
   width: 100vw;
-
-  .base-unit {
-    ${tw`grid place-items-center`}
-  }
 `;
 
 const EditLink = styled(Link)`
