@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { createContext, useState } from 'react';
-import { checkTimes } from 'types/types';
+import { amenitiesList, checkTimes } from 'types/types';
 
 export const initialFiltersState: FilterState = {
   dateRange: {
@@ -10,18 +10,27 @@ export const initialFiltersState: FilterState = {
   amenities: {
     balcony: false,
     bathtub: false,
+    shower: false,
     wifi: false,
+    tv: false,
+    cutlery: false,
+    microwave: false,
+    oven: false,
+    kettle: false,
+    cooker: false,
+    fridge: false,
+    washingMachine: false,
+    iron: false,
+    ironingBoard: false,
+    linen: false,
+    towels: false,
   },
   sortBy: undefined,
 };
 
 export interface FilterState {
   dateRange: { from: string; to: string };
-  amenities: {
-    balcony: boolean | undefined;
-    bathtub: boolean | undefined;
-    wifi: boolean | undefined;
-  };
+  amenities: amenitiesList;
   sortBy: string | undefined;
 }
 

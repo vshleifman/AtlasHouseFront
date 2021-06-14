@@ -1,6 +1,6 @@
 import api from 'api/axiosInstance';
 import { Dispatch } from 'react';
-import { Apartment } from 'types/types';
+import { amenitiesList, Apartment } from 'types/types';
 import { setPropertiesThunk } from '../PropertyThunks';
 
 const handleFormSubmit = async (
@@ -12,6 +12,7 @@ const handleFormSubmit = async (
     codeID: string;
     price: number | undefined;
   },
+  amenities: Partial<amenitiesList>,
   picturesState: File[],
   apartment?: Apartment,
 ) => {
@@ -22,6 +23,9 @@ const handleFormSubmit = async (
 
     if (value) formData.append(key, value.toString());
   }
+  const amenitiesString = JSON.stringify(amenities);
+
+  formData.append('amenities', amenitiesString);
 
   picturesState.forEach(file => {
     formData.append('pictures', file);
@@ -34,10 +38,10 @@ const handleFormSubmit = async (
   try {
     if (apartment) {
       await api.patch(`/properties/${apartment.id}`, formData, { headers });
-      dispatch(setPropertiesThunk());
     } else {
       await api.post('/properties', formData, { headers });
     }
+    dispatch(setPropertiesThunk());
 
     alert(apartment ? 'Updated!' : 'Added!');
     if (!apartment) resetForm();

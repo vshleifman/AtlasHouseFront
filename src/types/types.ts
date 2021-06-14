@@ -49,6 +49,7 @@ export interface Apartment {
   createdAt: string;
   updatedAt: string;
   price: number;
+  area: number;
   amenities: amenitiesList;
   isCleaned: boolean;
   id: string;

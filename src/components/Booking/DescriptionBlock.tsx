@@ -17,7 +17,7 @@ const DescriptionBlock = () => {
 
   const maxHeight = amenities.length > 4 ? `${3.5 * (amenities.length / 2)}rem` : 'initial';
   const Container = styled.div`
-    ${tw`flex justify-center items-stretch grid-area[descblock]`}
+    ${tw`flex flex-col items-stretch grid-area[descblock]`}
     svg {
       color: gray;
     }
@@ -36,28 +36,39 @@ const DescriptionBlock = () => {
 
   return (
     <Container>
-      <section tw="flex flex-col items-center p-3 bg-gradient-to-l to-white from-light-gray">
-        <h1 tw="justify-center w-20 pb-1 flex border-b border-secondary">Description</h1>
-        <p tw="place-self-start mt-2">{apartment.description}</p>
-      </section>
-      <div tw="flex flex-col bg-gradient-to-r from-light-gray to-white">
-        <section tw="flex flex-col items-center p-3">
-          <h1 tw="justify-center w-20 pb-1 flex border-b border-secondary">Amenities</h1>
-          <div className="ams" tw="flex flex-col flex-wrap self-stretch">
-            {amenities?.map(entry => (
-              <p key="entry" tw="capitalize place-self-start mx-1 my-0.5">
-                <IconsSwitch amenity={entry as keyof amenitiesList} /> {entry}
-              </p>
-            ))}
-          </div>
+      <div tw="flex justify-end">
+        <section tw="flex flex-col items-center p-3 bg-gradient-to-l to-white from-light-gray">
+          <h1 tw="justify-center w-20 pb-1 flex border-b border-secondary">Description</h1>
+          <p tw="place-self-start mt-2">{apartment.description}</p>
         </section>
 
-        <section>
-          <Btn tw="" onClick={onClick}>
-            Book Apartment
-          </Btn>
+        {/* <div tw="flex flex-col bg-gradient-to-r from-light-gray to-white"> */}
+        <section tw="flex flex-col items-center p-3 bg-gradient-to-r from-light-gray to-white">
+          <h1 tw="justify-center w-20 pb-1 flex border-b border-secondary">Amenities</h1>
+
+          <div className="ams" tw="flex flex-col flex-wrap self-stretch">
+            {amenities?.map(entry => {
+              if (apartment.amenities[entry as keyof amenitiesList] === true) {
+                return (
+                  <p key="entry" tw="capitalize place-self-start mx-1 my-0.5">
+                    <IconsSwitch amenity={entry as keyof amenitiesList} /> {entry}
+                  </p>
+                );
+              }
+            })}
+          </div>
         </section>
       </div>
+      {/* </div> */}
+
+      <section tw="flex">
+        <Btn type="button" onClick={() => history.goBack()}>
+          Return
+        </Btn>
+        <Btn tw="" onClick={onClick}>
+          Book Apartment
+        </Btn>
+      </section>
     </Container>
   );
 };

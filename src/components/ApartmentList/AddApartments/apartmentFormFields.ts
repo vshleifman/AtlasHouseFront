@@ -18,6 +18,12 @@ const formFields = [
     type: 'number',
   },
   {
+    name: 'area',
+    text: 'Enter the apartment area:',
+    placeholder: 'area',
+    type: 'number',
+  },
+  {
     name: 'description',
     text: 'Write the apartments description:',
     placeholder: 'Description',
