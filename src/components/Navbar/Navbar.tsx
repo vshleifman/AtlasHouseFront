@@ -34,7 +34,7 @@ const Navbar = () => {
     <Container>
       <div tw="text-2xl mx-4 flex items-center height[10vh] p-0.5 justify-between">
         <div tw="flex-grow[2]">
-          <BaseLink tw="text-4xl border-none" to="/">
+          <BaseLink tw="text-4xl" to="/">
             AtlasHouse
           </BaseLink>
         </div>

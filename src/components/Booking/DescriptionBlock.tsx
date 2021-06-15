@@ -37,12 +37,19 @@ const DescriptionBlock = () => {
   return (
     <Container>
       <div tw="flex justify-end">
-        <section tw="flex flex-col items-center p-3 bg-gradient-to-l to-white from-light-gray">
+        <section tw="flex flex-col flex-grow items-center p-3 bg-gradient-to-l to-white from-light-gray">
           <h1 tw="justify-center w-20 pb-1 flex border-b border-secondary">Description</h1>
-          <p tw="place-self-start mt-2">{apartment.description}</p>
+          <div tw="flex justify-between place-self-stretch p-2">
+            <div tw="min-width[fit-content] mt-2 mr-4">
+              <p>
+                Area: {apartment.area} m<sup>2</sup>
+              </p>
+              <p>Price: {apartment.price} €</p>
+            </div>
+            <p tw="place-self-start mt-2">{apartment.description}</p>
+          </div>
         </section>
 
-        {/* <div tw="flex flex-col bg-gradient-to-r from-light-gray to-white"> */}
         <section tw="flex flex-col items-center p-3 bg-gradient-to-r from-light-gray to-white">
           <h1 tw="justify-center w-20 pb-1 flex border-b border-secondary">Amenities</h1>
 
@@ -59,7 +66,6 @@ const DescriptionBlock = () => {
           </div>
         </section>
       </div>
-      {/* </div> */}
 
       <section tw="flex">
         <Btn type="button" onClick={() => history.goBack()}>
