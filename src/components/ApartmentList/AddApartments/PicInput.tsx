@@ -1,20 +1,30 @@
-import { useEffect, useState } from 'react';
-import { DropzoneState } from 'react-dropzone';
+import { useCallback, useEffect, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 
 const PicInput = ({
-  dropzone,
   picturesState,
-  setPictureState,
+  setPicturesState,
   currentPictureFile,
 }: {
-  dropzone: DropzoneState;
   picturesState: File[];
-  setPictureState: (arg: any) => void;
+  setPicturesState: (arg: any) => void;
   currentPictureFile: File;
 }) => {
   const isEmptyFile = currentPictureFile.name === '';
 
   const [picture64, setPicture64] = useState('');
+
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      let newPicState: File[] = picturesState;
+
+      newPicState = [...newPicState, ...acceptedFiles];
+      setPicturesState(newPicState);
+    },
+    [picturesState],
+  );
+
+  const dropzone = useDropzone({ onDrop });
 
   useEffect(() => {
     const fileTo64 = async () => {
@@ -33,7 +43,7 @@ const PicInput = ({
       redactedPicturesState.findIndex(pictureFile => pictureFile.name === currentPictureFile.name),
       1,
     );
-    setPictureState(redactedPicturesState);
+    setPicturesState(redactedPicturesState);
   };
 
   const EmptyInput = (

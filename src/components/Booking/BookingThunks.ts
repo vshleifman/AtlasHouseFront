@@ -35,12 +35,11 @@ export const postBookingThunk =
 export const adminBookingThunk =
   (userData: Partial<User>, bookingData: Partial<Booking>): AppThunk =>
   async dispatch => {
-    console.log({ bookingData, userData });
     try {
       await api.post('/createUserAndBook', { booking: bookingData, user: userData });
       dispatch(setBookingsThunk());
     } catch (error) {
-      console.log(error);
+      console.error(error);
       dispatch(addError(error));
     }
   };

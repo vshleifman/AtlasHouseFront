@@ -59,7 +59,6 @@ const BookerDetails = ({ formikRef }: { formikRef: RefObject<FormikProps<typeof 
               ),
             );
           }
-          console.log({ bookings });
           alert('Booked!');
         } else {
           alert('Not currently available');

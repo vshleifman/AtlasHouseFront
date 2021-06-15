@@ -57,7 +57,7 @@ const DescriptionBlock = () => {
             {amenities?.map(entry => {
               if (apartment.amenities[entry as keyof amenitiesList] === true) {
                 return (
-                  <p key="entry" tw="capitalize place-self-start mx-1 my-0.5">
+                  <p key={entry} tw="capitalize place-self-start mx-1 my-0.5">
                     <IconsSwitch amenity={entry as keyof amenitiesList} /> {entry}
                   </p>
                 );

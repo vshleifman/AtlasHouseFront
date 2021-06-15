@@ -46,7 +46,7 @@ const handleFormSubmit = async (
     alert(apartment ? 'Updated!' : 'Added!');
     if (!apartment) resetForm();
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

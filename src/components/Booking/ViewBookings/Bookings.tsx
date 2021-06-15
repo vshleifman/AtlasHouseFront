@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBookingsThunk, setOwnBookingsThunk } from 'components/Booking/BookingThunks';
 import { bookingSelector, userSelector } from 'selectors/selectors';
-// import { Document, Page, View, Text } from '@react-pdf/renderer';
 import { Apartment, Booking, User } from 'types/types';
 import moment from 'moment';
 import NoBookings from './NoBookings';

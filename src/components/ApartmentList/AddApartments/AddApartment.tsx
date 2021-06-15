@@ -1,5 +1,4 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import { propertySelector } from 'selectors/selectors';
@@ -9,9 +8,9 @@ import * as Yup from 'yup';
 import formFields from './apartmentFormFields';
 import PicInput from './PicInput';
 import handleFormSubmit from './handleFormSubmit';
-import { useCallback, useEffect, useState } from 'react';
-import Select from 'react-select';
+import { useEffect, useState } from 'react';
 import { amenitiesList } from 'types/types';
+import SelectAmenities from './SelectAmenities';
 
 const Container = styled.div`
   ${tw`flex flex-col items-center`}
@@ -27,14 +26,15 @@ const Container = styled.div`
 
 const AddApartment = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const location = useLocation();
   const apartmentCode = location.pathname.replace('/add_apartment/', '');
   const apartment = useSelector(propertySelector).properties?.find(apartm => apartm.codeID === apartmentCode);
-  const dispatch = useDispatch();
 
   const emptyPicFile = new File([''], '', { type: 'image/jpg' });
-  const [picturesState, setPicturesState] = useState<File[]>([emptyPicFile]);
+
+  const [picturesState, setPicturesState] = useState([emptyPicFile]);
   const [amenities, setAmenities] = useState<Partial<amenitiesList>>({});
 
   useEffect(() => {
@@ -59,33 +59,20 @@ const AddApartment = () => {
     initPicStateSetter();
   }, []);
 
-  const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      let newPicState: File[] = picturesState;
-
-      newPicState = [...newPicState, ...acceptedFiles];
-      setPicturesState(newPicState);
-    },
-    [picturesState],
-  );
-
-  const dropzone = useDropzone({ onDrop });
-
   const picArray: JSX.Element[] = [];
 
   for (let i = 0; i < picturesState.length; i++) {
     picArray.push(
       <PicInput
         key={i}
-        dropzone={dropzone}
         picturesState={picturesState}
-        setPictureState={setPicturesState}
+        setPicturesState={setPicturesState}
         currentPictureFile={picturesState[i]}
       />,
     );
   }
 
-  const initialValues = {
+  const initialFormikValues = {
     name: apartment ? apartment.name : '',
     description: apartment ? apartment.description : '',
     codeID: apartment ? apartment.codeID : '',
@@ -93,52 +80,11 @@ const AddApartment = () => {
     area: apartment ? apartment.area : 0,
   };
 
-  const defaultAmenities = {
-    balcony: false,
-    bathtub: false,
-    shower: false,
-    wifi: false,
-    tv: false,
-    cutlery: false,
-    microwave: false,
-    oven: false,
-    kettle: false,
-    cooker: false,
-    fridge: false,
-    washingMachine: false,
-    iron: false,
-    ironingBoard: false,
-    linen: false,
-    towels: false,
-  };
-
-  const amenitiesOptions = Object.keys(defaultAmenities).map(amenity => {
-    return {
-      value: amenity,
-      label: `${amenity.charAt(0).toUpperCase()}${amenity.slice(1)}`,
-    };
-  });
-
-  const preselectedAmenities: typeof amenitiesOptions = [];
-  console.log(apartment?.amenities);
-
-  if (apartment?.amenities) {
-    amenitiesOptions.forEach(option => {
-      if (apartment?.amenities[option.value as keyof amenitiesList] === true) {
-        console.log(option);
-        preselectedAmenities.push(option);
-      } else {
-        console.log('banana');
-      }
-    });
-  }
-  console.log(preselectedAmenities);
-
   return (
     <Container>
       <Heading tw="flex[10rem] ">Add A New Apartment</Heading>
       <Formik
-        initialValues={initialValues}
+        initialValues={initialFormikValues}
         validationSchema={Yup.object({
           name: Yup.string().required('Required'),
           codeID: Yup.string().required('Required'),
@@ -160,23 +106,13 @@ const AddApartment = () => {
               <ErrorMessage name={field.name} />
             </div>
           ))}
+
           <label tw="mt-3">Select amenities</label>
-          <Select
-            tw="max-width[min-content]"
-            defaultValue={preselectedAmenities}
-            isMulti
-            className="basic-multi-select"
-            classNamePrefix="select"
-            options={amenitiesOptions}
-            onChange={options => {
-              const tempAmenities = { ...defaultAmenities };
-              options.forEach(option => (tempAmenities[option.value as keyof typeof defaultAmenities] = true));
-              setAmenities(tempAmenities);
-            }}
-          />
+          <SelectAmenities onChange={amens => setAmenities(amens)} apartment={apartment} />
 
           <label tw="mt-3">Attach the photos</label>
           <div tw="flex gap-2 flex-wrap max-width[fit-content] pb-2">{picArray}</div>
+
           <div tw="flex place-self-stretch pt-1 border-t border-secondary border-dotted">
             <Btn type="button" onClick={() => history.goBack()}>
               Return
