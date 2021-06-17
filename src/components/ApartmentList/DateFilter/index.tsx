@@ -1,21 +1,19 @@
 import moment from 'moment';
 import { useContext, useRef, useState } from 'react';
-import { FilterContext } from './FilterProvider';
+import { FilterContext } from '../FilterProvider';
 import DatePicker from 'react-datepicker';
-import Filter from './Filter';
+import Filter from '../Filter';
 import { checkTimes } from 'types/types';
 import { useDispatch } from 'react-redux';
-import { setPropertiesThunk } from './PropertyThunks';
+import { setPropertiesThunk } from '../PropertyThunks';
 
-const DateSearchBar = () => {
+const DateFilter = () => {
   const dispatch = useDispatch();
 
   const { filters, setFilters } = useContext(FilterContext);
 
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-
-  console.log(filters);
 
   const onChange = async ([start, end]: [Date, Date]) => {
     setStartDate(start);
@@ -39,11 +37,10 @@ const DateSearchBar = () => {
   const reference = useRef<HTMLDivElement>(null);
 
   return (
-    <div tw="flex gap-1">
+    <div tw="flex gap-1 justify-center">
       <div tw="my-4 text-3xl">
         <DatePicker
           onChange={onChange}
-          // onClickOutside={onClickOutside}
           startDate={startDate}
           endDate={endDate}
           selectsRange
@@ -52,6 +49,7 @@ const DateSearchBar = () => {
           fixedHeight={true}
           selected={startDate}
           disabledKeyboardNavigation
+          minDate={moment().toDate()}
         />
       </div>
       <Filter reference={reference} />
@@ -59,4 +57,4 @@ const DateSearchBar = () => {
   );
 };
 
-export default DateSearchBar;
+export default DateFilter;

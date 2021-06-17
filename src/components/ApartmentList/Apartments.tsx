@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { userSelector } from 'selectors/selectors';
 import { Btn } from 'styles/styles';
 import ApartmentList from './ApartmentList';
-import DateSearchBar from './DateSearchBar';
+import DateFilter from './DateFilter';
 
 const Apartments = () => {
   const user = useSelector(userSelector).userData;
@@ -11,10 +11,10 @@ const Apartments = () => {
 
   return (
     <div tw="flex flex-col">
-      <DateSearchBar />
+      <DateFilter />
       {isAdmin ? (
         <Btn tw="flex w-3 h-3 rounded-full items-center margin[-2rem 1rem] self-end">
-          <Link tw="flex flex-col text-5xl flex-basis[100%] min-h-full justify-center" to="/add_apartment">
+          <Link tw="text-5xl" to="/add_apartment">
             +
           </Link>
         </Btn>

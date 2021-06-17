@@ -11,9 +11,9 @@ import Welcome from 'components/Navbar/Welcome';
 import AuthForm from 'components/Authentication/AuthForm';
 import ApartmentsSwitch from 'components/ApartmentList/ApartmentsSwitch';
 import rigaPanorama from 'images/Riga_panorama.jpg';
-import AddApartment from 'components/ApartmentList/AddApartment';
+import AddApartment from 'components/ApartmentList/AddApartments';
 import tw from 'twin.macro';
-import Bookings from 'components/Booking/Bookings';
+import Bookings from 'components/Booking/ViewBookings/Bookings';
 import { setPropertiesThunk } from 'components/ApartmentList/PropertyThunks';
 
 const Container = styled.div`
@@ -30,12 +30,6 @@ const Container = styled.div`
       text-decoration: none;
     }
   }
-`;
-
-const StSwitch = styled.div`
-  margin-top: 2em;
-  justify-content: center;
-  display: flex;
 `;
 
 const NavBackground = styled.header`
@@ -66,7 +60,7 @@ const App = () => {
         {location.pathname === '/' ? <Welcome reference={ref} /> : null}
       </NavBackground>
 
-      <StSwitch>
+      <Switch tw="mt-2 justify-center flex">
         <Switch>
           <Route exact path="/" render={() => <ApartmentsSwitch reference={ref} />} />
           <Route path="/auth" component={AuthForm} />
@@ -77,7 +71,7 @@ const App = () => {
           <Route path="/bookings" component={Bookings} />
           <Route path="/about" component={About} />
         </Switch>
-      </StSwitch>
+      </Switch>
     </Container>
   );
 };

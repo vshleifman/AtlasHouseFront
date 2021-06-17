@@ -34,16 +34,17 @@ const Filter = ({ reference }: { reference?: RefObject<HTMLDivElement> }) => {
       tempAmenities[val] = true;
     });
 
-    setFilters({ ...filters, amenities: tempAmenities });
+    const newFilters = { ...filters, amenities: tempAmenities };
+
+    setFilters(newFilters);
+    applyFilters(newFilters);
   };
 
-  const onClick = (filters?: FilterState) => {
+  const applyFilters = (filters?: FilterState) => {
     if (filters && !filters.dateRange.to) {
       return alert('Please select an end date!');
     }
     dispatch(setPropertiesThunk(filters));
-
-    reference?.current !== null ? reference?.current.scrollIntoView() : console.log('null');
   };
 
   return (
@@ -54,7 +55,9 @@ const Filter = ({ reference }: { reference?: RefObject<HTMLDivElement> }) => {
           <Select
             options={sortOptions}
             onChange={e => {
-              setFilters({ ...filters, sortBy: e!.value });
+              const newFilters = { ...filters, sortBy: e!.value };
+              setFilters(newFilters);
+              applyFilters(newFilters);
             }}
           />
         </div>
@@ -71,9 +74,7 @@ const Filter = ({ reference }: { reference?: RefObject<HTMLDivElement> }) => {
         </div>
 
         <div tw="flex grid-area[btn]">
-          <Btn onClick={() => onClick(filters)}>Filter Apartments</Btn>
-
-          <Btn onClick={() => onClick()}>Reset Filters</Btn>
+          <Btn onClick={() => applyFilters()}>Reset Filters</Btn>
         </div>
       </div>
     </>

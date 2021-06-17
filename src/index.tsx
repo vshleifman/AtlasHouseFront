@@ -9,6 +9,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import './global.css';
+import './components/ApartmentList/DateFilter/datepicker.css';
 
 ReactDOM.render(
   <React.StrictMode>

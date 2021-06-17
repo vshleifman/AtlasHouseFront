@@ -18,6 +18,7 @@ export interface InitialAuthState {
 
 export interface InitialBookingState {
   bookings: Booking[] | undefined;
+  ownBookings: Booking[] | undefined;
   errorMsg: string | undefined;
 }
 
@@ -36,8 +37,8 @@ export interface Booking {
   checkOut: string;
   createdAt: string;
   updatedAt: string;
-  property: string;
-  user: string;
+  property: string | Apartment;
+  user: string | User;
   paidFor: boolean;
   amount: number;
 }
@@ -48,10 +49,11 @@ export interface Apartment {
   createdAt: string;
   updatedAt: string;
   price: number;
-  amenities: Record<string, boolean>;
+  area: number;
+  amenities: amenitiesList;
   isCleaned: boolean;
   id: string;
-  pictures: string[];
+  pictures: { buffer: string; name: string; mimetype: string }[];
   bookings: Booking[];
   description: string;
 }
@@ -59,4 +61,23 @@ export interface Apartment {
 export enum checkTimes {
   checkIn = 15,
   checkOut = 12,
+}
+
+export interface amenitiesList {
+  balcony: boolean;
+  bathtub: boolean;
+  shower: boolean;
+  wifi: boolean;
+  tv: boolean;
+  cutlery: boolean;
+  microwave: boolean;
+  oven: boolean;
+  kettle: boolean;
+  cooker: boolean;
+  fridge: boolean;
+  washingMachine: boolean;
+  iron: boolean;
+  ironingBoard: boolean;
+  linen: boolean;
+  towels: boolean;
 }
