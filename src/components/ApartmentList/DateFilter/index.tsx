@@ -7,7 +7,7 @@ import { checkTimes } from 'types/types';
 import { useDispatch } from 'react-redux';
 import { setPropertiesThunk } from '../PropertyThunks';
 
-const DateSearchBar = () => {
+const DateFilter = () => {
   const dispatch = useDispatch();
 
   const { filters, setFilters } = useContext(FilterContext);
@@ -57,4 +57,4 @@ const DateSearchBar = () => {
   );
 };
 
-export default DateSearchBar;
+export default DateFilter;

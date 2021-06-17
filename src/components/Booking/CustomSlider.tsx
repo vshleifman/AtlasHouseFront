@@ -1,8 +1,6 @@
 import Slider from 'react-slick';
 import { styled } from 'twin.macro';
 
-import arrow from 'images/sliderArrow.svg';
-
 const Carousel = styled.div`
   grid-area: carousel;
   place-items: initial;
@@ -19,9 +17,15 @@ const PhotoContainer = styled.div`
 `;
 
 const NextArrow = styled.div`
-  right: 25px;
+  right: 50px;
   &::before {
     content: '';
+  }
+
+  transition: all 0.2s;
+  &:hover {
+    transition: all 0.2s;
+    transform: scale(1.1) translateY(-10px);
   }
 `;
 
@@ -34,12 +38,18 @@ const PrevArrow = styled.div`
   &::before {
     content: '';
   }
+
+  transition: all 0.2s;
+  &:hover {
+    transition: all 0.2s;
+    transform: scale(1.1) translateY(-10px);
+  }
 `;
 
 const MySvg = () => (
   <svg tw="text-dark-gray text-2xl stroke-current" width="3em" height="3em" viewBox="0 0 100 100">
-    <line x1="30" x2="70" y1="10" y2="51" stroke-width="6" />
-    <line x1="70" x2="30" y1="49" y2="90" stroke-width="6" />
+    <line x1="30" x2="70" y1="10" y2="51" strokeWidth="6" />
+    <line x1="70" x2="30" y1="49" y2="90" strokeWidth="6" />
   </svg>
 );
 

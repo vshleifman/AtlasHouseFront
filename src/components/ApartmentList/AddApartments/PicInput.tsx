@@ -21,7 +21,7 @@ const PicInput = ({
       newPicState = [...newPicState, ...acceptedFiles];
       setPicturesState(newPicState);
     },
-    [picturesState],
+    [setPicturesState, picturesState],
   );
 
   const dropzone = useDropzone({ onDrop });

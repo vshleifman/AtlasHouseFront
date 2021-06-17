@@ -38,7 +38,6 @@ const SelectAmenities = ({ apartment, onChange }: { apartment?: Apartment; onCha
   if (apartment?.amenities) {
     amenitiesOptions.forEach(option => {
       if (apartment?.amenities[option.value as keyof amenitiesList] === true) {
-        console.log(option);
         preselectedAmenities.push(option);
       }
     });

@@ -57,7 +57,7 @@ const AddApartment = () => {
     };
 
     initPicStateSetter();
-  }, []);
+  }, [apartment?.pictures]);
 
   const picArray: JSX.Element[] = [];
 

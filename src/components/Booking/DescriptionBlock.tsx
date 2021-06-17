@@ -54,14 +54,15 @@ const DescriptionBlock = () => {
           <h1 tw="justify-center w-20 pb-1 flex border-b border-secondary">Amenities</h1>
 
           <div className="ams" tw="flex flex-col flex-wrap self-stretch">
-            {amenities?.map(entry => {
-              if (apartment.amenities[entry as keyof amenitiesList] === true) {
-                return (
-                  <p key={entry} tw="capitalize place-self-start mx-1 my-0.5">
-                    <IconsSwitch amenity={entry as keyof amenitiesList} /> {entry}
-                  </p>
-                );
+            {amenities.map(entry => {
+              if (apartment.amenities[entry as keyof amenitiesList] === false) {
+                return null;
               }
+              return (
+                <p key={entry} tw="capitalize place-self-start mx-1 my-0.5">
+                  <IconsSwitch amenity={entry as keyof amenitiesList} /> {entry}
+                </p>
+              );
             })}
           </div>
         </section>

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Btn, Heading } from 'styles/styles';
-import { styled } from 'twin.macro';
 import { Booking } from 'types/types';
 import InvoiceDetails from './InvoiceDetails';
 import ModalCloseButton from '../ModalCloseButton';

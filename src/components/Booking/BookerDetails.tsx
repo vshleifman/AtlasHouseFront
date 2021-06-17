@@ -4,7 +4,7 @@ import moment from 'moment';
 import { RefObject, useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { adminBookingThunk, postBookingThunk, setBookingsThunk } from 'components/Booking/BookingThunks';
-import { bookingSelector, userSelector } from 'selectors/selectors';
+import { userSelector } from 'selectors/selectors';
 import binaryFinder from './binaryBookingFinder';
 import { BookingContext } from './BookingProvider';
 
@@ -17,7 +17,6 @@ const BookerDetails = ({ formikRef }: { formikRef: RefObject<FormikProps<typeof 
 
   const { filters } = useContext(FilterContext);
   const { setIsOpen, apartment } = useContext(BookingContext);
-  const bookings = useSelector(bookingSelector);
   const user = useSelector(userSelector).userData;
 
   const initialValues = {

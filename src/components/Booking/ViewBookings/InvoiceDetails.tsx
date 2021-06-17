@@ -1,5 +1,4 @@
 import moment from 'moment';
-import tw from 'twin.macro';
 import { Apartment, Booking, User } from 'types/types';
 
 const issuer = {
