@@ -1,14 +1,17 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
+import facade from 'images/facade.jpeg';
+import WindowView from 'images/WindowView.jpeg';
+
 const Container = styled.div`
   ${tw`flex flex-col w-1/2 mt-1 justify-around height[150rem]`}
 `;
 
 const Section = styled.section`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   place-items: center;
+  margin-top: 4rem;
 `;
 
 const Text = styled.div`
@@ -17,14 +20,9 @@ const Text = styled.div`
   place-items: center;
 `;
 
-const Picture = styled.div`
-  border: 1px solid black;
-  height: 13em;
-  width: 10em;
-`;
-
 const H3 = styled.h3`
   margin: 0;
+  font-size: 2rem;
 `;
 
 const Divider = styled.div`
@@ -37,7 +35,7 @@ const About = ({ reference }: { reference: React.MutableRefObject<null> }) => {
   return (
     <Container ref={reference}>
       <Section>
-        <Picture>pic</Picture>
+        <img tw="h-auto w-auto mr-4" src={facade} alt="n" />
         <Text>
           <H3>Welcome!</H3>
           <Divider />
@@ -50,7 +48,7 @@ const About = ({ reference }: { reference: React.MutableRefObject<null> }) => {
           </p>
         </Text>
       </Section>
-      <Section>
+      <Section tw="flex-col">
         <Text>
           <H3>Find out we are in a great location!</H3>
           <Divider />
@@ -64,10 +62,16 @@ const About = ({ reference }: { reference: React.MutableRefObject<null> }) => {
             car.
           </p>
         </Text>
-        <Picture>pic</Picture>
+        <iframe
+          tw="width[650px] height[400px] mt-4"
+          loading="lazy"
+          allowFullScreen
+          src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJvTJLss3P7kYRFQknxwBM-OI&key=AIzaSyDm3v9y93pQYE1spSyLNDjC8F8UhRX5g68"
+        ></iframe>
       </Section>
-      <Section>
-        <Picture>pic</Picture>
+      <Section tw="width[145%] place-self-center">
+        <img tw="h-30 w-auto mr-4" src={WindowView} alt="n" />
+
         <Text>
           <H3>Be enthusiastic about your stay here!</H3>
           <Divider />
