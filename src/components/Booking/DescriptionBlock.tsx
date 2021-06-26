@@ -36,36 +36,36 @@ const DescriptionBlock = () => {
 
   return (
     <Container>
-      <div tw="flex justify-end">
-        <section tw="flex flex-col flex-grow items-center p-3 bg-gradient-to-l to-white from-light-gray">
+      <div tw="flex justify-start">
+        {/* <section tw="flex flex-col flex-grow items-center p-3 bg-gradient-to-l to-white from-light-gray">
           <h1 tw="justify-center w-20 pb-1 flex border-b border-secondary">Description</h1>
-          <div tw="flex justify-between place-self-stretch p-2">
-            <div tw="min-width[fit-content] mt-2 mr-4">
-              <p>
-                Area: {apartment.area} m<sup>2</sup>
-              </p>
-              <p>Price: {apartment.price} €</p>
-            </div>
-            <p tw="place-self-start mt-2">{apartment.description}</p>
+        </section> */}
+        <div tw="flex justify-between place-self-stretch p-2 mt-2">
+          <div tw="min-width[fit-content] mr-4">
+            <p tw="my-0.5">
+              Area: {apartment.area} m<sup>2</sup>
+            </p>
+            <p tw="my-0.5">Price: {apartment.price} €</p>
           </div>
-        </section>
+          {/* <p tw="place-self-start mt-2">{apartment.description}</p> */}
+        </div>
 
-        <section tw="flex flex-col items-center p-3 bg-gradient-to-r from-light-gray to-white">
+        {/* <section tw="flex flex-col items-center p-3 bg-gradient-to-r from-light-gray to-white">
           <h1 tw="justify-center w-20 pb-1 flex border-b border-secondary">Amenities</h1>
+            </section> */}
 
-          <div className="ams" tw="flex flex-col flex-wrap self-stretch">
-            {amenities.map(entry => {
-              if (apartment.amenities[entry as keyof amenitiesList] === false) {
-                return null;
-              }
-              return (
-                <p key={entry} tw="capitalize place-self-start mx-1 my-0.5">
-                  <IconsSwitch amenity={entry as keyof amenitiesList} /> {entry}
-                </p>
-              );
-            })}
-          </div>
-        </section>
+        <div className="ams" tw="flex flex-col flex-wrap self-stretch mt-2 p-2">
+          {amenities.map(entry => {
+            if (apartment.amenities[entry as keyof amenitiesList] === false) {
+              return null;
+            }
+            return (
+              <p key={entry} tw="capitalize place-self-start mx-1 my-0.5">
+                <IconsSwitch amenity={entry as keyof amenitiesList} /> {entry}
+              </p>
+            );
+          })}
+        </div>
       </div>
 
       <section tw="flex">

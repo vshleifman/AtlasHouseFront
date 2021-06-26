@@ -40,7 +40,7 @@ const Navbar = () => {
         </div>
         <div>
           <BaseLink to="/about">About Us</BaseLink>
-          {user?.role !== 0 ? <BaseLink to="/bookings">Bookings</BaseLink> : null}
+          {user?.role === 2 ? <BaseLink to="/bookings">Bookings</BaseLink> : null}
           <BaseLink to={user?.role !== 2 ? '/contacts' : ''}>{user?.role !== 2 ? 'Contacts' : null}</BaseLink>
         </div>
         <div tw="text-align[end] border-left[cyan 1px solid]">

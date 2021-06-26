@@ -27,20 +27,21 @@ export const setUserThunk = (): AppThunk => async dispatch => {
 
     dispatch(setUser(response.data));
   } catch (error) {
-    dispatch(addError(error.response.data.msg));
+    console.log({ error });
+    dispatch(addError(error.response?.data.msg || error.message));
   }
 };
 
-export const updateUserThunk = (
-  data: Partial<InitialUserState>,
-): AppThunk => async dispatch => {
-  try {
-    const response = await api.patch('/users/me', data);
-    dispatch(setUser(response.data));
-  } catch (error) {
-    dispatch(addError(error.response.data.msg));
-  }
-};
+export const updateUserThunk =
+  (data: Partial<InitialUserState>): AppThunk =>
+  async dispatch => {
+    try {
+      const response = await api.patch('/users/me', data);
+      dispatch(setUser(response.data));
+    } catch (error) {
+      dispatch(addError(error.response?.data.msg || error.message));
+    }
+  };
 
 export const { setUser, addError } = UserSlice.actions;
 

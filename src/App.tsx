@@ -4,17 +4,18 @@ import About from './pages/About';
 import Contacts from 'pages/Contacts';
 import ProfilePage from 'pages/ProfilePage';
 import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { tryAutoSignin } from 'reducers/AuthSlice';
 import styled from 'styled-components';
 import Welcome from 'components/Navbar/Welcome';
 import AuthForm from 'components/Authentication/AuthForm';
 import ApartmentsSwitch from 'components/ApartmentList/ApartmentsSwitch';
 import rigaPanorama from 'images/Riga_panorama.jpg';
-import AddApartment from 'components/ApartmentList/AddApartments';
+import AddApartment from 'components/ApartmentList/AddApartments/index';
 import tw from 'twin.macro';
 import Bookings from 'components/Booking/ViewBookings/Bookings';
 import { setPropertiesThunk } from 'components/ApartmentList/PropertyThunks';
+import { userSelector } from 'selectors/selectors';
 
 const Container = styled.div`
   ${tw`flex flex-col items-center`}
@@ -43,6 +44,7 @@ const NavBackground = styled.header`
 
 const App = () => {
   const dispatch = useDispatch();
+  const user = useSelector(userSelector).userData;
 
   const location = useLocation();
 
@@ -68,7 +70,7 @@ const App = () => {
           <Route path="/apartments" component={ApartmentsSwitch} />
           <Route path="/add_apartment" component={AddApartment} />
           <Route path="/profile" component={ProfilePage} />
-          <Route path="/bookings" component={Bookings} />
+          {user?.role === 2 ? <Route path="/bookings" component={Bookings} /> : null}
           <Route path="/about" component={About} />
         </Switch>
       </Switch>

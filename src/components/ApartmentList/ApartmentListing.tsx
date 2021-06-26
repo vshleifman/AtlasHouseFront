@@ -37,7 +37,7 @@ const Name = styled(BaseBox)`
 const Description = styled(BaseBox)`
   grid-area: description;
 `;
-const Price = styled(BaseBox)`
+const PriceArea = styled(BaseBox)`
   grid-area: price;
 `;
 
@@ -67,7 +67,12 @@ const ApartmentListing = ({ apartment }: { apartment: Apartment }) => {
       <Description tw="justify-start max-w-40">
         <p>{apartment.description || 'No description yet'}</p>
       </Description>
-      <Price>{apartment.price} €</Price>
+      <PriceArea tw="flex flex-col">
+        <p>Price: {apartment.price} €</p>
+        <p>
+          Area: {apartment.area} m<sup>2</sup>
+        </p>
+      </PriceArea>
     </Container>
   );
 };
