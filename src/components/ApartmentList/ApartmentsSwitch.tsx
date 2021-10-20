@@ -18,6 +18,7 @@ const ApartmentsSwitch = ({ reference }: { reference: React.MutableRefObject<nul
   const apartments = useSelector(propertySelector).properties;
 
   const { path } = useRouteMatch();
+  console.log({ apartments });
 
   const routes = apartments?.map(aprtm => (
     <Route path={`/apartments/${aprtm.codeID}`} key={aprtm.codeID} component={ApartmentPage} />

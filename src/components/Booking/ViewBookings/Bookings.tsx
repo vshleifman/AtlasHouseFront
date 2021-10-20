@@ -9,7 +9,7 @@ import { Btn } from 'styles/styles';
 import ReactModal from 'react-modal';
 import InvoiceModal from './InvoiceModal';
 
-const Bookings = () => {
+const Bookings = ({ interval }: { interval?: { firstCheckIn: string; lastCheckIn: string } }) => {
   const dispatch = useDispatch();
   const user = useSelector(userSelector).userData;
 
@@ -23,7 +23,13 @@ const Bookings = () => {
 
   const bookingKind = isAdmin ? 'bookings' : 'ownBookings';
 
-  const bookings = useSelector(bookingSelector)[bookingKind];
+  const allBookings = useSelector(bookingSelector)[bookingKind];
+
+  const bookings = !interval
+    ? allBookings
+    : allBookings?.filter(
+        booking => booking.checkIn === interval.firstCheckIn && booking.checkIn <= interval.lastCheckIn,
+      );
 
   if (bookings?.length === 0) {
     return <NoBookings />;
@@ -44,13 +50,15 @@ const Bookings = () => {
             <p>Paid For: {booking.paidFor.toString()}</p>
           </div>
           <div>
-            <Btn
-              onClick={() => {
-                setIsOpen(true);
-              }}
-            >
-              Create Invoice
-            </Btn>
+            {user?.role === 2 ? (
+              <Btn
+                onClick={() => {
+                  setIsOpen(true);
+                }}
+              >
+                Create Invoice
+              </Btn>
+            ) : null}
             <ReactModal isOpen={isOpen} ariaHideApp={false}>
               <InvoiceModal booking={booking} setIsOpen={setIsOpen} />
             </ReactModal>
